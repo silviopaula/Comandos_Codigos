@@ -3,8 +3,8 @@
 
 ![img0 ](https://i.ibb.co/FgykSn9/img0.png "img0")
 
-***Autor:*** Silvio da Rosa Paula
-***Data atualização:*** 18/08/2021
+***Autor:*** Silvio da Rosa Paula        
+     
 Essas notas são baseadas no Curso de SQL Completo oferecido gratuitamente com certificação de 18 horas  pela [Softblue](https://www.softblue.com.br/site/curso/id/3/CURSO+SQL+COMPLETO+BASICO+AO+AVANCADO+ON+LINE+BD03)
 
 ## **DICIONÁRIO PARA UM DBA SQL Jr.**
