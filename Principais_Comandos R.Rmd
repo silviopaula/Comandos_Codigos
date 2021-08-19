@@ -1,0 +1,1347 @@
+---
+title: "Principais Comandos"
+author: "Silvio da Rosa Paula & Dianifer Leal Borges"
+date: "10/08/2021"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+
+### **DICIONÁRIO**                     
+df = data.frame                    
+<- ou = atribuição               
+na.rm=TRUE - ignora missings                       
+== operador lógico destinado a comparar se duas coisas são exatamente iguais.                
+
+
+
+### **ATALHOS**                 
+Executar ---------------------- (ctrl + Enter)                                 
+Salvar script ----------------- (Ctrl + S)                                  
+Atalho para Limpar console ---- (ctrl + L)                                        
+
+
+
+### **COMANDOS**
+	 
+Instalar pacotes
+```{r, eval=FALSE}
+#install.packages('package')
+install.package(c('package1','package2','package3'))
+```
+
+Como atulizar pacotes
+```{r, eval=FALSE}
+old.packages() 
+update.packages()
+```
+
+Carregar pacotes instalados
+```{r, eval=FALSE}
+#library(package)
+#require(pacote)
+```
+
+Como descarregar pacotes
+```{r, eval=FALSE}
+detach('package:pacote', unload =TRUE)
+```
+
+Verificar a versão do pacote
+```{r, eval=FALSE}
+packageDescription("pacote")
+```
+
+Limpar console e base de dados
+```{r, eval=FALSE}
+rm(list=ls())
+```
+
+Selecionar pasta de trabalho
+```{r, eval=FALSE}
+setwd ("D:/")
+```
+
+Utilizar uma função específica de um pacote sem carregar o pacote
+```{r, eval=FALSE}
+(pacote)::função()
+```
+
+Acessar a documentação (HELP) ou selecionar o função e preciosar F1
+```{r, eval=FALSE}
+help('pacote')
+```
+
+Para acessar a documentação de um pacote
+```{r, eval=FALSE}
+help(package='pacote')
+```
+
+Para acessar o help de um comando específico
+```{r, eval=FALSE}
+?comando
+help('comando')
+help('comando', package='pacote')
+```
+
+Desabilitar notacao científica
+```{r, eval=FALSE}
+options(scipen = 999)
+```
+
+Expandir memória
+```{r, eval=FALSE}
+memory.limit (9999999999) 
+```
+
+Checar tamanho da memória
+```{r, eval=FALSE}
+memory.size()
+```
+
+
+
+
+
+### **VISUALIZANDO DATAFRAMES**
+
+Ver dataframe no browser
+```{r, eval=FALSE}
+View(df)
+```
+
+Remover (drop) data.frame
+```{r, eval=FALSE}
+rm(df)
+```
+
+Ver o nome das variáveis de um dataframe
+```{r, eval=FALSE}
+names(df)
+```
+
+Ver as primeiras 10 linhas do dataframe
+```{r, eval=FALSE}
+head(df) ## ou head(df, n==10) podendo escolher quantas linhas quer ver
+```
+
+Reporta as ultimas 5 linhas do banco de dados juntamente com as variaveis
+```{r, eval=FALSE}
+tail(df, n=5)
+```
+
+Reporta as dimenssões do banco de dados
+```{r, eval=FALSE}
+dim(df)
+```
+
+Keep data.frame
+```{r, eval=FALSE}
+rm(list=(ls()[ls()!="df1", "df2"]))
+```
+
+Ver detalhes das variaveis do dataframe
+```{r, eval=FALSE}
+str(df)
+```
+
+Ver o tipo de classe de uma variável (numérico, string, etc.)
+```{r, eval=FALSE}
+class(df$var1)
+```
+
+Duplicar uma variável do dataframe com package dplyr
+```{r, eval=FALSE}
+df <- df %>% 
+      mutate(var_clone1 = var1) %>%   
+      mutate(var_clone2 = var2)
+```
+
+Reporta a classificacao de um objeto (numeric, matrix, data.frame, etc)
+```{r, eval=FALSE}
+class(df)
+```
+
+Mostra todas as variáveis e o data type
+```{r, eval=FALSE}
+df
+```
+
+Lista os objetos no ambiente de trabalho 
+```{r, eval=FALSE}
+ls(df)
+```
+
+Ordenando variáveis de um dataframe
+```{r, eval=FALSE}
+df <- df %>% select(order(colnames(df)))
+```
+
+"Subset" Gerar uma novo data set com apenas algumas variáveis (keep)
+```{r, eval=FALSE}
+df_keep <- subset(df, select = c(var1,var2,var6)) ## fica somente as variaveis var1 var2 var6
+```
+
+"Subset" Gerar uma novo data set com apenas algumas variáveis (drop)
+```{r, eval=FALSE}
+df_drop <- subset(df, select = -c(var1,var2,var6)) ## dropa as variaveis var1 var2 var6
+```
+
+"Subset" com package data.table
+```{r, eval=FALSE}
+df_novo <- df[,.(var1, var2)]
+```
+
+Keep if (deixa tudo mesmo a modalidade_1
+```{r, eval=FALSE}
+df <- df[!(df$var=="modalidade_1"),]
+```
+
+Delimitando periodo 2009 para frente
+```{r, eval=FALSE}
+df_2009 <- subset(df, Ano>=2009)
+df <- subset(df, Ano>=2009 & Ano<=2018)
+```
+
+Fazer Reshape de long para wide
+```{r, eval=FALSE}
+df_wide = reshape(data = df_long, idvar = "id", v.names= c("var1","var2","var3"), sep = "_", timevar = "Ano", times = c(2000,2001,2002,2003), direction = "wide")
+```
+
+Gerando uma amostra com as primeiras 1000 linhas
+```{r, eval=FALSE}
+df_amostra <- head(df, n=1000)
+View(df_amostra) # Ver
+```
+
+Ordenar uma coluna no R
+```{r, eval=FALSE}
+DF <- DF[order(DF$VAR),] # Ordenar crescente
+DF <- DF[order(DF$VAR),decreasing = (TRUE),] # Ordenar decrescente
+```
+
+Ordenar colunas df
+```{r, eval=FALSE}
+df2 <- df %>%  select(sort(current_vars()))
+```
+
+
+
+
+
+
+### **MANIPULANDO  DATAFRAMES**
+
+Ver nome das variáveis de um dataframe
+```{r, eval=FALSE}
+names(df)
+```
+
+Ver nome de colunas especificas
+```{r, eval=FALSE}
+names(df)[c(1:4,9,20)]
+```
+
+Ver nome das variáveis com [#library(data.table)]
+```{r, eval=FALSE}
+colnames(df)
+```
+
+Renomear variáveis
+```{r, eval=FALSE}
+df <- rename(df, c("nome_novo_1" = "nome_antigo_1",
+                   "nome_novo_2" = "nome_antigo_2"))
+```
+
+Renomear o painel de dados (data.frame)
+```{r, eval=FALSE}
+df_novo <- df_antigo
+```
+
+Renomear multiplas colunas
+```{r, eval=FALSE}
+names(df)[1:4] <- c("var1", "var2","var3" ,"var4")
+```
+
+Renomear variáveis com [#library(data.table)]
+```{r, eval=FALSE}
+setNames(df, 'nome_antigo', 'nome_novo')
+```
+
+Renomear variáveis do painel de dados (data.frame)
+```{r, eval=FALSE}
+#syntax: names(my_data)[names(my.data) == 'old.var.name'] <- 'new.var.name'
+names(df)[names(df) == 'nome_antigo'] <- 'nome_novo'
+```
+
+Adicionar prefixo as variáveis
+```{r, eval=FALSE}
+colnames(df) <- paste("ln", colnames(df), sep = "_")
+```
+
+Declarar que uma variável é do tipo data [package(lubridate)]
+```{r, eval=FALSE}
+df$Data_var <- ymd(paste(df$Data_var))
+```
+
+Extrair ano Mês ou dia de uma coluna do tipo date
+```{r, eval=FALSE}
+df$Ano <- format(as.Date(df$Data, format="%d/%m/%Y"),"%Y")
+```
+
+Clonar uma variável
+```{r, eval=FALSE}
+df$var_clone <- df$var
+```
+
+Dropar uma variável
+```{r, eval=FALSE}
+df$var1  <-NULL
+df$var2 <- df$var3 <-NULL
+df <- df[,-c("var1", "var2")]
+```
+
+Apagar um arquivo salvo em alguma pasta
+```{r, eval=FALSE}
+file.remove("D:/data.csv")
+```
+
+Gerar uma variável dentro de um dataframe
+```{r, eval=FALSE}
+df$var = 0
+```
+
+Gerar uma variavel logaritmo
+```{r, eval=FALSE}
+df$log_var <- log(df$var)
+```
+
+Gerar multiplas variável em log
+```{r, eval=FALSE}
+# Gerar a função
+logplusone <- function(x) {log(x[1])}
+
+# Gerar log das colunas 1 a 10
+df[, 1:10] <- as.data.frame(lapply(df[, 3:5], FUN = function(x) {sapply(x, FUN = logplusone)}))
+
+# OBS: depois basta renomear
+```
+
+
+Ver somente algumas variaveis do dataframe
+```{r, eval=FALSE}
+View(df$var)
+```
+
+Adicionar label [#library(Hmisc)]
+```{r, eval=FALSE}
+label(var[[1]]) <- "var descrição"
+```
+
+Converter de numérico para string (character)
+```{r, eval=FALSE}
+df <- as.data.table(apply(df, "var", as.character))  
+class(df$var)
+```
+
+Converter de character (string) para numeric
+```{r, eval=FALSE}
+df <- as.data.table(apply(df, "var", as.numeric))  
+class(df$var)
+```
+
+Converter um conjunto de colunas para numerico
+```{r, eval=FALSE}
+df <- df %>% mutate_at(c(1:10), as.numeric)
+```
+
+Converter todo dataframe para numérico
+```{r, eval=FALSE}
+df = as.data.frame(sapply(df, as.numeric))
+```
+
+Converter todas as variáveis para numérico
+```{r, eval=FALSE}
+df <- df %>% mutate_at(c(1:15), as.numeric) # Convertendo 15 colunas
+```
+
+Replace inf para zero (inf = infinito) com package dplyr
+```{r, eval=FALSE}
+fortify.zoo(log_ret) %>% mutate_all(function(x) ifelse(is.infinite(x), 0, x))
+# ou
+df$var[which(!is.finite(df$var))] <- 0
+```
+
+Gerar variável categórica 
+Neste exemplo ele pega alguns produtos da varivel Var produto e gera uma nova variavel categorica com 4 categorias 0 a 3
+```{r, eval=FALSE}
+df <- df %>% mutate(var_cat = ifelse(Var_Produto %in% c(1:24,28,35,99), 1,
+                              ifelse(Var_Produto %in% c(26,34), 2 ,
+                              ifelse(Var_Produto %in% c(25,32,33), 3, 0))))
+```
+
+
+Arredondando multiplas colunas 
+```{r, eval=FALSE}
+df %>% mutate_at(vars(var1, var2), funs(round(., 1)))
+```
+
+Arredondar todas as colunas exceto a var1
+```{r, eval=FALSE}
+df %>% mutate_at(vars(-var1), funs(round(., 1)))
+```
+
+Arredondar todas as colunas cujo nome começa por VAR
+```{r, eval=FALSE}
+df %>% mutate_at(vars(starts_with("VAR")), funs(round(., 1)))
+```
+
+Arredondar apenas colunas numeridicas
+```{r, eval=FALSE}
+mydf %>% mutate_if(is.numeric, ~round(., 1))
+```
+
+
+
+
+###**TRATAMENTO DE MISSING**
+
+Ver total de missings de variavéis numéricas 
+```{r, eval=FALSE}
+summary(df$var)
+colSums(is.na(df))
+
+# OU
+Missings <- as.matrix(colSums(is.na(Covaridas_mun)))
+print(Missings)
+```
+
+
+Remover missings e deixar o data.frame completo sem missings [(package dplyr)]
+```{r, eval=FALSE}
+df <- df[complete.cases(df),]
+```
+
+Remover missings baseado em uma variável com pacote zoo
+install.packages('zoo')
+library(zoo)
+```{r , eval=FALSE}
+df <- df[!is.na(df$Var),]
+```
+
+Imputar dados missings com interpolação
+```{r, eval=FALSE}
+df <- df %>%  group_by(id) %>%  mutate_at(vars(var1, var2, var3, IMPOSTOS_2), 
+                                          list(inter = ~na.approx(., na.rm = FALSE)))
+```
+
+
+Substituir missings pela média GERAL
+```{r, eval=FALSE}
+df$var = ifelse(is.na(df$var), mean(df$var, na.rm=TRUE), df$var)
+```
+
+Substituir missings pela mediana GERAL isso evita problemas com outliers
+```{r, eval=FALSE}
+df$var = ifelse(is.na(df$var), median(df$var, na.rm=TRUE), df$var)
+```
+
+Substituir missings pela média agrupada por id com dplyr
+```{r, eval=FALSE}
+impute.mean <- function(x) replace(x, is.na(x), mean(x, na.rm = TRUE))
+df <- df %>% group_by(id) %>% mutate(var1_nova = impute.mean(var1), 
+                                     var2_nova = impute.mean(var2)) 
+```
+
+Substituir missings pela mediana agrupada por id com dplyr
+```{r, eval=FALSE}
+impute.median <- function(x) replace(x, is.na(x), median(x, na.rm = TRUE))
+df <- df %>% group_by(id) %>% mutate(var1_nova = impute.median(var1), 
+                                     var2_nova = impute.median(var2)) 
+```
+
+Substituir missings pela média e mediana agrupada por id com data.table
+```{r, eval=FALSE}
+df <- as.data.table(df)
+df <- df[is.na(df$var), "var_nova"] <- mean(na.omit(df$var))
+df <- df[is.na(df$var), "var_nova"] <- median(na.omit(df$var))
+```
+
+
+Ver o total de missings de uma coluna
+```{r, eval=FALSE}
+lyrsapply(df, function(x) sum(is.na(x))) 
+```
+
+Excluir missings das variaveis var1 ou var2 ou var3 e gerar um novo dataframe
+```{r, eval=FALSE}
+df_novo <- df[!(is.na(df$var1)) | !(is.na(df$var2))| !(is.na(df$var3)),]
+```
+
+Replace de missings para valores de outra variável
+```{r, eval=FALSE}
+df$A <- ifelse(is.na(df$A), df$B, df$A)
+```
+
+Atribuindo zero a todos os missings
+install.packages('imputeTS')
+library(imputeTS)
+```{r, eval=FALSE}
+df <- na_replace(df, 0)
+```
+
+
+
+
+
+
+### **ESTRUTURAS DE REPETIÇÃO**
+						  
+LOOP TIPO foreach	
+Esse comando é equivalente ao foreach do stata (basicamente o que ele faz é pegar os códigos das estações meteorológicas e substituir no comando que acessa o site e baixa os dados e salva em .csv)
+
+```{r, eval=FALSE}
+#library(jsonlite)
+#library(readr)
+#library(dplyr)
+```
+
+```{r, eval=FALSE}
+x <- c(83512,83659,83704)
+Estacao = list()
+Tabela_Estacao = list()
+```
+
+```{r, eval=FALSE}
+for(cod in x) {
+  Estacao[[as.character(cod)]] <- fromJSON(paste0("https://apitempo.inmet.gov.br/estacao/2000-01-01/2020-12-31/", cod))
+  Tabela_Estacao[[as.character(cod)]]<- as_data_frame(Estacao[[as.character(cod)]])
+  write.csv(Estacao[[as.character(cod)]], paste0('Tabela_Estacao_', cod, '.csv'))
+}
+```
+				  
+
+
+
+
+
+### **ESTATÍSTICAS E REGRESSÕES**
+
+Nota: no R para trabalhar com efeito fixo é preciso transformar as colunas em fatores
+```{r, eval=FALSE}
+df$var <- factor(df$var)
+```
+
+Summarise de todo o banco de dados
+```{r, eval=FALSE}
+summary(df)
+```
+
+Estatísticas descritivas de variaveis especificas
+```{r, eval=FALSE}
+summary(df$var)
+```
+
+Exportar descritivas 
+install.packages("stargazer")
+library(stargazer)
+```{r, eval=FALSE}
+stargazer(Dados_meteorologicos, type = "text", out = "Estatisticas descritivas.txt")
+```
+Gerar Matriz de correlação
+```{r, eval=FALSE}
+correlation.matrix <- cor(Dados_meteorologicos)
+```
+
+Exportar matriz de correlação
+```{r, eval=FALSE}
+stargazer(correlation.matrix, type = "text", out = "Matriz de correlação.txt")
+stargazer(Dados_meteorologicos, type = "html",title="Estatisticas descritivas", digits=3, out = "Estatisticas descritivas.doc")
+```
+
+Estatísticas descritivas por grupos 
+```{r, eval=FALSE}
+tapply(df$var, df$var_grupos, summary)
+```
+
+Análise exploratória dos dados
+```{r, eval=FALSE}
+summary(df$var) 
+boxplot(df$var)
+hist(df$var)
+hist(~var1 | var2, data=df) # histograma condicional de var1 em relação a var2
+```
+
+Gráfico de barras rápido
+```{r, eval=FALSE}
+counts = table(df$var)
+barplot(counts, main="titulo", xlab="titulox")
+```
+
+Visualizar outlier (ver mais na aula 53)
+```{r, eval=FALSE}
+boxplot(df$var)
+boxplot(df$var, out1ine = F) # sem outlier
+boxplot(df$var, out1ine = T) # com outlier
+x = boxplot(df$var)$out # ver os valores outlier
+```
+
+Grafico de dispersão
+```{r, eval=FALSE}
+xyplot (df$var1 ~ df$var2 | df$tratamento) # grafico de dispersão condicional ao tratamento
+```
+
+Gráfico de densidade
+```{r, eval=FALSE}
+densityplot (~ df$var1 | df$tratamento)
+```
+
+Tabela estatísticas descritivas
+```{r, eval=FALSE}
+install.package('fields')
+#library(fields)
+Tabela_descritivas<- cbind(stats(df$var1), stats(df$var2), stats(df$var3), stats(df$var4))
+colnames(Tabela_descritivas)<- c("var1","var2", "var3", "var4")
+round(Tabela_descritivas,3) ## Arredondando em 3 casas decimais
+```
+
+Outra maneira de obter as estatísticas descritivas
+```{r, eval=FALSE}
+install.package('pastecs')
+#library(pastecs)
+stat.desc(df) 
+stat.desc(df[,c("var1","var2","var3","var4")])
+stat.desc(df[,c("var1","var2","var3","var4")], basic=TRUE, desc=TRUE, norm=TRUE, p=0.95)
+```
+
+Matriz de correlação
+```{r, eval=FALSE}
+cor(df$var1, df$var2) #correlacao padrao é a de pearson
+cor(df$var1, df$var2, method = "pearson")  #correlacao de pearson
+cor(df$var1, df$var2, method = "kendall")  #correlacao de Kendall
+cor(df$var1, df$var2, method = "spearman") #correlacao de spearman
+cor(df) ## vai comparar todas as variaveis (obs: todas variaveis devem ser numericas)
+cor(df[,c("var1","var2","var3","var4")])
+```
+
+Pooled OLS estimator
+```{r, eval=FALSE}
+#install.packages('plm')
+#library(plm)
+pooling <- plm(Y ~ X, data=df, model= "pooling") 
+summary(pooling)
+```
+
+Between estimator
+```{r, eval=FALSE}
+between <- plm(Y ~ X, data=df, model= "between") 
+summary(between)
+```
+
+First differences estimator
+```{r, eval=FALSE}
+firstdiff <- plm(Y ~ X, data=df, model= "fd")
+summary(firstdiff)
+```
+
+Fixed effects or within estimator
+```{r, eval=FALSE}
+fixed <- plm(Y ~ X, data=df, model= "within")
+summary(fixed)
+```
+
+Random effects estimator
+```{r, eval=FALSE}
+random <- plm(Y ~ X, data=df, model= "random")
+summary(random)
+```
+
+LM test for random effects versus OLS
+```{r, eval=FALSE}
+plmtest(pooling)
+```
+
+LM test for fixed effects versus OLS
+```{r, eval=FALSE}
+pFtest(fixed, pooling)
+```
+
+Hausman test for fixed versus random effects model
+```{r, eval=FALSE}
+phtest(random, fixed)
+```
+
+
+
+
+
+
+### **REPLACE (SUBSTITUIR)**
+					 
+Removendo cedulas vazias de um dataframe
+```{r, eval=FALSE}
+df <- subset(df, var!="")
+```
+
+Substituir caracteres com a função #library(stringr)
+```{r, eval=FALSE}
+df$var <- str_replace(df$var, "-", "")
+```
+
+Remover caracteres especificos
+Dica: use "^x" se quiser excluir os que começam com X
+      use "x$" se quiser excluir os que terminam com X
+```{r, eval=FALSE}
+df_novo <- df[!grepl("E+", df$var),]  
+df_novo <- df[!grepl("^X$", df$var),]
+```
+      
+Remover linhas que contém >= 4 caracteres
+```{r, eval=FALSE}
+df = df[(which(nchar(df$var) >= 4)),]
+```
+
+Padronizando das DAP tirando apenas alguns caracteres
+```{r, eval=FALSE}
+#library(stringr)
+df$var <- str_replace(df$var, "-", "")
+df$var <- str_replace(df$var, "\\[", "")  # Para remover [
+df$var <- str_replace(df$var, "\\\\", "") # Para remover \
+df$var <- str_replace(df$var, "\\.", "")  # Para remover . 
+```
+
+Remove todos caracteres não-alfanuméricos (ou seja, remove caracteres especiais)
+```{r, eval=FALSE}
+df$var <- gsub("[[:punct:]]", "", df$var)
+```
+
+Remove todos caracteres não-numéricos (ou seja letras e caracteres especiais)
+```{r, eval=FALSE}
+df$var <- gsub("[^0-9]", "", df$var)
+```
+
+Remove todos caracteres numéricos (remove somente numeros, não remove caractes especiais)
+```{r, eval=FALSE}
+df$var <- gsub('[[:digit:]]+', '', df$var)
+```
+
+Remove caracteres especiais (remove somente caracteres especiais acentos e outros)
+```{r, eval=FALSE}
+df$var <- gsub("[^[:alnum:]]", " ", df$vra)
+```
+
+Converte letras para maíusculo
+```{r, eval=FALSE}
+#library(magrittr)
+CP2 %<>% mutate_if(is.character, toupper)
+```
+
+Remover linhas com a expressão exata
+```{r, eval=FALSE}
+df <- subset(df, var!="0")
+```
+
+Remover os espaçoes em bancos iniciais e finais
+```{r, eval=FALSE}
+(str_trim) # A função str_trim  remove apenas os espaços em branco iniciais e finais.
+df$var <- str_trim(df$var)                
+```
+
+Fazer append
+```{r, eval=FALSE}
+df_novo <- data.table::rbindlist(list(df1,df2))
+#OU
+df_novo <- rbind.data.frame(df1,df2,df3)
+#OU
+df_novo <- rbind(df1, df2)
+```
+
+Ficar somente os dois primeiros caracteres
+```{r, eval=FALSE}
+df$var <- substr(df$var, 0, 2)
+```
+
+Remova colunas com mais de 50% NA
+```{r, eval=FALSE}
+dat[, which(colMeans(!is.na(dat)) > 0.5)]
+```
+
+Remova linhas com mais de 50% NA
+```{r, eval=FALSE}
+dat[which(rowMeans(!is.na(dat)) > 0.5), ]
+```
+
+Remova colunas e linhas com mais de 50% NA
+```{r, eval=FALSE}
+dat[which(rowMeans(!is.na(dat)) > 0.5), which(colMeans(!is.na(dat)) > 0.5)]
+```
+
+Collapsar os dados com dplyr
+```{r, eval=FALSE}
+# com dplyr
+df_novo <- df %>% 
+           group_by(as.factor(id)) %>%  # obs: as variaveis do agrupamento devem ser fatores
+           summarise(var1 = mean(var1),
+                     var2 = mean(var2))
+```
+
+Collapsar os dados com data.table
+```{r, eval=FALSE}
+df <- setDT(df)[, lapply(.SD, sum), by = .(id, ANO)]
+```
+
+Collapsar os dados 
+```{r, eval=FALSE}
+df_novo <- summarise(df, total_var = sum(var))
+```
+
+Merge para df com nomes de colunas iguais
+```{r, eval=FALSE}
+df_novo <- merge(df1,df2, by.x='var_x', by.y='var_y', all=TRUE) 
+# se os nomes das variaveis são diferentes
+```
+
+Merge para df com  nomes das variaveis são diferentes
+```{r, eval=FALSE}
+df_novo <- merge(df1,df2, by=c('var1','var2'), all=TRUE)
+```
+
+Merge com join
+```{r, eval=FALSE}
+DF <- left_join(DF1,DF2) # Ele encontra automaticamente as variaveis iguais
+```
+
+Somando duas colunas de um dataframe
+```{r, eval=FALSE}
+df$Valor_total <- rowSums(df[,c("coluna1", "coluna2")], na.rm=TRUE)
+```
+
+Remover duplicados
+```{r, eval=FALSE}
+df$var %>% unique() %>% length()         # Diz quantos temos sem os duplicados 10933722
+df2 <- df %>% filter(!duplicated(var))   # Este código filtra remove os duplicados.
+```
+
+Remover duplicados baseado em duas variáveis
+```{r, eval=FALSE}
+df_novo <- df[!duplicated(df[c('var1', 'var2')]),] 
+#ou
+df2 <- unique(df, by = "id")
+```
+
+
+```{r, eval=FALSE}
+#install.packages("stargazer")
+#library(stargazer)
+stargazer(Dados_meteorologicos, type = "text", out = "Estatisticas descritivas.txt")
+```
+
+Matriz de correlação
+```{r, eval=FALSE}
+correlation.matrix <- cor(Dados_meteorologicos)
+stargazer(correlation.matrix, type = "text", out = "Matriz de correlação.txt")
+stargazer(Dados_meteorologicos, type = "html",title="Estatisticas descritivas", digits=3, out = "Estatisticas descritivas.doc")
+```
+
+Atribuindo zero a todos os missings
+```{r, eval=FALSE}
+#install.packages('imputeTS')
+#library(imputeTS)
+df <- na_replace(df, 0)
+```
+
+Replace numérico Fácil
+```{r, eval=FALSE}
+df$var1 <- 0               # Gerar uma variavel igual a zero
+df$var1[df$var2 == 1] <- 1 # fazer replace para 1 em var1 se var2 ==1
+#[df$var2 == 2] <- 1       # fazer replace para 1 se var2 ==2
+df$var[is.na(df$var)] <- 0 # fazer replace para 0 em var1 se var2 ==NA (missings)
+```
+
+Replace com ifelse 
+Fazer replace na variável var1, se var1 for menor que zero (,) então (a virgula significa então) var1 irá receber o valor de 1 (,) caso contrário não alterar (a segunda virgula significa caso contrário
+```{r, eval=FALSE}
+df$var1 = ifelse(df$var1 <0, 1, df$var1)
+```
+
+Replace string
+```{r, eval=FALSE}
+df$var <- str_replace(df$var, "homem", "Homem")
+```
+
+Gerar dummie
+```{r, eval=FALSE}
+mydata$dac<-ifelse(mydata$origin=="ac",1,0)
+```
+
+Gerar dummie com muitas condições
+```{r, eval=FALSE}
+df <- df %>% mutate(D_var = ifelse(var_categorias_1 %in% c(1,10,28), 1,                   
+                            ifelse(var_categorias_2 %in% c(2,5,23:26), 1,0)))
+```
+
+Como gerar dummies com ifelse
+```{r, eval=FALSE}
+df$Masculino <- ifelse(df$Sexo = 'M', 1,0)
+df$Feminino  <- ifelse(df$Sexo = 'F', 1,0)
+```
+
+Gera dummies com package fastDummies
+install.packages('fastDummies')
+library(fastDummies)
+```{r, eval=FALSE}
+df <- dummy_cols(df, var='ran')
+```
+
+Gerar id
+```{r, eval=FALSE}
+df <- df %>% group_by(var1,var2) %>% mutate(id = cur_group_id())
+```
+
+Exportar .dta stata
+```{r, eval=FALSE}
+#library(haven)
+write_dta(df, "df.dta")
+```
+
+Gerar variavel lag e lead variable
+```{r, eval=FALSE}
+df <-  df %>% group_by(id) %>% mutate(L1_var = dplyr::lag(var, n = 1, default = NA))
+df <-  df %>% group_by(id) %>% mutate(F1_var = dplyr::lead(var, n = 1, default = NA))
+```
+
+
+Gerar dummies (pacotes necessarios [data.table & mltools]
+```{r, eval=FALSE}
+df <- one_hot(as.data.table(df[,1:3])) # aqui ele transforma em dummies as colunas 1 a 3 do df
+```
+
+Codifica variáveis categóricas
+```{r, eval=FALSE}
+df <- data.matrix(df[,1:3]) # codifica as colunas 1 a 3 do df
+```
+
+Gerar colunas apartir de uma variavel categorica
+```{r, eval=FALSE}
+df2 <- df %>% spread(var_categorica,var) 
+```
+
+
+
+
+Padronizar a escala das quatros colunas do df
+```{r, eval=FALSE}
+df_pad = scale(df[,1:4]) # 
+```
+
+Normalizar dados (deixar em uma escala entr 0 e 1)
+```{r, eval=FALSE}
+#install.packages("scales")
+#library(scales)
+df$var_Norm <- rescale(df$var) 
+```
+
+Plotar em boxplot
+```{r, eval=FALSE}
+boxplot(df[, 1:4], main="df")
+boxplot(df_pad[, 1:4], main="df")
+boxplot(df_norm[, 1:4], main="df")
+```
+
+
+
+
+Obter valor mínimo de duas colunas
+```{r, eval=FALSE}
+df <- transform(df, new_Var = pmin(var1, var2))
+```
+
+Deletar base salva na pasta (exemplo)
+```{r, eval=FALSE}
+file.remove("D:/df.RDS")
+```
+
+Deixar somente os últimos dígitos
+```{r, eval=FALSE}
+str_left <- function(string, n) {
+  substr(string, 1, n)}
+```
+
+```{r, eval=FALSE}
+df$var <- substrRight(df$var, 4) # deixar os ultimos 4 digitos
+df$var <- str_left(df$var, 4)    # deixar os primeiros 4 digitos
+df$var <- str_mid(x, 6, 9)       # deixar os digitos 6 ao 9
+```
+
+Dividir coluna em várias
+install.packages('splitstackshape')
+library(splitstackshape)
+```{r, eval=FALSE}
+df<- cSplit(df, "var", "/") # ex: absde/12/asdf/2010
+```
+
+
+```{r, eval=FALSE}
+#install.packages('fastDummies')
+#library(fastDummies)
+df <- dummy_cols(df, select_columns = "Idade_grp")
+```
+
+Remover primeira e última linha
+```{r, eval=FALSE}
+df <- df[-1, ]
+```
+
+Para ver proporção igual ao table
+```{r, eval=FALSE}
+prop.table(table(df$var))
+```
+
+
+  
+  
+  
+  
+### **COMANDOS PRONTOS**
+
+
+Obter codigo dos Estados a partir do código IBGE de 7 dígitos
+```{r, eval=FALSE}
+DAP_PAA_dt_1e2$UF <- substr(DAP_PAA_dt_1e2$id7, 1, (nchar(DAP_PAA_dt_1e2$id7)-5))
+```
+
+Trabalhando com CPF 
+Os CPF tem zeros nos primeiros caracteres, se importar como numerico os zeros serão removidos
+
+Importar CPF como string
+```{r, eval=FALSE}
+df <- read.csv("D:/dados.csv", colClasses=c(CPF="character"),)
+```
+
+Se já estiver como numérico basta atribuir os zeros antes
+```{r, eval=FALSE}
+df$CPF <- str_pad(df$CPF, width = 11, pad = "0", side = "left")
+```
+
+Retirando ponto e traço de CPF
+```{r, eval=FALSE}
+df$CPF <- gsub("\\W","",df$CPF)
+```
+
+Gerar classes etárias 
+```{r, eval=FALSE}
+df$Idade_grp <- df$Idade
+df$Idade_grp <- ifelse((df$Idade>=1  & df$Idade<=10) , 'Idade_01_20',df$Idade_grp)
+df$Idade_grp <- ifelse((df$Idade>=10 & df$Idade<=20) , 'Idade_10_20',df$Idade_grp)
+df$Idade_grp <- ifelse((df$Idade>=21 & df$Idade<=30) , 'idade_21_30',df$Idade_grp)
+df$Idade_grp <- ifelse((df$Idade>=31 & df$Idade<=40) , 'idade_31_40',df$Idade_grp)
+df$Idade_grp <- ifelse((df$Idade>=41 & df$Idade<=50) , 'idade_41_50',df$Idade_grp)
+df$Idade_grp <- ifelse((df$Idade>=51 & df$Idade<=60) , 'idade_51_60',df$Idade_grp)
+df$Idade_grp <- ifelse((df$Idade>=61 & df$Idade<=70) , 'idade_61_70',df$Idade_grp)
+df$Idade_grp <- ifelse((df$Idade>=71) , 'idade_71_mais',df$Idade_grp)
+#install.packages('fastDummies')
+#library(fastDummies)
+df <- dummy_cols(df, select_columns = "Idade_grp")
+```
+
+Balanceando classes
+install.packages("DMwR")
+library(DMwR
+```{r, eval=FALSE}
+set.seed(9560)
+df_treino_balanceado <- SMOTE(var_desbalanceada ~., data=df_treino)
+table(df_treino_balanceado$var_desbalanceada) 
+prob.table(table(df_treino_balanceado$var_desbalanceada)
+```
+
+
+
+
+
+
+##### **GRÁFICOS LADO A LADO**
+
+*EXEMPLO DE GRÁFICOS EM R*
+https://www.r-graph-gallery.com/
+
+Plot
+```{r, eval=FALSE}
+# Gráfico lado a lado pelo plot
+# Executar Ctrl+Shift+Enter
+
+split.screen(figs=c(2,2))
+screen(1)
+comandográfico(plot)
+screen(2)
+ggplot(VPL_outorga_final, aes(x=VPL_outorga)) + 
+comandográfico(plot)
+screen(3)
+comandográfico(plot)
+screen(4)
+comandográfico(plot)
+close.screen(all=TRUE)
+```
+
+ggplot
+```{r, eval=FALSE}
+# Gráfigco lado a lado ggplot
+# Criar as figuras como objetos
+
+##install.packages("egg")
+#library(egg)
+grid.arrange(fig1, fig2, fig3, fig4, ncol=2, nrow=2)
+```
+
+
+
+
+
+### **IMPORTAR E EXPORTAR BASES DE DADOS**
+
+Exportar arquivo csv
+```{r, eval=FALSE}
+write.csv(df,'nome.csv')
+```
+
+Importar arquivo excel com package readxl
+```{r, eval=FALSE}
+df <- read_excel("D:/dados.xlsx", sheet = "Planilha1")
+```
+
+Importar csv de forma mais rapida com data.table
+```{r, eval=FALSE}
+df_amostra <- fread(D:df.csv)
+df_amostra <- fread(D:df.csv, nrows = 100)
+```
+
+Importar .dta stata 
+library(haven)
+```{r, eval=FALSE}
+read_dta(df, "df.dta")
+```
+
+Exportar .dta stata 
+library(haven)
+```{r, eval=FALSE}
+write_dta(df, "df.dta")
+```
+
+
+
+
+##### COMPARANDO MÉTODOS PARA ABRIR CSV
+```{r, eval=FALSE}
+# Gerar uma amostra para teste
+library(data.table)
+# Demo speedup
+n=1e6
+DT = data.table( a=sample(1:1000,n,replace=TRUE),
+                 b=sample(1:1000,n,replace=TRUE),
+                 c=rnorm(n),
+                 d=sample(c("foo","bar","baz","qux","quux"),n,replace=TRUE),
+                 e=rnorm(n),
+                 f=sample(1:1000,n,replace=TRUE) )
+DT[2,b:=NA_integer_]
+DT[4,c:=NA_real_]
+DT[3,d:=NA_character_]
+DT[5,d:=""]
+DT[2,e:=+Inf]
+DT[3,e:=-Inf]
+```
+
+read.table padrão
+```{r, eval=FALSE}
+write.table(DT,"test.csv",sep=",",row.names=FALSE,quote=FALSE)
+cat("File size (MB):",round(file.info("test.csv")$size/1024^2),"\n")    
+## File size (MB): 51 
+
+system.time(DF1 <- read.csv("test.csv",stringsAsFactors=FALSE))        
+##    user  system elapsed 
+##   24.71    0.15   25.42
+# second run will be faster
+system.time(DF1 <- read.csv("test.csv",stringsAsFactors=FALSE))        
+##    user  system elapsed 
+##   17.85    0.07   17.98
+```
+
+read.table otimizado
+```{r, eval=FALSE}
+system.time(DF2 <- read.table("test.csv",header=TRUE,sep=",",quote="",  
+                          stringsAsFactors=FALSE,comment.char="",nrows=n,                   
+                          colClasses=c("integer","integer","numeric",                        
+                                       "character","numeric","integer")))
+```
+
+#### fread
+```{r, eval=FALSE}
+require(data.table)
+system.time(DT <- fread("test.csv")) 
+```
+
+sqldf
+```{r, eval=FALSE}
+#install.packages('sqldf')
+require(sqldf)
+system.time(SQLDF <- read.csv.sql("test.csv",dbname=NULL))
+```
+
+ff / ffdf
+```{r, eval=FALSE}
+#install.packages('ff')
+require(ff)
+system.time(FFDF <- read.csv.ffdf(file="test.csv",nrows=n))  
+```
+
+Resumo            
+1º fread               
+2º Optimized read.table                
+3º sqldf                
+4º ffdf                
+5º read.csv                 
+6º sqldf on SO  
+
+
+
+
+
+##### *** Função para remover acentos ***
+```{r, eval=FALSE}
+rm_accent <- function(str,pattern="all") {
+  if(!is.character(str))
+    str <- as.character(str)
+  pattern <- unique(pattern)
+  if(any(pattern=="Ç"))
+    pattern[pattern=="Ç"] <- "ç"
+  symbols <- c(
+    acute = "áéíóúÁÉÍÓÚýÝ",
+    grave = "àèìòùÀÈÌÒÙ",
+    circunflex = "âêîôûÂÊÎÔÛ",
+    tilde = "ãõÃÕñÑ",
+    umlaut = "äëïöüÄËÏÖÜÿ",
+    cedil = "çÇ"
+  )
+  nudeSymbols <- c(
+    acute = "aeiouAEIOUyY",
+    grave = "aeiouAEIOU",
+    circunflex = "aeiouAEIOU",
+    tilde = "aoAOnN",
+    umlaut = "aeiouAEIOUy",
+    cedil = "cC"
+  )
+  accentTypes <- c("´","`","^","~","¨","ç")
+  if(any(c("all","al","a","todos","t","to","tod","todo")%in%pattern)) # opcao retirar todos
+    return(chartr(paste(symbols, collapse=""), paste(nudeSymbols, collapse=""), str))
+  for(i in which(accentTypes%in%pattern))
+    str <- chartr(symbols[i],nudeSymbols[i], str)
+  return(str)
+}
+```
+
+
+
+
+
+##### Gerar indice de Diversidade SID = 1-sum(W^2)
+exemplo com a renda
+```{r, eval=FALSE}
+df$W = df$Renda / df$RendaTotal
+grp <- group_by(df, id)                
+SID <- summarise(grp, SID= 1-sum(W^2))  
+```
+
+
+
+
+##### Deflacionando 
+Primeiro passo é gerar uma variável do tipo date. Neste exemplo é utilizada a variavel Ano para gerar uma data do utlimo dia do Ano.
+Essa data será utilizada para a deflacionar.
+Ver mais em: https://fmeireles.com/blog/rstats/deflacionar-series-no-r-deflatebr/
+```{r, eval=FALSE}
+# Gerar variavel Data
+df$Data <- 0
+df$Data <- ifelse (df$Ano  == 2006, "2006-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2007, "2007-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2008, "2008-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2009, "2009-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2010, "2010-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2011, "2011-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2012, "2012-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2013, "2013-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2014, "2014-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2015, "2015-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2016, "2016-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2017, "2017-12-31", df$Data)
+table(df)
+
+# Converter a variável Data para o formato date
+install.packages('lubridate')
+library(lubridate)
+df$Data <- as.Date(df$Data)
+
+#Deflacionar com o pacote deflateBR utilizando o IPCA para o ano 2017
+install.packages('deflateBR')
+library(deflateBR)
+df$var_monetaria_def <- ipca(var$var_monetaria_def,var$Data, "12/2017")
+
+# Ver como era e como ficou
+summary(df$var_monetaria)
+summary(df$var_monetaria_def)
+
+```
+
+
+
+
+##### Gerar um banco SQLite
+Ver mais em: https://db.rstudio.com/databases/sqlite/
+```{r, eval=FALSE}
+#Instalando SQLite
+install.packages("RSQLite")
+
+# install.packages("devtools")
+devtools::install_github("rstats-db/RSQLite") 
+
+# Carregar pacote
+library(DBI)
+
+# Definir pasta de trabalo
+setwd("D:/")
+
+# Crie um banco de dados RSQLite  na memória 
+con <- dbConnect(drv=RSQLite::SQLite(), dbname="db_sqlite.db")
+
+# Importar dados de uma tabela excel por exemplo
+library(readxl)
+TB_EXCEL <- read_excel("D:/TB_EXCEL.xlsx")
+
+# Adicionar a tabela ao db_sqlite
+dbWriteTable(con, "TB_EXCEL",  TB_EXCEL)
+
+# Ver tabelas de um SQLite
+dbListTables(con)
+
+# Ver colunas de uma tabela no SQLite
+dbListFields(con, "TB_EXCEL")
+
+# Fazer uma query no SQLite
+res <- dbSendQuery(con, "SELECT * FROM BANCO_SQL")
+dbFetch(res)
+
+# Limpar resultados de um consulta
+dbClearResult(res)
+
+# Ddesconectar da base
+dbDisconnect(con)
+
+# Carregar a tabela no R
+TB_EXCEL <- dbReadTable(con, "TB_EXCEL")
+```
+
+
+
+
+
+
+
+
