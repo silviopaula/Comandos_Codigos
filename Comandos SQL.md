@@ -9,8 +9,6 @@ Essas notas são baseadas no Curso de SQL Completo oferecido gratuitamente com c
 
 ## **DICIONÁRIO PARA UM DBA SQL Jr.**
 
-Fonte: [Dicionário para um DBA SQL Jr (dbaonboarding.com.br)](https://www.dbaonboarding.com.br/post/dicionario-para-um-dba-sql-jr)
-
 Aqui são descritos alguns termos e traduções dos comandos mais utilizados.
 
 **1) Instância ou Servidor:** É a *Engine*, ou seja, o ambiente que armazena os bancos de dados de aplicações, quando você instala o SQL Server, é a Instância que é instalada e configurada. Em alguns casos pode ser chamada de servidor.
@@ -53,6 +51,7 @@ Aqui são descritos alguns termos e traduções dos comandos mais utilizados.
 
 **20) Scriptar:** Gerar o script de uma tabela, view, procedure, trigger.... **"Termo abrasileirado"**
 
+Fonte: [Dicionário para um DBA SQL Jr (dbaonboarding.com.br)](https://www.dbaonboarding.com.br/post/dicionario-para-um-dba-sql-jr)
 
 ### Glossário  SQL:
 
