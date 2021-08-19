@@ -26,7 +26,7 @@ Atalho para Limpar console ---- (ctrl + L)
 ### **COMANDOS**
 	 
 Instalar pacotes
-```{r, eval=FALSE}
+```
 #install.packages('package')
 install.package(c('package1','package2','package3'))
 ```
