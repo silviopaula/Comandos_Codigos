@@ -1,7 +1,7 @@
 # Comandos R
 ![enter image description here](https://miro.medium.com/max/1400/1*cuOlMPTUQ3cTY7ldb-usKw.png)
 
-**Autores:**          
+**Autores:**
 Silvio da Rosa Paula            
 Dianifer Leal Borges          
 
@@ -19,7 +19,7 @@ Os operadores de comparação sempre retornam um valor lógico TRUE ou FALSE.
 | Operador |   Significado    |
 |----------|------------------|
 |     ==   | igual a          |
-|     !=   | diferente de	  |
+|     !=   | diferente de	    |
 |     >    | maior que        |
 |     <    | menor que        |
 |     >=   | maior ou igual a |
@@ -65,6 +65,8 @@ Também conhecidos como operadores booleanos, permitem trabalhar com múltiplas 
 |Cria um chunk no R Markdown    | Ctrl + Alt + I            |
 |Restart Rstudio                | Crtl + Shift + F10        |
 |Visualizar todos os atalhos    | Alt  + Shift + K          |
+|Mais Zoom                      | Crtl  +                   |
+|Menos Zoom                     | Crtl  -                   |
 
 ## Instalar e Carregar Pacotes
 
@@ -516,9 +518,9 @@ Extrair apenas o dia de uma coluna do tipo date
 df$Ano <- format(as.Date(df$Data, format="%d/%m/%Y"),"%d")
 ```
 
-Dividir coluna em várias com `splitstackshape`
-``install.packages(‘splitstackshape’) ``
-``library(splitstackshape)``
+Dividir coluna em várias com `splitstackshape`    
+``install.packages(‘splitstackshape’) ``  
+``library(splitstackshape)``    
 ```
 df<- cSplit(df, "var", "/") # ex: absde/12/asdf/2010
 ```
@@ -552,7 +554,6 @@ df <- df[!is.na(df$Var1),]
 
 Imputar dados faltante com interpolação
 
-> Obs: não estamos imputados os dados agrupados por um id!
 ```
 df <- df %>%  group_by(id) %>%  mutate_at(vars(var1, var2, var3, IMPOSTOS_2), 
                                 list(inter = ~na.approx(., na.rm = FALSE)))
@@ -605,9 +606,9 @@ Substituir de missings de uma coluna por valores de outra coluna
 df$A <- ifelse(is.na(df$A), df$B, df$A)
 ```
 
-Atribuindo zero a todos os missings com `imputeTS`
-``install.packages('imputeTS')``
-``library(imputeTS)``
+Atribuindo zero a todos os missings com `imputeTS`     
+``install.packages('imputeTS')``    
+``library(imputeTS)``    
 ```
 df <- na_replace(df, 0)
 ```
@@ -989,12 +990,12 @@ df <- df %>% mutate(D_var = ifelse(var1 %in% c(1,10,28), 1,
                             ifelse(var2 %in% c(2,5,23:26), 1,0)))
 ```
 
-Gera dummies com `fastDummies` 
-``install.packages(‘fastDummies’) ``
-``library(fastDummies)``
+Gera dummies com `fastDummies`              
+``install.packages(‘fastDummies’) ``              
+``library(fastDummies)``                
 > Nota: com fastaDummies basta selecionar uma variável categórica que ele gera as dummies.
 ```
-df <- dummy_cols(df, var='ran')
+df <- dummy_cols(df, select_columns =c("var"))
 ```
 
 Gerar dummies  com `data.table` e `mltools`
