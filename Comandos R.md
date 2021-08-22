@@ -11,7 +11,7 @@ Dianifer Leal Borges
 |------------|-----------|
 |     df     | dataframe |
 |     TB     | tabela    |
-|  Var  | Coluna    |
+|    Var     | Coluna    |
 
 ## Operadores de Comparação:
 Os operadores de comparação sempre retornam um valor lógico TRUE ou FALSE.
@@ -24,6 +24,7 @@ Os operadores de comparação sempre retornam um valor lógico TRUE ou FALSE.
 |     <    | menor que        |
 |     >=   | maior ou igual a |
 |     <=   | menor ou igual a |
+
 **Fonte** [Bóson Treinamentos em Ciência e Tecnologia](http://www.bosontreinamentos.com.br/programacao-em-r/operadores-logicos-e-operadores-de-comparacao-em-r/)
 
 ##  Operadores Lógicos:
@@ -37,6 +38,7 @@ Também conhecidos como operadores booleanos, permitem trabalhar com múltiplas 
 |    ll    | OR lógico      |Versão não-vetorizada. Compara apenas o primeiro valor de cada vetor, retornando um valor lógico.
 |    !     | NOT lógico     |Negação lógica. Retorna um valor lógico único ou um vetor de TRUE / FALSE.
 |    xor   | XOR            |Ou Exclusivo. Retorna valor lógico TRUE se ambos os valores de entrada forem diferentes entre si, e retorna FALSE se os valores forem iguais.
+
 **Fonte** [Bóson Treinamentos em Ciência e Tecnologia](http://www.bosontreinamentos.com.br/programacao-em-r/operadores-logicos-e-operadores-de-comparacao-em-r/)
 
 ##  Operadores  Aritméticos
@@ -50,8 +52,7 @@ Também conhecidos como operadores booleanos, permitem trabalhar com múltiplas 
 |    :     | sequência        |
 |     ^    |  exponencial     |
 |    %%    | módulo           |
-|        |  |
-|        |  |
+
 
 ## Atalhos
 
