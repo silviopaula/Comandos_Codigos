@@ -1163,6 +1163,37 @@ library(egg)
 grid.arrange(fig1, fig2, fig3, fig4, ncol=2, nrow=2)
 ```
 
+## Gerar estações do ano a partir de uma variável do tipo date
+```
+# Criar função para gerar as estações do ano no hemisfério sul
+toSeason <- function(dat) {
+     stopifnot(class(dat) == "Date")
+     scalarCheck <- function(dat) {
+         m <- as.POSIXlt(dat)$mon + 1        
+         d <- as.POSIXlt(dat)$mday           
+         if ((m == 3 & d >= 23) | (m == 4) | (m == 5) | (m == 6 & d < 21)) {            # outono
+             r <- 1
+         } else if ((m == 6 & d >= 21) | (m == 7) | (m == 8) | (m == 9 & d < 23)) {     # inverno
+             r <- 2
+         } else if ((m == 9 & d >= 23) | (m == 10) | (m == 11) | (m == 12 & d < 21)) {  # Primavera
+             r <- 3
+         } else {
+             r <- 4                                                                     # Verão
+         }
+         r
+     }
+     res <- sapply(dat, scalarCheck)
+     res <- ordered(res, labels=c("Outono", "Inverno", "Primavera", "Verão"))
+     invisible(res)
+}
+
+# Aplicar função
+df <- data.frame(Date=df, Estacoes=toSeason(Base_dia$var_date))
+
+# Renomear removendo o prefixo .Date
+df <- df %>% rename_all(~stringr::str_replace(.,"Date.",""))
+```
+
 ## Importar e Exportar Dados
 
 > Nota: No Rstudio é possível importar bases de dados via menu.
