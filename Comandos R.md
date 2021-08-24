@@ -1124,9 +1124,9 @@ df$Idade_grp <- ifelse((df$Idade>=71) , 'idade_71_mais',df$Idade_grp)
 df <- dummy_cols(df, select_columns = "Idade_grp")
 ```
 
-Balanceando classes em modelos de Machine Learning
-``install.packages(“DMwR”) ``
-``library(DMwR``
+Balanceando classes em modelos de Machine Learning               
+``install.packages(“DMwR”) ``       
+``library(DMwR``        
 
 ```
 set.seed(9560)
