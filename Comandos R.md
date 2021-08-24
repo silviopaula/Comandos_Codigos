@@ -1188,7 +1188,7 @@ toSeason <- function(dat) {
 }
 
 # Aplicar função
-df <- data.frame(Date=df, Estacoes=toSeason(Base_dia$var_date))
+df <- data.frame(Date=df, Estacoes=toSeason(df$var_date))
 
 # Renomear removendo o prefixo .Date
 df <- df %>% rename_all(~stringr::str_replace(.,"Date.",""))
