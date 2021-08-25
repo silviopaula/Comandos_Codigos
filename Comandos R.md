@@ -79,15 +79,11 @@ install.package(c('package1','package2','package3'))
 
 Instalar uma versão mais antiga de um pacote
 ```
-packageurl <- "http://cran.r-project.org/src/contrib/Archive/ggplot2/ggplot2_0.9.1.tar.gz"
-install.packages(packageurl, repos=NULL, type="source")
-
-# ou
-require(remotes)
-install_version("package1", version = "0.0.1", repos = "http://cran.us.r-project.org")
-
-# Instalar mais de um pacote 
-install.versions(c('package1', 'package2'), c('0.0.1', '1.0.0'))
+Exemplo 
+install.packages("rgl")
+library(rgl)
+fixest <- "https://cran.r-project.org/src/contrib/Archive/fixest/fixest_0.8.4.tar.gz"
+install.packages(fixest, repos=NULL, type="source")
 ```
 
 Atualizar pacotes
