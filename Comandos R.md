@@ -718,10 +718,10 @@ summary(df)
 summary(df$var1, df$var2)
 ```
 
-Exportar descritivas com `stargazer`
+Exportar descritivas com `stargazer`             
 
-   ``install.packages(“stargazer”)``
-   `` library(stargazer)``
+   ``install.packages(“stargazer”)``                  
+   `` library(stargazer)``                   
 
 ```
 stargazer(df, type = "text", out = "Descritivas.txt")
@@ -852,9 +852,9 @@ phtest(random, fixed)
 ## Strings
 
 
-Substituir caracteres com a função
-``install.packages('stringr')``
-``library(stringr)``
+Substituir caracteres com a função                    
+``install.packages('stringr')``               
+``library(stringr)``                     
 ```
 df$var <- str_replace(df$var, "-", "")
 ```
@@ -995,9 +995,9 @@ df <- df %>% mutate(D_var = ifelse(var1 %in% c(1,10,28), 1,
                             ifelse(var2 %in% c(2,5,23:26), 1,0)))
 ```
 
-Gera dummies com `fastDummies`              
-``install.packages(‘fastDummies’) ``              
-``library(fastDummies)``                
+Gera dummies com `fastDummies`                         
+``install.packages(‘fastDummies’) ``                                   
+``library(fastDummies)``                           
 > Nota: com fastaDummies basta selecionar uma variável categórica que ele gera as dummies.
 ```
 df <- dummy_cols(df, select_columns =c("var"))
@@ -1232,9 +1232,9 @@ Importar .csv  com read.table padrão
 system.time(DF1 <- read.csv("test.csv"))        
 ```
 
-Importar .csv com  `sqldf`
-``install.packages('sqldf')``
-``require(sqldf)``
+Importar .csv com  `sqldf`                          
+``install.packages('sqldf')``               
+``require(sqldf)``                    
 ```
 SQL_df <- read.csv.sql("test.csv",dbname=NULL))
 ```
@@ -1326,14 +1326,14 @@ Baixe o SQLiteBrowser para conferir após o procedimento:
 [DB Browser for SQLite (sqlitebrowser.org)](https://sqlitebrowser.org/)
 
 ```
-#Instalando SQLite
-install.packages("RSQLite")
+#Instalando SQLite            
+install.packages("RSQLite")               
 
-# install.packages("devtools")
-devtools::install_github("rstats-db/RSQLite") 
+# install.packages("devtools")                     
+devtools::install_github("rstats-db/RSQLite")                
 
-# Carregar pacote
-library(DBI)
+# Carregar pacote            
+library(DBI)            
 
 # Definir pasta de trabalo (onde será salvo o arquivo.db)
 setwd("D:/")
