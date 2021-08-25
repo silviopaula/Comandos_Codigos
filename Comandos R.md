@@ -458,15 +458,20 @@ mydf %>% mutate_if(is.numeric, ~round(., 2))
 Agregar  dados por id com `dplyr`
 > Obs: as colunas do agrupamento devem ser fatores
 ```
-df_novo <- df %>% 
-           group_by(as.factor(id)) %>%  # 
-           summarise(var1 = mean(var1),
-                     var2 = mean(var2))
+df_novo <- df %>% group_by(as.factor(id, Ano)) %>%  
+           summarise(Max_var   = max(var),
+                     Media_var = mean(var),
+                     Total_var = sum(var),
+                      Min_var = min(var))
 ```
 
 Agregar  os dados por id e Ano com `data.table`
 ```
-df <- setDT(df)[, lapply(.SD, sum), by = .(id, ANO)]
+df_novo <- setDT(df)[ , .(Max_var   = max(var),
+                          Media_var  = mean(var),
+                          Min_var   = min(var),
+                          Total_var = sum(var)), 
+                          by =c("id", "Ano")]
 ```
 
 Agregar  os dados com a soma
