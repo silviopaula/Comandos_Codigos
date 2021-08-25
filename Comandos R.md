@@ -80,10 +80,7 @@ install.package(c('package1','package2','package3'))
 Instalar uma versão mais antiga de um pacote
 ```
 Exemplo 
-install.packages("rgl")
-library(rgl)
-fixest <- "https://cran.r-project.org/src/contrib/Archive/fixest/fixest_0.8.4.tar.gz"
-install.packages(fixest, repos=NULL, type="source")
+install.packages("fixest", version='0.8.4')
 ```
 
 Atualizar pacotes
