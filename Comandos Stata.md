@@ -489,7 +489,7 @@ Agora você pode entender o significado da frase que descreve o comando joinby n
     (count) Qtd_faltas = D_faltas      ///
     (sum) Total_inscritos = Inscritos  ///
     (percent) Per_homens = D_homens    ///
-    by(id Ano)
+    ,by(id Ano)
 
 ## Trabalhando com painel de dados
 Quando desejamos trabalhar com painel de dados, devemos declara para o stata nossa intenção
