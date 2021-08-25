@@ -337,9 +337,13 @@ Renomear colunas de um data.frame
 names(df)[names(df) == 'nome_antigo'] <- 'nome_novo'
 ```
 
-Renomear colunas adicionando um prefixo
+Renomear colunas adicionando um prefixo e sufixo
 ```
+# Prefixo
 colnames(df) <- paste("ln", colnames(df), sep = "_")
+
+# Sufixo para as 10 primeiras colunas
+colnames(df)[1:10] <- paste(colnames(df)[1:10], "texto", sep = "_")
 ```
 
 Dropar (deletar) colunas do dataframe
