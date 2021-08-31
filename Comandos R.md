@@ -1028,63 +1028,63 @@ df <- dummy_cols(df, select_columns = "Idade_grp")
 
 ## Tarefas Prontas
 
-Desabilitar notação científica
+**Desabilitar notação científica**
 ```
 options(scipen = 999)
 ```
 
-Apagar um arquivo salvo em uma pasta no computador
+**Apagar um arquivo salvo em uma pasta no computador**
 ```
 file.remove("D:/data.R")
 file.remove("D:/data.RDS")
 file.remove("D:/data.csv")
 ```
 
-Remover observações duplicadas
+**Remover observações duplicadas**
 ```
 # Ver quantas observações temo sem duplicados
 df$var %>% unique() %>% length()  
 
-# Remover duplicados.       
+**Remover duplicados**       
 df2 <- df %>% filter(!duplicated(var))   
 ```
 
-Remover duplicados baseado em duas variáveis
+**Remover duplicados baseado em duas variáveis**
 ```
 df_novo <- df[!duplicated(df[c('var1', 'var2')]),] 
 #ou
 df2 <- unique(df, by = "var1")
 ```
 
-Obter o valor mínimo de duas colunas
+**Obter o valor mínimo de duas colunas**
 ```
 df <- transform(df, new_Var = pmin(var1, var2))
 ```
 
-Padronização de  escala das colunas do df
+**Padronização de  escala das colunas do df**
 ```
 df_pad = scale(df[,1:4]) 
 ```
 
-Normalização de dados (deixar em uma escala entr 0 e 1)
+**Normalização de dados (deixar em uma escala entr 0 e 1)**               
 ``install.packages("scales")``
 ``library(scales)``
 ```
 df$var_Norm <- rescale(df$var) 
 ```
 
-Gerar um lag e lead de uma variável observando os grupos 
+**Gerar um lag e lead de uma variável observando os grupos** 
 ```
 df <-  df %>% group_by(id) %>% mutate(L1_var = dplyr::lag(var, n = 1, default = NA))
 df <-  df %>% group_by(id) %>% mutate(F1_var = dplyr::lead(var, n = 1, default = NA))
 ```
 
-Gerar (id) identificador a partir de uma ou mais colunas
+**Gerar (id) identificador a partir de uma ou mais colunas**
 ```
 df <- df %>% group_by(var1,var2) %>% mutate(id = cur_group_id())
 ```
 
-Obter código IBGE das UF  a partir do código de municípios
+**Obter código IBGE das UF  a partir do código de municípios**
 ```
 Se o código ibge do municipios for de 7 dígitos 
 df$Cod_UF <- substr(df$id7, 1, (nchar(df$id7)-5))
@@ -1093,7 +1093,7 @@ Se o código ibge do municipios for de 6 dígitos
 df$Cod_UF <- substr(df$id7, 1, (nchar(df$id7)-4))
 ```
 
-Trabalhando com CPF
+**Trabalhando com CPF**    
 Nota:  os CPF tem zeros nos primeiros caracteres (zeros a esquerda), se importarmos os dados  como numéricos os zeros serão removidos, portanto uma boa pratica é trabalhar com eles em string
 
 ```
@@ -1107,12 +1107,12 @@ Caso o CPF tenha sido convertido em numérico é possível adicionar os zeros a 
 df$CPF <- str_pad(df$CPF, width = 11, pad = "0", side = "left")
 ```
 
-Retirando ponto e traço de CPF
+Retirando ponto e traço de CPF            
 ```
 df$CPF <- gsub("\\W","",df$CPF)
 ```
 
-Gerar classes etárias com `fastDummies`
+**Gerar classes etárias com `fastDummies`**         
 ```
 df$Idade_grp <- df$Idade
 df$Idade_grp <- ifelse((df$Idade>=1  & df$Idade<=10) , 'Idade_01_20',df$Idade_grp)
@@ -1126,9 +1126,9 @@ df$Idade_grp <- ifelse((df$Idade>=71) , 'idade_71_mais',df$Idade_grp)
 df <- dummy_cols(df, select_columns = "Idade_grp")
 ```
 
-Balanceando classes em modelos de Machine Learning               
-``install.packages(“DMwR”) ``       
-``library(DMwR``        
+**Balanceando classes em modelos de Machine Learning**                            
+``install.packages(“DMwR”) ``                 
+``library(DMwR``               
 
 ```
 set.seed(9560)
@@ -1137,7 +1137,7 @@ table(df_treino_balanceado$var_desbalanceada)
 prob.table(table(df_treino_balanceado$var_desbalanceada)
 ```
 
-Função para remover acentos
+**Remover acentos**
 Fonte: [Retirar acentos de um Data Frame com a Linguagem R](https://www.thomazrossito.com.br/retirar-acentos-de-um-data-frame-com-a-linguagem-r/)
 ```
 rm_accent <- function(str,pattern="all") {
@@ -1174,7 +1174,7 @@ rm_accent <- function(str,pattern="all") {
 df_teste_sem_acento <- rm_accent(df_teste$Assunto)
 ```
 
-Deflacionar variáveis monetárias
+**Deflacionar variáveis monetárias**                                 
 Fonte: [https://fmeireles.com/blog/rstats/deflacionar-series-no-r-deflatebr/](https://fmeireles.com/blog/rstats/deflacionar-series-no-r-deflatebr/)
 
 > Nota: Primeiro passo é gerar uma variável do tipo date. Neste exemplo  é utilizada a variável Ano para gerar uma data do último dia do Ano.  Essa data será utilizada para a deflacionar.
@@ -1208,14 +1208,14 @@ df$var_monetaria_def <- ipca(var$var_monetaria_def,var$Data, "12/2017")
 summary(df$var_monetaria)
 summary(df$var_monetaria_def)
 ```
-## Plotar Gráficos Lado a Lado
+**Plotar Gráficos Lado a Lado**
 
 Ver mais detalhes de gráficos para R em:
  [https://www.r-graph-gallery.com/](https://www.r-graph-gallery.com/)
 Dica: para executar chunk no Rmarkdown utilize o atalho Ctrl+Shift+Enter
 
 ```
-# Gráfigco lado a lado com plot
+# Gráfico lado a lado com plot
 split.screen(figs=c(2,2))
 screen(1)
 comandográfico(plot)
@@ -1230,13 +1230,13 @@ close.screen(all=TRUE)
 ```
 
 ```
-# Gráfigco lado a lado ggplot
+# Gráfico lado a lado ggplot
 install.packages("egg")
 library(egg)
 grid.arrange(fig1, fig2, fig3, fig4, ncol=2, nrow=2)
 ```
 
-## Gerar estações do ano a partir de uma variável do tipo date
+**Gerar estações do ano a partir de uma variável do tipo date**
 ```
 # Criar função para gerar as estações do ano no hemisfério sul
 toSeason <- function(dat) {
@@ -1345,7 +1345,7 @@ for (i in files){
 }
 ```
 
-Gerar um banco de dados SQL com SQLite
+## Gerar um banco de dados SQL com SQLite
 
 Fonte:  [https://db.rstudio.com/databases/sqlite/](https://db.rstudio.com/databases/sqlite/)
 
