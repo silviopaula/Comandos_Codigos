@@ -1137,6 +1137,77 @@ table(df_treino_balanceado$var_desbalanceada)
 prob.table(table(df_treino_balanceado$var_desbalanceada)
 ```
 
+Função para remover acentos
+Fonte: [Retirar acentos de um Data Frame com a Linguagem R](https://www.thomazrossito.com.br/retirar-acentos-de-um-data-frame-com-a-linguagem-r/)
+```
+rm_accent <- function(str,pattern="all") {
+  if(!is.character(str))
+    str <- as.character(str)
+  pattern <- unique(pattern)
+  if(any(pattern=="Ç"))
+    pattern[pattern=="Ç"] <- "ç"
+  symbols <- c(
+    acute = "áéíóúÁÉÍÓÚýÝ",
+    grave = "àèìòùÀÈÌÒÙ",
+    circunflex = "âêîôûÂÊÎÔÛ",
+    tilde = "ãõÃÕñÑ",
+    umlaut = "äëïöüÄËÏÖÜÿ",
+    cedil = "çÇ"
+  )
+  nudeSymbols <- c(
+    acute = "aeiouAEIOUyY",
+    grave = "aeiouAEIOU",
+    circunflex = "aeiouAEIOU",
+    tilde = "aoAOnN",
+    umlaut = "aeiouAEIOUy",
+    cedil = "cC"
+  )
+  accentTypes <- c("´","`","^","~","¨","ç")
+  if(any(c("all","al","a","todos","t","to","tod","todo")%in%pattern)) # opcao retirar todos
+    return(chartr(paste(symbols, collapse=""), paste(nudeSymbols, collapse=""), str))
+  for(i in which(accentTypes%in%pattern))
+    str <- chartr(symbols[i],nudeSymbols[i], str)
+  return(str)
+}
+
+# Aplicando a função
+df_teste_sem_acento <- rm_accent(df_teste$Assunto)
+```
+
+Deflacionar variáveis monetárias
+Fonte: [https://fmeireles.com/blog/rstats/deflacionar-series-no-r-deflatebr/](https://fmeireles.com/blog/rstats/deflacionar-series-no-r-deflatebr/)
+
+> Nota: Primeiro passo é gerar uma variável do tipo date. Neste exemplo  é utilizada a variável Ano para gerar uma data do último dia do Ano.  Essa data será utilizada para a deflacionar.
+
+```
+# Gerar variável Data
+df$Data <- 0
+df$Data <- ifelse (df$Ano  == 2006, "2006-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2007, "2007-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2008, "2008-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2009, "2009-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2010, "2010-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2011, "2011-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2012, "2012-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2013, "2013-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2014, "2014-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2015, "2015-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2016, "2016-12-31", df$Data)
+df$Data <- ifelse (df$Ano  == 2017, "2017-12-31", df$Data)
+table(df)
+
+# Converter a variável Data para o formato date com lubridate
+df$Data <- as.Date(df$Data)
+
+# Deflacionar com o pacote deflateBR utilizando o IPCA para o ano 2017
+install.packages('deflateBR')
+library(deflateBR)
+df$var_monetaria_def <- ipca(var$var_monetaria_def,var$Data, "12/2017")
+
+# Ver como era e como ficou
+summary(df$var_monetaria)
+summary(df$var_monetaria_def)
+```
 ## Plotar Gráficos Lado a Lado
 
 Ver mais detalhes de gráficos para R em:
@@ -1244,76 +1315,34 @@ Importar .csv com  `ff / ffdf`
 FF_df <- read.csv.ffdf(file="test.csv",nrows=n))  
 ```
 
-Função para remover acentos
-Fonte: [Retirar acentos de um Data Frame com a Linguagem R](https://www.thomazrossito.com.br/retirar-acentos-de-um-data-frame-com-a-linguagem-r/)
+Importar varios arquivos .csv fazer append e gerar uma coluna com nome dos arquivos
+> Nota: é necessário que os arquivos tenham o mesmo nome nas colunas
 ```
-rm_accent <- function(str,pattern="all") {
-  if(!is.character(str))
-    str <- as.character(str)
-  pattern <- unique(pattern)
-  if(any(pattern=="Ç"))
-    pattern[pattern=="Ç"] <- "ç"
-  symbols <- c(
-    acute = "áéíóúÁÉÍÓÚýÝ",
-    grave = "àèìòùÀÈÌÒÙ",
-    circunflex = "âêîôûÂÊÎÔÛ",
-    tilde = "ãõÃÕñÑ",
-    umlaut = "äëïöüÄËÏÖÜÿ",
-    cedil = "çÇ"
-  )
-  nudeSymbols <- c(
-    acute = "aeiouAEIOUyY",
-    grave = "aeiouAEIOU",
-    circunflex = "aeiouAEIOU",
-    tilde = "aoAOnN",
-    umlaut = "aeiouAEIOUy",
-    cedil = "cC"
-  )
-  accentTypes <- c("´","`","^","~","¨","ç")
-  if(any(c("all","al","a","todos","t","to","tod","todo")%in%pattern)) # opcao retirar todos
-    return(chartr(paste(symbols, collapse=""), paste(nudeSymbols, collapse=""), str))
-  for(i in which(accentTypes%in%pattern))
-    str <- chartr(symbols[i],nudeSymbols[i], str)
-  return(str)
+file_names <- list.files(path = "D:/ARQUIVOS", pattern = "*.csv", full.names = T)
+file_list <- lapply(file_names, function(x){
+                    ret <- read_csv2(x, skip = 0,locale = default_locale(),trim_ws = TRUE, col_select = NULL,)
+                    ret$origin <- x
+                    return(ret)})
+df <- rbindlist(file_list)
+```
+
+Importar varios arquivos .csv fazer append
+> Nota: é necessário que os arquivos tenham o mesmo nome nas colunas
+```
+file_names <- ldply(list.files(path = "D:/ARQUIVOS", pattern = "*.csv", full.names = T), 
+                           read.csv, header=TRUE, sep = ";", skip = 0, dec = ",", fill = TRUE)
+```
+
+Importar varios arquivos .csv e usar o endereço e nome do arquivo como nome da tabela 
+> Nota: é necessário que os arquivos tenham o mesmo nome nas colunas
+```
+files<- list.files(path = "ARQUIVOS", pattern="*.csv", full.names=T)
+for (i in files){
+    iname=sub("*.csv","",i)
+    f=read.csv(i, header=TRUE, sep = ";", skip = 0, dec = ",", fill = TRUE)
+    rownames(f)=paste(rownames(f),iname,sep = "_")
+    assign(paste0(iname),f)
 }
-
-# Aplicando a função
-df_teste_sem_acento <- rm_accent(df_teste$Assunto)
-```
-
-Deflacionar variáveis monetárias
-Fonte: [https://fmeireles.com/blog/rstats/deflacionar-series-no-r-deflatebr/](https://fmeireles.com/blog/rstats/deflacionar-series-no-r-deflatebr/)
-
-> Nota: Primeiro passo é gerar uma variável do tipo date. Neste exemplo  é utilizada a variável Ano para gerar uma data do último dia do Ano.  Essa data será utilizada para a deflacionar.
-
-```
-# Gerar variável Data
-df$Data <- 0
-df$Data <- ifelse (df$Ano  == 2006, "2006-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2007, "2007-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2008, "2008-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2009, "2009-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2010, "2010-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2011, "2011-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2012, "2012-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2013, "2013-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2014, "2014-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2015, "2015-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2016, "2016-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2017, "2017-12-31", df$Data)
-table(df)
-
-# Converter a variável Data para o formato date com lubridate
-df$Data <- as.Date(df$Data)
-
-# Deflacionar com o pacote deflateBR utilizando o IPCA para o ano 2017
-install.packages('deflateBR')
-library(deflateBR)
-df$var_monetaria_def <- ipca(var$var_monetaria_def,var$Data, "12/2017")
-
-# Ver como era e como ficou
-summary(df$var_monetaria)
-summary(df$var_monetaria_def)
 ```
 
 Gerar um banco de dados SQL com SQLite
