@@ -1202,7 +1202,7 @@ df$Data <- as.Date(df$Data)
 # Deflacionar com o pacote deflateBR utilizando o IPCA para o ano 2017
 install.packages('deflateBR')
 library(deflateBR)
-df$var_monetaria_def <- ipca(var$var_monetaria_def,var$Data, "12/2017")
+df$var_monetaria_def <- ipca(df$var_monetaria_def, df$Data, "12/2017")
 
 # Ver como era e como ficou
 summary(df$var_monetaria)
