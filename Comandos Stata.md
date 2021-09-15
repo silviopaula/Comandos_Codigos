@@ -557,6 +557,10 @@ Veja mais detalhes da AED
 
 ## Tarefas Prontas
 
+### *Gerar id (identificador)
+
+    egen id = group(var)
+    
 ### *Gerar uma variável aleatória
 
     set seed 123
