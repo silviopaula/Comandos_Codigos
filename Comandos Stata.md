@@ -368,7 +368,7 @@ iv- Excluir: podemos excluir aqueles indivíduos que não temos nenhuma observa�
 
      foreach var  in var1 var2 var3{ 
        egen mean_var = mean(`var'), by(id) 
-       replace`var'=median_var if `var'==.
+       replace`var'=mean_var if `var'==.
        drop mean_var 
     }
 
