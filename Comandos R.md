@@ -937,16 +937,16 @@ df$var <- str_left(df$var, 4)    # Deixar os primeiros 4 digitos
 df$var <- str_mid(x, 6, 9)       # Deixar os digitos 6 ao 9
 ```
 
-Dividir coluna em várias com `splitstackshape`
-``install.packages(‘splitstackshape’) ``
-``library(splitstackshape)``
+Dividir coluna em várias com `splitstackshape`                       
+``install.packages(‘splitstackshape’) ``                           
+``library(splitstackshape)``                             
 ```
 df<- cSplit(df, "var", "/") # ex: absde/12/asdf/2010
 ```
 
 Comparar duas strings e gerar probabilidades baseado na semelhança               
-install.packages('RecordLinkage')             
-library(RecordLinkage)               
+``install.packages('RecordLinkage')``                          
+``library(RecordLinkage)``                            
 ```
 df$Prob_1 <- levenshteinSim(df$var_1, df$var_2)
 df$Prob_2 <- jarowinkler(df$var_1, df$var_2)
