@@ -944,6 +944,15 @@ Dividir coluna em várias com `splitstackshape`
 df<- cSplit(df, "var", "/") # ex: absde/12/asdf/2010
 ```
 
+Comparar duas strings e gerar probabilidades baseado na semelhança               
+install.packages('RecordLinkage')             
+library(RecordLinkage)               
+```
+df$Prob_1 <- levenshteinSim(df$var_1, df$var_2)
+df$Prob_2 <- jarowinkler(df$var_1, df$var_2)
+df$Prob_3 <- jarowinkler(df$var_1, df$var_2)
+```
+
 ## Merge, Join, Append
 
 Ver mais informações em: 
@@ -1136,7 +1145,6 @@ df_treino_balanceado <- SMOTE(var_desbalanceada ~., data=df_treino)
 table(df_treino_balanceado$var_desbalanceada) 
 prob.table(table(df_treino_balanceado$var_desbalanceada)
 ```
-
 **Remover acentos**
 Fonte: [Retirar acentos de um Data Frame com a Linguagem R](https://www.thomazrossito.com.br/retirar-acentos-de-um-data-frame-com-a-linguagem-r/)
 ```
