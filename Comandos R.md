@@ -806,7 +806,9 @@ correlation.matrix <- cor(attitude[,c("var1","var2","var3")])
 stargazer(correlation.matrix, title="Matriz de Correlação", type = "html")
 ```
 
-Gerar correlalograma
+Gerar correlalograma                     
+``install.packages(c("DescTools", "corrplot"))``                          
+``library(c("DescTools", "corrplot"))``                        
 ```
 corelacao <- DescTools::PairApply(df, DescTools::CramerV)
 corrplot::corrplot(corelacao)
