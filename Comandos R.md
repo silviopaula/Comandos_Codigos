@@ -540,6 +540,18 @@ Missings <- as.matrix(colSums(is.na(Covaridas_mun)))
 print(Missings)
 ```
 
+Ver total de células vazias 
+```
+# Ver células vazias de uma coluna string
+vazias <- length(which(df$var == ''))
+vazias
+
+# Ver células vazias de todas colunas
+vazias <- apply(df, 2, function(x) length(which(x == '')))
+vazias 
+```
+
+
 Remover missings e deixar o dataframe completo sem missings com `dplyr`
 ```
 df <- df[complete.cases(df),]
@@ -678,6 +690,13 @@ aes(x = var1) +
  theme_minimal()
 ```
 
+Histograma de todas as colunas
+```
+for(i in c(2,4:ncol(df))){
+  hist(df[,i], main = paste('Histogram of', colnames(df)[i]), xlab = colnames(df)[i])
+}
+```
+
 Boxplot com `ggplot2`
 ```
 ggplot(dat) + 
@@ -785,6 +804,12 @@ Exportar matriz de correlação com `stargazer`
 ```
 correlation.matrix <- cor(attitude[,c("var1","var2","var3")]) 
 stargazer(correlation.matrix, title="Matriz de Correlação", type = "html")
+```
+
+Gerar correlalograma
+```
+corelacao <- DescTools::PairApply(df, DescTools::CramerV)
+corrplot::corrplot(corelacao)
 ```
 
 Estatísticas descritivas por grupos
