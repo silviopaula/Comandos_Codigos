@@ -221,6 +221,17 @@ Listar objetos no ambiente de trabalho
 ls(df)
 ```
 
+Plotar rapidamente as variáveis númericas                  
+``library(funModeling)``             
+
+```
+# Plotar todas variáveis númericas do df
+plot_num(df)
+
+# Plotar todas variáveis categóricas do df
+plot_cat(df)
+```
+
 ## Manipulando Dataframes
 
 Ordenando alfabeticamente as colunas de um dataframe
@@ -496,6 +507,14 @@ Remover primeira e última linha
 df <- df[-1, ]
 ```
 
+Gerar categorias a partir de uma variável númericas              
+``library(funModeling)``            
+
+```
+# Gerar 5 categorias
+df$var_5cat = equal_freq(df$var, n_bins = 5)
+```
+
 
 ##  Variáveis  do Tipo Data (Date)
 
@@ -538,6 +557,12 @@ colSums(is.na(df))
 # Criar uma matrix com o total de missings (fica melhor para visualizar)
 Missings <- as.matrix(colSums(is.na(Covaridas_mun)))
 print(Missings)
+```
+
+Fazer resumo de missings e zeros                                                            
+``library(funModeling)``                        
+```
+df_status(df)
 ```
 
 Ver total de células vazias 
@@ -722,12 +747,56 @@ Gráfico de densidade
 densityplot (~ df$var1 | df$tratamento)
 ```
 
+Identificar outliers                                  
+``library(funModeling)``      
+Ver mais em: http://pablo14.github.io/funModeling/articles/funModeling_quickstart.html   
+    
+Método **HAMPEL**                         
+Detalhes:                     
+O limite inferior é median_value - 3*mad_value. Todos os valores abaixo são considerados outliers.            
+O limite superior é median_value + 3*mad_value. Todos os valores acima são considerados outliers.          
+O parâmetro chamado k_mad_value e seu valor padrão é 3. O valor k_mad_value pode ser modificado.            
+Quanto mais alto o valor k_mad_value, mais altos são os limites.               
+
+Podemos acessar a função interna usada prep_outlierspara calcular o limite de Hampel:
+	
+```
+hampel_outlier(df$var)
+hampel_outlier(df$var, k_mad_value = 6) 
+```
+
+
+Método de **TURKEY**         
+Detalhes:          
+Este método marca outliers usando os quartis, Q1, Q2 e Q3, onde Q1 é indescritível no 25º percentil,
+ Q2 no 50º percentil (também conhecido como mediana) e Q3 é o 75º percentil.
+
+O intervalo interquartil (IQR) é calculado fazendo Q3 - Q1.
+
+O limite inferior é: Q1 - 1,5 * IQR. Todos os valores abaixo são considerados outliers.
+O limite superior é: Q1 + 1,5 * IQR. Todos os valores acima são considerados outliers.
+
+O valor 3 é para detectar o limite “extremo”. Este método vem do gráfico de caixa, 
+onde o multiplicador é 1,5. Isso faz com que muitos mais valores sejam marcados como outliers.
+
+```
+tukey_outlier(df$var)
+```
+
+
+
+
 ## Estatísticas 
 
 Ver mais detalhes em: 
 https://rpubs.com/melinatarituba/353262
 https://anderlerv.netlify.app/tabelas-com-stargazer/10/2018/
 
+Descritivas completas com quartis, quantis, kurtosis e etc.                                          
+``library(funModeling)``        
+```
+profiling_num(df$var)
+```
 
 Descritivas
 ```
@@ -823,6 +892,24 @@ Para ver proporções (table)
 ```
 prop.table(table(df$var))
 ```
+
+Tabular dados e gerar gráfico                                                   
+``library(funModeling)``                  
+
+```
+# Tabular dados de uma variável binária     
+freq(df, "D_var")                     
+
+# Tabular dados de uma variável categórica, pedindo apenas as primeiras 5 categorias
+head(freq(Base_nominais, "ano"), 5) 
+```
+
+Ver correlação de todas colunas em relação a uma especifica                      
+``library(funModeling)``                 
+```
+correlation_table(df, "var")
+```
+
 
 
 ## Regressões Básicas Econometria 
