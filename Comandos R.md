@@ -1329,7 +1329,7 @@ df$Data <- ifelse (df$Ano  == 2014, "2014-12-31", df$Data)
 df$Data <- ifelse (df$Ano  == 2015, "2015-12-31", df$Data)
 df$Data <- ifelse (df$Ano  == 2016, "2016-12-31", df$Data)
 df$Data <- ifelse (df$Ano  == 2017, "2017-12-31", df$Data)
-table(df)
+table(df$Data)
 
 # Converter a variável Data para o formato date com lubridate
 df$Data <- as.Date(df$Data)
