@@ -106,6 +106,19 @@ Verificar a versão do pacote
 packageDescription("pacote")
 ```
 
+Utilizando o package ``pacman`` para instalar e carregar pacotes
+O pacman verifica se os pacotes estão instalados se não esão, ele instala e carrega
+```
+install.packages('pacman')
+library(pacman)
+
+# Exemplos de aplicação
+p_load(ggplot2, dplyr, stringr)    # Install & load packages
+p_unload(ggplot2, dplyr, stringr)  # Unload packages
+p_update(update = FALSE)           # Check for outdated packages
+p_update()                         # Update all packages
+```
+
 Limpar console e base de dados
 ```
 rm(list=ls())
