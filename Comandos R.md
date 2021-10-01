@@ -107,7 +107,7 @@ packageDescription("pacote")
 ```
 
 Utilizando o package ``pacman`` para instalar e carregar pacotes
-O pacman verifica se os pacotes estão instalados se não esão, ele instala e carrega
+> O pacman verifica se os pacotes estão instalados se não esão, ele instala e carrega
 ```
 install.packages('pacman')
 library(pacman)
