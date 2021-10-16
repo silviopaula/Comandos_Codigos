@@ -229,6 +229,11 @@ Visualizar  a classe de um objeto (numeric, matrix, data.frame, etc,)
 class(df)
 ```
 
+Visualizar a classe de todas colunas
+```
+lapply(df,class)
+```
+
 Listar objetos no ambiente de trabalho
 ```
 ls(df)
