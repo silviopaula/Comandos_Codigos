@@ -503,6 +503,11 @@ df_novo <- setDT(df)[ , .(Max_var   = max(var),
                           by =c("id", "Ano")]
 ```
 
+Contar quantas linhas não missings por id 
+```
+df2 <- df1 %>% group_by(id) %>% mutate(contagem = sum(!is.na(var)))
+```
+
 Agregar  os dados com a soma
 ```
 df_novo <- summarise(df, total_var = sum(var))
