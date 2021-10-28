@@ -126,6 +126,14 @@ Para utilizamos o stata como calculadora precisamos utilizar o comando ***displa
 
     label var var1 "texto"
 
+*Remover todos labels
+
+```
+foreach v of varlist * {
+label var `v' ""
+}
+```
+
 *Tabular dados de uma variável
 
     tab var
