@@ -1202,6 +1202,11 @@ df_novo <- df[!duplicated(df[c('var1', 'var2')]),]
 df2 <- unique(df, by = "var1")
 ```
 
+**Remover duplicados com data.table (ideal para grandes conjuntos de dados**
+```
+df_novo <- unique(df, by =c("var1", "var2"))
+```
+
 **Obter o valor mínimo de duas colunas**
 ```
 df <- transform(df, new_Var = pmin(var1, var2))
