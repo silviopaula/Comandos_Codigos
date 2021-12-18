@@ -119,6 +119,12 @@ p_update(update = FALSE)           # Check for outdated packages
 p_update()                         # Update all packages
 ```
 
+Instalando e carregando pacotes automaticamente
+```
+if(!require(pacman)){install.packages("pacman")}
+p_load(ggplot2, dplyr, stringr) 
+```
+
 Limpar console e base de dados
 ```
 rm(list=ls())
@@ -217,6 +223,11 @@ dim(df)
 Visualizar detalhes das variáveis do dataframe
 ```
 str(df)
+```
+
+Visualizar classes das colunas e prévia dos dados
+```
+glimpse(df)
 ```
 
 Visualizar o tipo de classe de uma variável (numérico, string, etc.)
@@ -599,7 +610,6 @@ vazias <- apply(df, 2, function(x) length(which(x == '')))
 vazias 
 ```
 
-
 Remover missings e deixar o dataframe completo sem missings com `dplyr`
 ```
 df <- df[complete.cases(df),]
@@ -618,7 +628,7 @@ df <- df[!is.na(df$Var1),]
 Imputar dados faltante com interpolação
 
 ```
-df <- df %>%  group_by(id) %>%  mutate_at(vars(var1, var2, var3, IMPOSTOS_2), 
+df <- df %>%  group_by(id) %>%  mutate_at(vars(var1, var2, var3), 
                                 list(inter = ~na.approx(., na.rm = FALSE)))
 ```
 
@@ -666,7 +676,7 @@ df_novo <- df[!(is.na(df$var1)) | !(is.na(df$var2))| !(is.na(df$var3)),]
 
 Substituir de missings de uma coluna por valores de outra coluna
 ```
-df$A <- ifelse(is.na(df$A), df$B, df$A)
+df$Var_1 <- ifelse(is.na(df$Var_1), df$Var_2, df$Var_1)
 ```
 
 Atribuindo zero a todos os missings com `imputeTS`     
@@ -684,17 +694,17 @@ df$var[is.na(df$var)] <- 0
 
 Remove colunas com mais de 50% NA
 ```
-dat[, which(colMeans(!is.na(dat)) > 0.5)]
+df[, which(colMeans(!is.na(df)) > 0.5)]
 ```
 
 Remove linhas com mais de 50% NA
 ```
-dat[which(rowMeans(!is.na(dat)) > 0.5), ]
+df[which(rowMeans(!is.na(df)) > 0.5), ]
 ```
 
 Remove colunas e linhas com mais de 50% NA
 ```
-dat[which(rowMeans(!is.na(dat)) > 0.5), which(colMeans(!is.na(dat)) > 0.5)]
+df[which(rowMeans(!is.na(df)) > 0.5), which(colMeans(!is.na(df)) > 0.5)]
 ```
 
 
@@ -711,8 +721,8 @@ plot(df$var1, df$var2)
 
 Grafico de dispersão
 ```
-# grafico de dispersão condicional a variável de  tratamento
-xyplot (df$var1 ~ df$var2 | df$tratamento) 
+# grafico de dispersão condicional a variável de var_tratamento
+xyplot (df$var1 ~ df$var2 | df$var_tratamento) 
 ```
 
 Plotar boxplot
@@ -805,8 +815,6 @@ onde o multiplicador é 1,5. Isso faz com que muitos mais valores sejam marcados
 ```
 tukey_outlier(df$var)
 ```
-
-
 
 
 ## Estatísticas 
