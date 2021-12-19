@@ -126,6 +126,13 @@ Para utilizamos o stata como calculadora precisamos utilizar o comando ***displa
 
     label var var1 "texto"
 
+*Adicionar o valor ao label para facilitar a visualização
+
+    *Mostrar todas variável encodificadas
+    label dir
+    *Adionar o valor ao nome encodificado
+    numlabel `r(names)', add
+
 *Remover todos labels
 
 ```
