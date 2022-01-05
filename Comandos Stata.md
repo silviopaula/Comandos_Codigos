@@ -1,4 +1,4 @@
-
+﻿
 
 
 # Comandos STATA
@@ -401,6 +401,48 @@ iv- Excluir: podemos excluir aqueles indivíduos que não temos nenhuma observa�
 > interpolação    
 >  `epolate` é o comando de extrapolação
 
+## Outliers 
+
+ Plotar boxplot 
+ 
+       graph box var
+        graph box ln_Horas_redes_sociais_Semana, mark(1,mlabel(id))
+
+   plotar histograma
+  
+     histogram var, bin(20)
+
+Usar package extremes para visualizar valores estremos
+
+    ssc install extremes 
+    extremes var
+    extremes var, iqr(1.5)
+
+Usar o summarize detail para ter uma visão mais geral da variável
+
+    sum var, detail
+
+
+**Método: Z-Score**
+
+Esse método envolve o cálculo do escore z das variáveis. Se qualquer um desses valores ficar fora de três desvios padrão da média (neste caso, essa média seria zero, pois o cálculo dos escores z envolve padronização), as observações correspondentes serão tratadas como um valor discrepante.
+
+    egen stdprice = std (var)
+
+Usar package winsor2 para identificar e tratar outliers
+Este comando substitui os outliers por percentis
+
+    ssc instalar o winsor2
+    
+    * Este comando substitui o outlier com os valores do 1º e 99º percentil 
+    winsor2 var, replace cut(1 99)
+    
+    * Este comando substitui o outlier com os valores do 5º e 95º percentil 
+    winsor2 var, replace cut(5 95)
+    
+    * Este comando elimina os outliers do 5º e 95º percentil
+    winsor2 var, replace cut(5 95) trim
+
    
 ## Variáveis Dummy (One-Hot Encoding)
 
@@ -795,4 +837,7 @@ Turnos do dia
  [Visual overview for creating graphs (stata.com)](https://www.stata.com/support/faqs/graphics/gph/stata-graphs/)                       
 [Graphics | Stata](https://www.stata.com/features/publication-quality-graphics/)                           
  [Stata Guide: Exploratory Data Analysis (mwn.de)](https://wlm.userweb.mwn.de/Stata/wstatexp.htm)                             
-[Stata Class Notes: Exploring Data (ucla.edu)](https://stats.idre.ucla.edu/stata/seminars/notes/stata-class-notesexploring-data/)                          
+[Stata Class Notes: Exploring Data (ucla.edu)](https://stats.idre.ucla.edu/stata/seminars/notes/stata-class-notesexploring-data/)        
+[How to Identify and Treat Outliers in Stata](https://thedatahall.com/how-to-identify-and-treat-outliers-in-stata/)        
+
+                 
