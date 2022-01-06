@@ -183,9 +183,14 @@ setDTthreads(20)
 
 ## Visualização de Dataframes
 
-Visualizar dataframe no browser
+Visualizar todo o dataframe
 ```
 View(df)
+```
+
+Visualizar apenas algumas colunas do dataframe
+```
+view(df[,c("var_1", "var_2", "var_3")])
 ```
 
 Visualizar o nome das variáveis de um dataframe
