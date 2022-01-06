@@ -399,6 +399,11 @@ Gerar nova coluna por meio da soma de duas colonas desconsiderando os missings
 df$var_total<- rowSums(df[,c("var1", "var2")], na.rm=TRUE)
 ```
 
+Remover se da coluna 2 a 10 for missings
+```
+df <- df[complete.cases(df[ , 2:10]),]
+```
+
 Gerar uma nova coluna tirando o  logaritmo de uma variável
 > Obs: esse comando gera o logaritmo natural
 ```
