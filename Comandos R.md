@@ -475,6 +475,11 @@ fortify.zoo(log_ret) %>% mutate_all(function(x) ifelse(is.infinite(x), 0, x))
 df$var[which(!is.finite(df$var))] <- 0
 ```
 
+Substituir inf e -inf por NA com data.table
+```
+invisible(lapply(names(df),function(.name) set(df, which(is.infinite(df[[.name]])), j = .name,value =NA)))
+```
+
 Gerar uma variável categórica com `dplyr`
 > Exemplo: suponha que temos uma variável categórica com tipos de produtos, e queremos gerar uma nova variável categóricas agregando esses produtos. A saída deste comando resulta e uma variável com 4 categorias, 0,1,2,3,4
 ```
@@ -517,10 +522,10 @@ df_novo <- df %>% group_by(as.factor(id, Ano)) %>%
 
 Agregar  os dados por id e Ano com `data.table`
 ```
-df_novo <- setDT(df)[ , .(Max_var   = max(var),
-                          Media_var  = mean(var),
-                          Min_var   = min(var),
-                          Total_var = sum(var)), 
+df_novo <- setDT(df)[ , .(Max_var   = max(var, na.rm=TRUE),
+                          Media_var = mean(var, na.rm=TRUE),
+                          Min_var   = min(var, na.rm=TRUE),
+                          Total_var = sum(var, na.rm=TRUE)), 
                           by =c("id", "Ano")]
 ```
 
@@ -538,6 +543,11 @@ Replace (substituir) de forma fácil
 ```
 df$var1[df$var2 == 1] <- 1 # fazer replace para 1 em var1 se var2 ==1
 [df$var2 == 2] <- 1        # fazer replace para 1 se var2 ==2
+```
+
+Replace todas colunas de nan para NA 
+```
+invisible(lapply(names(df),function(.name) set(df, which(is.nan(df[[.name]])), j = .name,value =NA)))
 ```
 
 Replace com ifelse 
