@@ -683,6 +683,14 @@ df <- as.data.table(df)
 df <- df[is.na(df$var), "var_nova"] <- mean(na.omit(df$var))
 df <- df[is.na(df$var), "var_nova"] <- median(na.omit(df$var))
 ```
+Substituir missings pela média e mediana agrupada por id com `datatable` para muitas colunas
+```
+cols <- c("var_1", "var_2", "var_3", "var_4")
+
+df_novo <- df[, (cols) := lapply(.SD, function(x) nafill(x, type = "const", fill = median(x, na.rm = TRUE)))
+                   , by = var_grupo
+                   , .SDcols = cols][]
+```
 
 Ver o total de missings de uma coluna
 ```
