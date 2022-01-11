@@ -609,7 +609,7 @@ summary(df$var)
 colSums(is.na(df))
 
 # Criar uma matrix com o total de missings (fica melhor para visualizar)
-Missings <- as.matrix(colSums(is.na(Covaridas_mun)))
+Missings <- as.matrix(colSums(is.na(df)))
 print(Missings)
 ```
 
@@ -758,8 +758,8 @@ Plotar boxplot
 boxplot(df$var1)
 boxplot(df$var1, outline = TRUE)
 boxplot.stats(df$var1)$out 
-outlier_var1 = base[df$var1< 0, ]
-outliers_var1 = base[df$var1> 10000,]
+outlier_var1 = df[df$var1< 0, ]
+outliers_var1 = df[df$var1> 10000,]
 ```
 Identificando e plotando outliers
 ```
@@ -960,7 +960,7 @@ Tabular dados e gerar gráfico
 freq(df, "D_var")                     
 
 # Tabular dados de uma variável categórica, pedindo apenas as primeiras 5 categorias
-head(freq(Base_nominais, "ano"), 5) 
+head(freq(df, "ano"), 5) 
 ```
 
 Ver correlação de todas colunas em relação a uma especifica                      
