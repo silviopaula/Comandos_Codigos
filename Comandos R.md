@@ -1224,23 +1224,28 @@ file.remove("D:/data.csv")
 
 **Remover observações duplicadas**
 ```
-# Ver quantas observações temo sem duplicados
-df$var %>% unique() %>% length()  
-
 **Remover duplicados**       
 df2 <- df %>% filter(!duplicated(var))   
 ```
 
-**Remover duplicados baseado em duas variáveis**
+**Visualizar duplicados e gerar coluna de número de ocorrências**
 ```
-df_novo <- df[!duplicated(df[c('var1', 'var2')]),] 
-#ou
-df2 <- unique(df, by = "var1")
+df_novo <- data.frame(table(df$var1, df$var2))
+```
+
+
+** Ver quantas observações temo sem duplicados **
+```
+df$var %>% unique() %>% length() 
 ```
 
 **Remover duplicados com data.table (ideal para grandes conjuntos de dados**
 ```
 df_novo <- unique(df, by =c("var1", "var2"))
+
+#ou
+
+df_novo <- df %>% unique(by =c("var1", "var2"))
 ```
 
 **Obter o valor mínimo de duas colunas**
@@ -1357,7 +1362,7 @@ rm_accent <- function(str,pattern="all") {
 }
 
 # Aplicando a função
-df_teste_sem_acento <- rm_accent(df_teste$Assunto)
+df$var_nova <- rm_accent(df$var)
 ```
 
 **Deflacionar variáveis monetárias**                                 
