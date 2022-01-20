@@ -1492,6 +1492,22 @@ Importar arquivo excel com `readxl`
 df <- read_excel("D:/dados.xlsx", sheet = "Planilha1")
 ```
 
+Importar arquivo excel com `openxlsx`
+```
+df <- read.xlsx('D:\Arquivo.xlsx')
+```
+
+Exportar arquivo excel com `openxlsx`
+```
+write.xlsx(df, "D:\Arquivo.xlsx")
+```
+
+Exportar arquivo excel com `xlsx`
+```
+write.xlsx(df, "D:\Arquivo.xlsx", sheetName = "Sheet1", col.names = TRUE, row.names = TRUE, append = FALSE)
+)
+```
+
 Importar base de dados do stata .dta com `haven`
 ```
 read_dta(df, "df.dta")
