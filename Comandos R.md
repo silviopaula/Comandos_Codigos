@@ -1285,6 +1285,31 @@ Se o código ibge do municipios for de 6 dígitos
 df$Cod_UF <- substr(df$id7, 1, (nchar(df$id7)-4))
 ```
 
+**Atribuir nome aos códigos IBGE das UFs e regiões**
+```
+df<- mutate(df, 
+            Nome_UF = factor(Cod_UF,
+            levels = c(11, 12, 13, 14, 15, 16, 17, 21, 22, 23, 24, 25, 26, 
+                       27, 28, 29, 31, 32, 33, 35, 41, 42, 43, 50, 51, 52, 53),
+            labels = c("Rondônia", "Acre", "Amazonas", "Roraima", "Pará", "Amapá", "Tocantins", "Maranhão", 
+                       "Piauí", "Ceará", "Rio Grande do Norte", "Paraíba", "Pernambuco", "Alagoas", 
+                       "Sergipe", "Bahia", "Minas Gerais", "Espírito Santo", "Rio de Janeiro", "São Paulo",
+                       "Paraná", "Santa Catarina", "Rio Grande do Sul", "Mato Grosso do Sul",  "Mato Grosso", 
+                       "Goiás", "Distrito Federal")),
+            Sigla_UF = factor(Cod_UF,
+            levels = c(11, 12, 13, 14, 15, 16, 17, 21, 22, 23, 24, 25, 26, 
+                       27, 28, 29, 31, 32, 33, 35, 41, 42, 43, 50, 51, 52, 53),
+            labels = c("RO", "AC", "AM", "RR", "PA", "AP", "TO", "MA", "PI", "CE", "RN", "PB", "PE", 
+                       "AL", "SE", "BA", "MG", "ES", "RJ", "SP", "PR", "SC", "RS", "MS", "MT", "GO", "DF")),
+            Região = factor(Cod_UF,
+            levels = c(11, 12, 13, 14, 15, 16, 17, 21, 22, 23, 24, 25, 26, 
+                       27, 28, 29, 31, 32, 33, 35, 41, 42, 43, 50, 51, 52, 53),
+            labels = c("Norte", "Norte", "Norte", "Norte", "Norte", "Norte", "Norte", "Nordeste", "Nordeste", 
+                       "Nordeste", "Nordeste", "Nordeste", "Nordeste", "Nordeste", "Nordeste", "Nordeste", 
+                       "Sudeste", "Sudeste", "Sudeste", "Sudeste", "Sul", "Sul", "Sul", "Centro-Oeste", 
+                       "Centro-Oeste", "Centro-Oeste", "Centro-Oeste")))				   
+```
+
 **Trabalhando com CPF**    
 Nota:  os CPF tem zeros nos primeiros caracteres (zeros a esquerda), se importarmos os dados  como numéricos os zeros serão removidos, portanto uma boa pratica é trabalhar com eles em string
 
