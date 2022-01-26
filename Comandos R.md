@@ -302,14 +302,14 @@ Gerar uma amostra  com package `data.table`
 # Gerar uma amostra apenas com as colunas var1 var2 var3
 df_novo <- df[,.(var1, var2, var3)]
 
-# Gerar uma amostra sem a coluna var1
+# Subset com data.table
 df <- df[!(df$var=="var1"),]
+df <- df[(df$Ano>=2009 & df$Ano==2017),]
 ```
 
 Gerar uma amostra com período delimitado
 ```
 df_novo <- subset(df, Ano>=2009)
-df_novo <- subset(df, Ano<2009)
 df_novo <- subset(df, Ano>=2009 & Ano<=2018)
 ```
 
