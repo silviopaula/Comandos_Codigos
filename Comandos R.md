@@ -462,6 +462,12 @@ Converter uma coluna para fator
 df$var1 <- factor(df$var1)
 ```
 
+Converter muitas colunas para fator
+```
+col_names <- c("var_1", "var_2", "var_3")
+df[,col_names] <- lapply(df[,col_names], factor)
+```
+
 Converter colunas selecionadas para numérico
 ```
 df <- df %>% mutate_at(c(1:15), as.numeric)
