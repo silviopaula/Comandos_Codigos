@@ -94,6 +94,10 @@ Para utilizamos o stata como calculadora precisamos utilizar o comando ***displa
 
     destring, replace
 
+*Remover notação ciêntifica 
+
+    format %12.0f var_1
+
 *Converter somente uma variável específica para numérico
 
     destring var_string, generate(var_numeric)
@@ -144,6 +148,10 @@ label var `v' ""
 *Tabular dados de uma variável
 
     tab var
+
+*Ordenar colunas
+
+    order var_1 var_2 var_3
 
 *Ordenar variáveis 
 
@@ -199,6 +207,10 @@ label var `v' ""
     }
 
 ## Trabalhando com Strings
+
+*Remover espaços desnecessários
+
+    replace var_1=strtrim(var_1)
 
 *Extrair um contexto de uma variável string
 
