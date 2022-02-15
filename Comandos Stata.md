@@ -212,11 +212,11 @@ label var `v' ""
 
     replace var_1=strtrim(var_1)
 
+*Remover acentos
 
-*Remover acentos 
     ssc install chartab
     chartab Var_1, noascii
-
+    
 *Extrair um contexto de uma variável string
 
 > Exemplo:  Suponha uma variável  Ano= "02/09/2000 11:35:42", se  quisermos pegar somente o Ano da string
