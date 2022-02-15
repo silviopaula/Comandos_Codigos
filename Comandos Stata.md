@@ -1,4 +1,4 @@
-﻿
+
 
 
 # Comandos STATA
@@ -211,6 +211,11 @@ label var `v' ""
 *Remover espaços desnecessários
 
     replace var_1=strtrim(var_1)
+
+
+* Remover acentos 
+    ssc install chartab
+    chartab Var_1, noascii
 
 *Extrair um contexto de uma variável string
 
