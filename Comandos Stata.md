@@ -213,7 +213,7 @@ label var `v' ""
     replace var_1=strtrim(var_1)
 
 
-* Remover acentos 
+*Remover acentos 
     ssc install chartab
     chartab Var_1, noascii
 
