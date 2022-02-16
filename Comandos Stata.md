@@ -106,6 +106,12 @@ Para utilizamos o stata como calculadora precisamos utilizar o comando ***displa
 
     destring, replace dpcomma
 
+*Remover caracteres não numéricos
+
+    ssc install egenmore
+    egen Var_numeric = sieve(Var), keep(numeric)
+
+
 *Destring e ignorar caracteres especiais
 
     destring, replace ignore("*")
