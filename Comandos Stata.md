@@ -216,6 +216,8 @@ label var `v' ""
 * Remover acentos 
     ssc install chartab
     chartab Var_1, noascii
+    replace Var_1 = lower(ustrto(ustrnormalize(Var_1, "nfd"), "ascii", 2))
+    replace Var_1 = upper(ustrto(ustrnormalize(Var_1, "nfd"), "ascii", 2))
 
 *Extrair um contexto de uma variável string
 
