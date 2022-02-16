@@ -216,13 +216,9 @@ label var `v' ""
 
     ssc install chartab
     chartab Var_1, noascii
-<<<<<<< HEAD
     replace Var_1 = lower(ustrto(ustrnormalize(Var_1, "nfd"), "ascii", 2))
     replace Var_1 = upper(ustrto(ustrnormalize(Var_1, "nfd"), "ascii", 2))
 
-=======
-    
->>>>>>> 86dc0d5d1366dc3fcaf75c5fb5bbb08d32596c84
 *Extrair um contexto de uma variável string
 
 > Exemplo:  Suponha uma variável  Ano= "02/09/2000 11:35:42", se  quisermos pegar somente o Ano da string
