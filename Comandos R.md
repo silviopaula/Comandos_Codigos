@@ -1080,11 +1080,16 @@ Remove caracteres especiais
 df$var <- gsub("[^[:alnum:]]", " ", df$vra)
 ```
 
-Converte letras minusculas para maiusculas com `magrittr`
+Converter letras minusculas para maiusculas com `magrittr`
 ``install.packages('magrittr')``
 ``library(magrittr)``
 ```
 df %<>% mutate_if(is.character, toupper)
+```
+
+Converter letras minusculas para maiuscula 
+```
+df$var <- toupper(df$var)
 ```
 
 Remover linhas com a expressão exata
