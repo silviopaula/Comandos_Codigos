@@ -1218,6 +1218,14 @@ Transformar colunas em dummies com  `fastDummies`
 df <- dummy_cols(df, select_columns = "Idade_grp")
 ```
 
+Gerar dummy a partir de uma expressão contida em uma string
+```
+# Gerar dummy
+df$var_nova <- as.integer(str_detect(df$var,"expressão_1"))
+
+# Fazer replace para outras condições
+df$var_nova[as.integer(str_detect(df$var,"expressão_2")) == 1] <- 1
+```
 
 ## Tarefas Prontas
 
