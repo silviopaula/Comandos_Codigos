@@ -350,7 +350,20 @@ Para mais detalhes veja:
 
     corr var1
 
-  
+*Gerar heatmap de correlação
+
+
+    *ssc install heatplot, replace
+    *ssc install palettes, replace
+    *ssc install colrspace, replace
+    *ssc install gtools, replace
+    
+    corr var1 var2 var3 var4
+    matrix corrmatrix = r(C)
+    heatplot corrmatrix, values(format(%4.2f) size(tiny)) xlabel(,labsize(vsmall) angle(45)) ylabel(,labsize(vsmall))  aspectratio(1) legend()
+
+
+
 ## Missings values
 
   A presença de observações ausentes (missing values) tem o potencial de  incorrer em  endogeneidade, ocasionando vieses nos estimadores de máxima verossimilhança, por essa razão muitos modelos de econometria espacial não permitem missings.
