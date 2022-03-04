@@ -547,8 +547,9 @@ df_novo <- summarise(df, total_var = sum(var))
 
 Replace (substituir) de forma fácil
 ```
-df$var1[df$var2 == 1] <- 1 # fazer replace para 1 em var1 se var2 ==1
-[df$var2 == 2] <- 1        # fazer replace para 1 se var2 ==2
+df$var1[df$var2 == 1] <- 1  # fazer replace para 1 em var1 se var2 ==1
+df$var1[df$var1 == 0] <- NA # fazer replace NA em var1 se var1 ==0
+[df$var2 == 2] <- 1         # fazer replace para 1 se var2 ==2
 ```
 
 Replace todas colunas de nan para NA 
@@ -975,57 +976,6 @@ Ver correlação de todas colunas em relação a uma especifica
 correlation_table(df, "var")
 ```
 
-
-
-## Regressões Básicas Econometria 
-
-Pooled ols estimador
-``install.packages('plm')``
-``library(plm)``
-```
-pooling <- plm(Y ~ X, data=df, model= "pooling") 
-summary(pooling)
-```
-
-Between estimador
-```
-between <- plm(Y ~ X, data=df, model= "between") 
-summary(between)
-```
-
-First differences estimador
-```
-firstdiff <- plm(Y ~ X, data=df, model= "fd")
-summary(firstdiff)
-```
-
-Fixed effects ou within estimador
-```
-fixed <- plm(Y ~ X, data=df, model= "within")
-summary(fixed)
-```
-
-Random effects estimador
-```
-random <- plm(Y ~ X, data=df, model= "random")
-summary(random)
-```
-
-LM test for random effects versus pooled
-```
-plmtest(pooling)
-```
-
-LM test for fixed effects versus pooled
-```
-pFtest(fixed, pooling)
-```
-
-Hausman test for fixed vs random effects model
-```
-phtest(random, fixed)
-```
-
 ## Strings
 
 
@@ -1107,9 +1057,19 @@ Deixar somente os dois primeiros caracteres
 df$var <- substr(df$var, 0, 2)
 ```
 
+Remover 3 caracteres iniciais
+```
+df$var_nova = substr(df$var, 4,14) # Onde 4 será o caracter de inicio e 14 de fim
+```
+
 Replace (substituir) string
 ```
 df$var <- str_replace(df$var, "mulher", "Homem")
+```
+
+Contar quantos caracteres tem cada celula de uma coluna
+```
+df$count <- str_count(df$var)
 ```
 
 Deixar somente alguns dígitos 
@@ -1136,6 +1096,7 @@ df$Prob_1 <- levenshteinSim(df$var_1, df$var_2)
 df$Prob_2 <- jarowinkler(df$var_1, df$var_2)
 df$Prob_3 <- jarowinkler(df$var_1, df$var_2)
 ```
+
 
 ## Merge, Join, Append
 
