@@ -624,7 +624,7 @@ print(Missings)
 
 Criar uma matrix com o total de celulas vazias
 ```
-empty <- as.matrix(colSums(IBAMA==""))
+empty <- as.matrix(colSums(df==""))
 print(empty)
 ```
 
