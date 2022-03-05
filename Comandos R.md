@@ -614,10 +614,18 @@ Ver total de missings das colunas de um dataframe
 ```
 summary(df$var)
 colSums(is.na(df))
+```
 
-# Criar uma matrix com o total de missings (fica melhor para visualizar)
+Criar uma matrix com o total de missings (fica melhor para visualizar)
+```
 Missings <- as.matrix(colSums(is.na(df)))
 print(Missings)
+```
+
+Criar uma matrix com o total de celulas vazias
+```
+empty <- as.matrix(colSums(IBAMA==""))
+print(empty)
 ```
 
 Fazer resumo de missings e zeros                                                            
