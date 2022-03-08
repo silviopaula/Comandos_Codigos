@@ -6,3 +6,4 @@
 * Stata
 * Scala
 * Docker
+* Julia
