@@ -1,4 +1,4 @@
-# Comandos úteis para os principais programas de Data Science e econometria.
+# Comandos e Fundamentos das principais linguagens de programação para data science e econometria.
 
 * R
 * Python
