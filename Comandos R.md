@@ -318,12 +318,17 @@ Gerar uma amostra com as primeiras 1000 linhas de um dataframe
 df_novo  <- head(df, n=1000)
 ```
 
-Reshape de long para wide
+Reshape de long para wide (painel)
 ```
 df_wide = reshape(data = df_long, idvar = "id", 
 v.names= c("var1","var2","var3"), sep = "_", 
 timevar = "Ano", times = c(2000,2001,2002,2003), 
 direction = "wide")
+```
+
+Reshape de wide (painel) para long (data.table)
+```
+df_long <- melt(setDT(df), id.vars = c("Código"), variable.name = "year")
 ```
 
 Clonar uma variável do dataframe com package `dplyr`
@@ -555,6 +560,15 @@ df$var1[df$var1 == 0] <- NA # fazer replace NA em var1 se var1 ==0
 Replace todas colunas de nan para NA 
 ```
 invisible(lapply(names(df),function(.name) set(df, which(is.nan(df[[.name]])), j = .name,value =NA)))
+```
+
+Replace virgula para ponto & ponto para virgula
+```
+# Replace virgula para ponto
+df$var <- gsub(",", "\\.", df$var)
+
+# Replace ponto para virgula
+df$var <- gsub("\\.", ",", df$var)
 ```
 
 Replace com ifelse 
