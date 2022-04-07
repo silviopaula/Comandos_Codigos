@@ -149,6 +149,10 @@ Para utilizamos o stata como calculadora precisamos utilizar o comando ***displa
 foreach v of varlist * {
 label var `v' ""
 }
+
+foreach var of varlist _all {
+label var `var' ""
+}
 ```
 
 *Tabular dados de uma variável
