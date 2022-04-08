@@ -764,6 +764,11 @@ Remove colunas e linhas com mais de 50% NA
 df[which(rowMeans(!is.na(df)) > 0.5), which(colMeans(!is.na(df)) > 0.5)]
 ```
 
+Remover linhas que apresentam apenas missings com base em varias colunas
+```
+df_novo <- df[!(is.na(df$var1)) | !(is.na(df$var2)) | !(is.na(df$var3)),]
+```
+
 
 ## Outliers
 
