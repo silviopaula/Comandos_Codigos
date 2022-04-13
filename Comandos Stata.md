@@ -576,7 +576,7 @@ A questão é como combinar os valores de um conjunto de dados com o outro. Acho
 Agora você pode entender o significado da frase que descreve o comando joinby na referência de ajuda: "Forme todas as combinações de pares dentro de grupos".
 
 
-## Collase (agregação)
+## Collapse (agregação)
 
 Às vezes, temos dados que precisam ser collapsados na média, total, min, max, etc, para serem úteis. Por exemplo, você pode  pode ter dados semanais, mas deseja dados mensais, ou ter dados por municípios mas queremos dados por estados etc. Nestes casos recorremos ao comando collapse.
 
