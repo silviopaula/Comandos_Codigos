@@ -1156,6 +1156,11 @@ df_novo <- merge(df1,df2, by.x='var_x', by.y='var_y', all=TRUE)
 DF <- left_join(DF1,DF2) 
 ```
 
+ **Left_join para muitos dataframes**
+```
+joined <- list(df1, df2, df3, df4, df5, df6, %>% 
+               reduce(left_join, by = c("id", "year"), fill=TRUE)
+```	    
 
 ## Dummy (One Hot Encode)
 
