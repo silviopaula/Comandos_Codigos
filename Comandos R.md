@@ -296,6 +296,11 @@ df_novo <- subset(df, select = c(var1,var2,var3))
 df_novo <- subset(df, select = -c(var1,var2,var3)) 
 ```
 
+Dropar colunas que contenham uma determinada expressão
+```
+df_novo <- subset(df, select = c(!grepl("^Expressão",names(df))))
+```
+
 Gerar uma amostra  com package `data.table`
 > Obs: só funciona se o objeto for um data.table
 ```
