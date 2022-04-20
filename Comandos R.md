@@ -464,6 +464,12 @@ Converter uma coluna para numérico
 df$var1 <- as.numeric(df$var1)
 ```
 
+Converter uma coluna factor para numérico (primeiro converter para character depois para numérico)
+```
+df$var1 <- as.character(df$var1) 
+df$var1 <- as.numeric(df$var1)
+```
+
 Converter um conjunto de colunas para numérico com `dplyr`
 ```
 df <- df %>% mutate_at(c(1:10), as.numeric)
