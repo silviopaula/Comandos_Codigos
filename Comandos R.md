@@ -326,9 +326,21 @@ timevar = "Ano", times = c(2000,2001,2002,2003),
 direction = "wide")
 ```
 
-Reshape de wide (painel) para long (data.table)
+Reshape de wide para long (painel) (data.table)
 ```
 df_long <- melt(setDT(df), id.vars = c("Código"), variable.name = "year")
+```
+
+Reshape de wide para long (painel) com varias colunas (data.table)
+```
+df_long  <- melt(setDT(df), id.vars = c("id"),
+                            variable.name = "year",
+                            measure = patterns("^Nome_1", 
+                                               "^Nome_2", 
+                                               "^Nome_3"), 
+                            value.name = c("Nome_1", 
+                                           "Nome_2", 
+                                           "Nome_3"))
 ```
 
 Clonar uma variável do dataframe com package `dplyr`
