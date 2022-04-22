@@ -576,8 +576,11 @@ df_novo <- summarise(df, total_var = sum(var))
 Replace (substituir) de forma fácil
 ```
 df$var1[df$var2 == 1] <- 1  # fazer replace para 1 em var1 se var2 ==1
-df$var1[df$var1 == 0] <- NA # fazer replace NA em var1 se var1 ==0
+df$var1[df$var1 == 0] <- NA # fazer replace de 0 para NA
 [df$var2 == 2] <- 1         # fazer replace para 1 se var2 ==2
+
+# Para muitas colunas
+df[,  1:10][ df[,  1:10] == 0 ] <- NA # fazer replace de 0 para NA
 ```
 
 Replace todas colunas de nan para NA 
