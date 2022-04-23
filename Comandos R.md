@@ -1293,7 +1293,11 @@ df <- transform(df, new_Var = pmin(var1, var2))
 
 **Padronização de  escala das colunas do df**
 ```
+# Padronizar e gerar novo dataframe
 df_pad = scale(df[,1:4]) 
+
+# Padronizar algumas colunas sem gerar novo dataframe
+df[,1:4] = scale(df[,1:4]) 
 ```
 
 **Normalização de dados (deixar em uma escala entr 0 e 1)**               
