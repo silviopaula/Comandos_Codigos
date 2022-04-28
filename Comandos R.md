@@ -188,6 +188,11 @@ Visualizar todo o dataframe
 View(df)
 ```
 
+Visualizar 100 linhas do dataframe
+```
+View(head(df, n=100))
+```
+
 Visualizar apenas algumas colunas do dataframe
 ```
 view(df[,c("var_1", "var_2", "var_3")])
