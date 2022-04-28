@@ -568,6 +568,11 @@ df_novo <- setDT(df)[ , .(Max_var   = max(var, na.rm=TRUE),
                           by =c("id", "Ano")]
 ```
 
+Contar valores unicos de uma coluna agrupando por id
+```
+df_novo <- df %>% group_by(id) %>% summarize(Total = n_distinct(var), Count = n())
+```
+
 Contar quantas linhas não missings por id 
 ```
 df2 <- df1 %>% group_by(id) %>% mutate(contagem = sum(!is.na(var)))
