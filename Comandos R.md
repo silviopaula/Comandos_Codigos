@@ -1578,10 +1578,9 @@ Importar base de dados do stata .dta com `haven` e remover label, formato e outr
 ver mais em: https://rdrr.io/cran/haven/man/zap_labels.html
 zap_empty(), zap_formats(), zap_label(), zap_widths()
 ```
-read_dta(df, "df.dta") %>% zap_empty() %>% zap_label() %>% zap_formats()
+read_dta(df, "df.dta") %>% zap_label() %>% zap_formats()
 ```
  
-
 Exportar base de dados do stata  .dta  com `haven`
 ```
 write_dta(df, "df.dta")
