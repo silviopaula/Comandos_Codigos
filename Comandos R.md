@@ -1571,8 +1571,14 @@ write.xlsx(df, "D:\Arquivo.xlsx", sheetName = "Sheet1", col.names = TRUE, row.na
 
 Importar base de dados do stata .dta com `haven`
 ```
-read_dta(df, "df.dta")
+read_dta(df, "df.dta") 
 ```
+
+Importar base de dados do stata .dta com `haven` e remover label, formato e outras informações vindas do STATA
+```
+read_dta(df, "df.dta") %>% zap_label() %>% zap_label() %>% zap_formats()
+```
+ 
 
 Exportar base de dados do stata  .dta  com `haven`
 ```
