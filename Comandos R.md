@@ -295,10 +295,13 @@ df <- df %>%  select(sort(current_vars()))
 Gerar uma amostra com o comando `subset`
 ```
 # Gerar uma amostra apenas com as colunas var1 var2 var3
-df_novo <- subset(df, select = c(var1,var2,var3)) 
+df_novo <- subset(df, select = c(var1, var2, var3)) 
 
 # Gerar uma amostra sem as colunas var1 var2 var3
-df_novo <- subset(df, select = -c(var1,var2,var3)) 
+df_novo <- subset(df, select = -c(var1, var2, var3)) 
+
+# Para nomes com espações utilizar `var 1`
+df_novo <- subset(df, select = -c(`var 1`, `var 1`, `var 1`)) 
 ```
 
 Dropar colunas que contenham uma determinada expressão
