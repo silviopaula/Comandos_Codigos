@@ -1336,6 +1336,11 @@ df <-  df %>% group_by(id) %>% mutate(F1_var = dplyr::lead(var, n = 1, default =
 df <- df %>% group_by(var1,var2) %>% mutate(id = cur_group_id())
 ```
 
+**Obter código dos municípios de 6 dígitos (id6) a partir do id7**
+```
+df$id6 <- substr(df$id7, 1, (nchar(df$id7)-1))
+```
+
 **Obter código IBGE das UF  a partir do código de municípios**
 ```
 Se o código ibge do municipios for de 7 dígitos 
