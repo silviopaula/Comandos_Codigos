@@ -672,6 +672,11 @@ Missings <- as.matrix(colSums(is.na(df)))
 print(Missings)
 ```
 
+Visualizar linhas com missings
+```
+View(subset(df, select=c("id", "Ano", "var_missing"), is.na(var_missing)))
+```
+
 Criar uma matrix com o total de celulas vazias
 ```
 empty <- as.matrix(colSums(df==""))
