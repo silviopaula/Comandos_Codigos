@@ -596,6 +596,20 @@ df$var1[df$var1 == 0] <- NA # fazer replace de 0 para NA
 df[,  1:10][ df[,  1:10] == 0 ] <- NA # fazer replace de 0 para NA
 ```
 
+Atribuindo zero a todos os missings com `imputeTS`     
+``install.packages('imputeTS')``    
+``library(imputeTS)``    
+```
+# Atribuir zeros para todo os missings do dataframe
+df <- na_replace(df, 0)
+
+# Atribuir zeros para todo os missings de uma coluna
+df$var <- na_replace(df$var, 0)
+
+# Atribuir zeros para todo os missings de vetor de colunas
+df[, 1:20] <- na_replace(df[, 1:20])
+```
+
 Replace todas colunas de nan para NA 
 ```
 invisible(lapply(names(df),function(.name) set(df, which(is.nan(df[[.name]])), j = .name,value =NA)))
@@ -784,7 +798,14 @@ Atribuindo zero a todos os missings com `imputeTS`
 ``install.packages('imputeTS')``    
 ``library(imputeTS)``    
 ```
+# Atribuir zeros para todo os missings do dataframe
 df <- na_replace(df, 0)
+
+# Atribuir zeros para todo os missings de uma coluna
+df$var <- na_replace(df$var, 0)
+
+# Atribuir zeros para todo os missings de vetor de colunas
+df[, 1:20] <- na_replace(df[, 1:20])
 ```
 
 Atribuindo zero a todos os missings
