@@ -607,7 +607,7 @@ df <- na_replace(df, 0)
 df$var <- na_replace(df$var, 0)
 
 # Atribuir zeros para todo os missings de vetor de colunas
-df[, 1:20] <- na_replace(df[, 1:20])
+df[, 1:20] <- na_replace(df[, 1:20], 0)
 ```
 
 Replace todas colunas de nan para NA 
@@ -805,7 +805,7 @@ df <- na_replace(df, 0)
 df$var <- na_replace(df$var, 0)
 
 # Atribuir zeros para todo os missings de vetor de colunas
-df[, 1:20] <- na_replace(df[, 1:20])
+df[, 1:20] <- na_replace(df[, 1:20], 0)
 ```
 
 Atribuindo zero a todos os missings
