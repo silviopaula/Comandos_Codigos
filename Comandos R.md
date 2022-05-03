@@ -449,12 +449,19 @@ Gerar múltiplas colunas em logaritmo
 > Obs: depois basta renomear as colunas (recomendo adicionar somente o prefixo com:
 >  ``colnames(df) <- paste("ln", colnames(df), sep = "_")``
 ```
-# Criar uma função para gerar o logaritmo
-logplusone <- function(x) {log(x[1])}
+# Criar uma função para gerar o logaritmo natural
+log_natural <- function(x) {log(x)}
 
-# Gerar log das colunas 1 a 10
-df[,1:10] <- as.data.frame(lapply(df[,3:5], FUN = function(x) {sapply(x, FUN = logplusone)}))
+# Aplicar função log_natural nas colunas 1 a 10
+df[,1:10] <- as.data.frame(lapply(df[,3:5], FUN = function(x) {sapply(x, FUN = log_natural)}))
+
+# Criar uma função para gerar o logaritmo natural + 1
+log_mais_um <- function(x) {log(x + 1)}
+
+# Aplicar função log_mais_um nas colunas 1 a 10
+df[,1:10] <- as.data.frame(lapply(df[,3:5], FUN = function(x) {sapply(x, FUN = log_mais_um)}))
 ```
+
 
 Adicionar um label com pacote `Hmisc`
 > Nota: o label é um descrição, ou seja, um rótulo para a coluna com a sua descrição. Cabe destacar que o label pode gerar problemas posteriormente com algumas transformação, portanto, adicione o label  após realizar todas as transformações nas colunas.
