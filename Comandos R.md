@@ -453,13 +453,19 @@ Gerar múltiplas colunas em logaritmo
 log_natural <- function(x) {log(x)}
 
 # Aplicar função log_natural nas colunas 1 a 10
-df[,1:10] <- as.data.frame(lapply(df[,3:5], FUN = function(x) {sapply(x, FUN = log_natural)}))
+df[,1:10] <- as.data.frame(lapply(df[,1:10], FUN = function(x) {sapply(x, FUN = log_natural)}))
 
-# Criar uma função para gerar o logaritmo natural + 1
+# Aplicar função log_natural nas colunas 1 a 10 e 12 ao 20
+df[,c(1:10, 12:20)] <- as.data.frame(lapply(df[,c(1:10, 12:20)], FUN = function(x) {sapply(x, FUN = log_natural)}))
+
+# Criar uma função para gerar o logaritmo natural + 1 (para quando temos zeros na coluna
 log_mais_um <- function(x) {log(x + 1)}
 
 # Aplicar função log_mais_um nas colunas 1 a 10
-df[,1:10] <- as.data.frame(lapply(df[,3:5], FUN = function(x) {sapply(x, FUN = log_mais_um)}))
+df[,1:10] <- as.data.frame(lapply(df[,1:10], FUN = function(x) {sapply(x, FUN = log_mais_um)}))
+
+# Aplicar função log_mais_um nas colunas 1 a 10 e 12 ao 20
+df[,c(1:10, 12:20)] <- as.data.frame(lapply(df[,c(1:10, 12:20)], FUN = function(x) {sapply(x, FUN = log_mais_um)}))
 ```
 
 
