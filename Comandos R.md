@@ -975,6 +975,12 @@ summary(df)
 summary(df$var1, df$var2)
 ```
 
+Descritivas dataframe
+```
+descritivas <- data.frame(unclass(summary(df)), check.names = FALSE, stringsAsFactors = FALSE)
+view(descritivas)
+```
+
 Exportar descritivas com `stargazer`             
 
    ``install.packages(“stargazer”)``                  
