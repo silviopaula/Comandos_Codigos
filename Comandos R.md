@@ -533,6 +533,9 @@ df$var[which(!is.finite(df$var))] <- 0
 Substituir inf e -inf por NA com data.table
 ```
 invisible(lapply(names(df),function(.name) set(df, which(is.infinite(df[[.name]])), j = .name,value =NA)))
+
+# para todas colunas
+is.na(df) <- sapply(df, is.infinite)
 ```
 
 Gerar uma variável categórica com `dplyr`
