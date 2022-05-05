@@ -584,6 +584,15 @@ df_novo <- setDT(df)[ , .(Max_var   = max(var, na.rm=TRUE),
                           by =c("id", "Ano")]
 ```
 
+Agregar  os dados por id e Ano com `data.table` e gerar novas colunas
+```
+setDT(df)[ , .(Max_var   := max(var, na.rm=TRUE),
+               Media_var := mean(var, na.rm=TRUE),
+               Min_var   := min(var, na.rm=TRUE),
+               Total_var := sum(var, na.rm=TRUE)), 
+               by =c("id", "Ano")]
+```
+
 Contar valores unicos de uma coluna agrupando por id
 ```
 df_novo <- df %>% group_by(id) %>% summarize(Total = n_distinct(var), Count = n())
@@ -604,6 +613,9 @@ Replace (substituir) de forma fácil
 df$var1[df$var2 == 1] <- 1  # fazer replace para 1 em var1 se var2 ==1
 df$var1[df$var1 == 0] <- NA # fazer replace de 0 para NA
 [df$var2 == 2] <- 1         # fazer replace para 1 se var2 ==2
+
+# Substiuir infinitos por missings
+df$var[is.infinite(df$var)] <- NA 
 
 # Substiuir missings por zero
 df$var[is.na(df$var)] <- 0 
