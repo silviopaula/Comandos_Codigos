@@ -605,6 +605,9 @@ df$var1[df$var2 == 1] <- 1  # fazer replace para 1 em var1 se var2 ==1
 df$var1[df$var1 == 0] <- NA # fazer replace de 0 para NA
 [df$var2 == 2] <- 1         # fazer replace para 1 se var2 ==2
 
+# Substiuir missings por zero
+df$var[is.na(df$var)] <- 0 
+
 # Para muitas colunas
 df[,  1:10][ df[,  1:10] == 0 ] <- NA # fazer replace de 0 para NA
 ```
