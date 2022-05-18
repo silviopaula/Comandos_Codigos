@@ -1088,6 +1088,19 @@ Para ver proporções (table)
 prop.table(table(df$var))
 ```
 
+tabular coluna binária
+```
+# para uma coluna
+table(df$var)
+
+# loop com varias colunas
+apply(df[,1:10],2,function(x) table(x))
+
+# loop com varias colunasa pedindo por ano
+apply(df[,1:10],2,function(x) table(x, df$Ano))
+```
+
+
 Tabular dados e gerar gráfico                                                   
 ``library(funModeling)``                  
 
