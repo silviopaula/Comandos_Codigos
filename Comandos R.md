@@ -1793,6 +1793,17 @@ for(cod in x) {
 }
 ```
 
+
+# Bibliometria com bibliometrix
+
+```
+install.packages("remotes")  
+install.packages("igraph", type="binary")
+remotes::install_github("massimoaria/bibliometrix")
+library(bibliometrix)
+biblioshiny()
+```
+
 ## Referências 
 * [Bóson Treinamentos em Ciência e Tecnologia](http://www.bosontreinamentos.com.br/programacao-em-r/operadores-logicos-e-operadores-de-comparacao-em-r/)
 
