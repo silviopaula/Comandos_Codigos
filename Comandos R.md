@@ -1335,6 +1335,15 @@ df$var_nova <- as.integer(str_detect(df$var,"expressão_1"))
 df$var_nova[as.integer(str_detect(df$var,"expressão_2")) == 1] <- 1
 ```
 
+Outras aplicações do str_detect
+```
+fruit <- c("apple", "banana", "pear", "pinapple")
+str_detect(fruit, "a")  # que contenha "a" em qualquer lugar
+str_detect(fruit, "^a") # que contenha "a" no inicio da palavra
+str_detect(fruit, "a$") # que contenha "a" no final da palavra
+str_detect(fruit, "[aeiou]")  # que contenha "aeiou" em qualquer lugar
+```
+
 ## Tarefas Prontas
 
 **Desabilitar notação científica**
