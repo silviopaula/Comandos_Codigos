@@ -315,6 +315,9 @@ Gerar uma amostra  com package `data.table`
 # Gerar uma amostra apenas com as colunas var1 var2 var3
 df_novo <- df[,.(var1, var2, var3)]
 
+# Remover colunas
+df_novo <- df[, c("var1", "var2", "var3") := NULL]
+
 # Subset com data.table
 df <- df[!(df$var=="var1"),]
 df <- df[(df$Ano>=2009 & df$Ano==2017),]
