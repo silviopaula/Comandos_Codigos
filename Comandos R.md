@@ -658,6 +658,12 @@ df$var <- gsub(",", "\\.", df$var)
 df$var <- gsub("\\.", ",", df$var)
 ```
 
+Replace virgula para ponto & ponto para virgula em todas colunas do dataframe
+```
+df <- format(df, decimal.mark=",") %>% as.data.frame()
+df = as.data.frame(sapply(df, as.numeric))
+```
+
 Replace com ifelse 
 > Nota: Fazer replace na variável var1, se var1 for menor que zero então var1 irá receber o valor de 1, caso contrário não irá alterar
 ```
