@@ -265,10 +265,16 @@ Plotar rapidamente as variáveis númericas
 
 ```
 # Plotar todas variáveis númericas do df
-plot_num(df)
+plot_num(df, path_out = ".")
 
-# Plotar todas variáveis categóricas do df
-plot_cat(df)
+# Plotar todas variáveis categóricas do df (devem estar em fator)
+freq(df)
+
+# Estatisticas descritivas
+Descritivas <- profiling_num(df)
+
+# Estatisticas descritivas (arredondando para 3 casas decimais)
+Descritivas <- profiling_num(df) %>% mutate_if(is.numeric, ~round(., 3))
 ```
 
 ## Manipulando Dataframes
