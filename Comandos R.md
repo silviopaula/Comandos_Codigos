@@ -261,9 +261,13 @@ ls(df)
 ```
 
 Plotar rapidamente as variáveis númericas                  
-``library(funModeling)``             
+``library(funModeling)`` 
+Ver mais em: https://livebook.datascienceheroes.com/appendix.html#funmodeling-quick-start
 
 ```
+# Ver quantidades de zeros missings etc.
+df_status(df)
+
 # Plotar todas variáveis númericas do df
 plot_num(df, path_out = ".")
 
@@ -271,10 +275,10 @@ plot_num(df, path_out = ".")
 freq(df)
 
 # Estatisticas descritivas
-Descritivas <- profiling_num(df)
+profiling_num(df)
 
 # Estatisticas descritivas (arredondando para 3 casas decimais)
-Descritivas <- profiling_num(df) %>% mutate_if(is.numeric, ~round(., 3))
+profiling_num(df) %>% mutate_if(is.numeric, ~round(., 3))
 ```
 
 ## Manipulando Dataframes
