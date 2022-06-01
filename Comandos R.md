@@ -514,6 +514,11 @@ Converter um conjunto de colunas para numérico com `dplyr`
 df <- df %>% mutate_at(c(1:10), as.numeric)
 ```
 
+Converter um conjunto de colunas para factor com `dplyr`
+```
+df <- df %>% mutate_at(c(1:10), as.factor)
+```
+
 Converter todo dataframe para numérico
 ```
 df = as.data.frame(sapply(df, as.numeric))
@@ -526,7 +531,8 @@ df$var1 <- factor(df$var1)
 
 Converter muitas colunas para fator
 ```
-col_names <- c("var_1", "var_2", "var_3")
+col_names <- c("var_1", "var_2", "var_3") # definindo 3 colunas
+col_names_all <- colnames(df) # obter todos os nomes das colunas
 df[,col_names] <- lapply(df[,col_names], factor)
 ```
 
