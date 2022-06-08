@@ -1050,7 +1050,7 @@ round(Tabela_descritivas,3) ## Arredondando em 3 casas decimais
 ```
 
 Outra maneira de obter as estatísticas descritivas com `pastecs`
-``install.package('pastecs')``
+``install.packages('pastecs')``
 ``library(pastecs)``
 ```
 stat.desc(df) 
