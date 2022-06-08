@@ -44,7 +44,7 @@ Para utilizamos o stata como calculadora precisamos utilizar o comando ***displa
     display exp(9)
     display log(9)
 
-## Trabalhando coma arquivos .dta
+## Trabalhando coma arquivos  .dta
 
 *Abrir somente algumas variáveis de um banco de dados
 
