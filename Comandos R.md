@@ -198,7 +198,7 @@ Visualizar apenas algumas colunas do dataframe
 view(df[,c("var_1", "var_2", "var_3")])
 ```
 
-Visualizar o nome das variáveis de um dataframe
+Visualizar o nome das colunas de um dataframe
 ```
 names(df)
 colnames(df)
@@ -207,6 +207,11 @@ colnames(df)
 Visualizar nome de colunas utilizando seu número
 ```
 names(df)[c(1:4,9,20)]
+```
+
+Visualizar numero das colunas utilizando seu nome
+```
+Col_number <- which(names(df) %in% c("var1","var2","var3","var4"))
 ```
 
 Visualizar uma prévia do dataframe
