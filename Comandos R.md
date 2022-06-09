@@ -198,6 +198,11 @@ Visualizar apenas algumas colunas do dataframe
 view(df[,c("var_1", "var_2", "var_3")])
 ```
 
+Visualizar apenas algumas colunas com data.table
+```
+view(df[,.(var_1, var_2, var_3)])
+```
+
 Visualizar o nome das colunas de um dataframe
 ```
 names(df)
