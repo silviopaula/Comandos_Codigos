@@ -1721,6 +1721,19 @@ Exportar base de dados do stata  .dta  com `haven`
 write_dta(df, "df.dta")
 ```
 
+Abrindo vários arquivos .csv
+```
+list_data <- list.files(path = "D:/OneDrive/PROJETO IPEA/volume_trafego", pattern = ".csv", full.names = TRUE)
+
+read_data = function(list_data){
+  read.csv2(list_data, encoding = "UTF-8", stringsAsFactors=FALSE)
+}
+myfiles = lapply(X = list_data, FUN = read_data)
+
+#Obtendo um único dataframe
+data_demand = data.table::rbindlist(myfiles)
+```
+
 Importar .csv de forma mais rápida com `data.table`
 ```
 df_amostra <- fread(D:df.csv)
