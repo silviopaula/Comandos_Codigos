@@ -1164,10 +1164,10 @@ df$var <- str_replace(df$var, "-", "")
 ```
 
 Remover caracteres específicos
-> Nota: use “^x” se quiser excluir os que começam com X use “x$” sequiser excluir os que terminam com X
+> Nota: use “^x” se quiser excluir os que começam com X; use “x$” sequiser excluir os que terminam com X
 ```
-df_novo <- df[!grepl("E+", df$var),]  
-df_novo <- df[!grepl("^X$", df$var),]
+df_novo <- df[!grepl("^X", df$var),]  # Começa com X
+df_novo <- df[!grepl("^X$", df$var),] # Termina com X
 ```
 
 Remover linhas que contém  4 caracteres ou mais caracteres
