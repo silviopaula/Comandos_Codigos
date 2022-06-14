@@ -684,6 +684,16 @@ df$var <- gsub(",", "\\.", df$var)
 df$var <- gsub("\\.", ",", df$var)
 ```
 
+Replace valores de uma coluna se outra coluna contém expressão específica.
+> Exemplo: suponha que a coluna Municipio tem o nome do municipio underline e a Sigla do UF, bastaria criar uma Coluna UF e preender os valores desta forma
+```
+# Municípios que terminam com RS
+df$UF[which(grepl("RS$", df$Municipio))] <- "RS"
+
+# Municípios que começam com RS
+df$UF[which(grepl("^RS", df$Municipio))] <- "RS" 
+```
+
 Replace virgula para ponto & ponto para virgula em todas colunas do dataframe
 ```
 df <- format(df, decimal.mark=",") %>% as.data.frame()
@@ -1175,7 +1185,7 @@ Remover linhas que contém  4 caracteres ou mais caracteres
 df = df[(which(nchar(df$var) >= 4)),]
 ```
 
-Padronizando strings retirando apenas alguns caracteres `stringr`
+Replace strings com `stringr`
 ```
 df$var <- str_replace(df$var, "-", "")
 df$var <- str_replace(df$var, "\\[", "")  # Para remover [
