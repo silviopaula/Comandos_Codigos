@@ -1181,6 +1181,7 @@ df$var <- str_replace(df$var, "-", "")
 df$var <- str_replace(df$var, "\\[", "")  # Para remover [
 df$var <- str_replace(df$var, "\\\\", "") # Para remover \
 df$var <- str_replace(df$var, "\\.", "")  # Para remover . 
+df$var <- str_replace_all(df$var, c("\\(" = "", "\\)" = "")) # Para remover ( e ) por nada
 ```
 
 Remove todos caracteres *não-alfanuméricos* 
