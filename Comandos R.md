@@ -298,13 +298,19 @@ Ordenando alfabeticamente as colunas de um dataframe
 df <- df %>% select(order(colnames(df)))
 ```
 
+Ordenando um dataframe com as colunas desejadas
+> Nota: isso é um subset, portando, se não colocar o nome da coluna ela será excluida do df
+```
+df <- df %>% select(c("var_3", "var_1", "var_2")) 
+```
+
 Ordenar uma coluna de um dataframe
 ```
 # Ordenar de forma crescente
-df <- df [order(df $var1),]
+df <- df [order(df$var1),]
 
 # Ordenar de forma decrescente
-df <- df [order(df $var1),decreasing = (TRUE),] 
+df <- df [order(df$var1),decreasing = (TRUE),] 
 ```
 
 Ordenar colunas de um dataframe
