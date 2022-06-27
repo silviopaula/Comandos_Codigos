@@ -125,7 +125,7 @@ if(!require(pacman)){install.packages("pacman")}
 p_load(ggplot2, dplyr, stringr) 
 ```
 
-Limpar console e base de dados
+Limpar console e objetos
 ```
 rm(list=ls())
 ```
