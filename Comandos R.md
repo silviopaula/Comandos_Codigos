@@ -90,13 +90,13 @@ update.packages()
 update.packages(checkBuilt=TRUE, ask=FALSE)
 ```
 
-Carregar pacotes instalados
+Carregar pacotes
 ```
 #library(package)
 #require(pacote)
 ```
 
-Como descarregar pacotes
+Descarregar packages
 ```
 detach('package:pacote', unload =TRUE)
 ```
@@ -106,7 +106,7 @@ Verificar a versão do pacote
 packageDescription("pacote")
 ```
 
-Utilizando o package ``pacman`` para instalar e carregar pacotes
+Package ``pacman`` para instalar e carregar pacotes
 > O pacman verifica se os pacotes estão instalados, e se não estão, ele instala e carrega automaticamente
 ```
 install.packages('pacman')
@@ -140,7 +140,7 @@ Utilizar uma função específica de um pacote sem carregar o pacote
 (pacote)::função()
 ```
 
-Acessar a documentação
+Acessar documentação
 > Obs: é possível acessar o help de uma função ou pacote simplesmente 
 > selecionando a função com mouse  e pressionando F1
 ```
@@ -152,7 +152,8 @@ Acessar  a documentação de um pacote
 help(package='pacote')
 ```
 
-Para acessar o help de um comando específico
+Help função 
+> Também é possível fazer, selecionando a função, package etc + F1
 ```
 ?comando
 help('comando')
@@ -171,8 +172,11 @@ memory.limit (9999999999)
 Checar quantidade de memória selecionada
 ```
 memory.size()
-gc()
-gc(reset=TRUE) # Limpar memória
+```
+
+Limpar memória (itens ocultos mas não apaga os objetos) 
+```
+gc() 
 ```
 
 Escolhendo quantos threads do CPU serão utilizadas
@@ -326,7 +330,7 @@ df_novo <- subset(df, select = c(var1, var2, var3))
 # Gerar uma amostra sem as colunas var1 var2 var3
 df_novo <- subset(df, select = -c(var1, var2, var3)) 
 
-# Para nomes com espações utilizar `var 1`
+# Para nomes com espaços utilizar `var 1`
 df_novo <- subset(df, select = -c(`var 1`, `var 1`, `var 1`)) 
 ```
 
@@ -349,13 +353,13 @@ df <- df[!(df$var=="var1"),]
 df <- df[(df$Ano>=2009 & df$Ano==2017),]
 ```
 
-Gerar uma amostra com período delimitado
+Gerar amostra com período delimitado
 ```
 df_novo <- subset(df, Ano>=2009)
 df_novo <- subset(df, Ano>=2009 & Ano<=2018)
 ```
 
-Gerar uma amostra com as primeiras 1000 linhas de um dataframe
+Gerar amostra com as primeiras 1000 linhas do df
 ```
 df_novo  <- head(df, n=1000)
 ```
@@ -1241,9 +1245,11 @@ Remover linhas com a expressão exata
 df <- subset(df, var!="expressao")
 ```
 
-Remover os espaços iniciais e finais
+Remover espaços iniciais e finais
 ```
-df$var <- str_trim(df$var)                
+df$var <- str_trim(df$var) 
+#ou
+df$var <- gsub("[[:space:]]", "", df$var)
 ```
 
 Deixar somente os dois primeiros caracteres
