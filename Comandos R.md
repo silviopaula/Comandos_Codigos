@@ -1712,7 +1712,7 @@ df <- data.frame(Date=df, Estacoes=toSeason(df$var_date))
 df <- df %>% rename_all(~stringr::str_replace(.,"Date.",""))
 ```
 
-**Preparar colunas para os novos métodos de diff (Callaway and Sant'anna; Sun and Abrahan; Gardner e outros)** 
+**Preparar colunas para os novos estimadores de diff (Callaway and Sant'anna; Sun and Abrahan; Gardner e outros)** 
 > Suponha que o tratamento do programa XXX, começou em 2006 para alguns municípios do Brasil
 ```
 # Clonar dummy de tratamento e substituindo zeros por missings
