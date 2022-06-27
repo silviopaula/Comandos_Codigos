@@ -77,7 +77,7 @@ install.packages('package')
 install.package(c('package1','package2','package3'))
 ```
 
-Instalar uma versão mais antiga de um pacote
+Instalar versão mais antiga de um pacote
 ```
 Exemplo 
 install.packages("fixest", version='0.8.4')
@@ -101,13 +101,13 @@ Descarregar packages
 detach('package:pacote', unload =TRUE)
 ```
 
-Verificar a versão do pacote
+Verificar versão do pacote
 ```
 packageDescription("pacote")
 ```
 
 Package ``pacman`` para instalar e carregar pacotes
-> O pacman verifica se os pacotes estão instalados, e se não estão, ele instala e carrega automaticamente
+> O pacman verifica se os pacotes estão instalados, se não estão, ele instala e carrega automaticamente.
 ```
 install.packages('pacman')
 library(pacman)
@@ -130,25 +130,28 @@ Limpar console e base de dados
 rm(list=ls())
 ```
 
-Definir pasta de trabalho
+Definir pasta/diretório de trabalho
 ```
 setwd ("D:/")
 ```
 
-Utilizar uma função específica de um pacote sem carregar o pacote
+Abrir diretório de trabalho
+```
+Abrir_Diretorio <- function(directory = getwd()){
+  system(sprintf('open %s', shQuote(directory)))
+}
+opendir("D:/")
+```
+
+Utilizar uma função específica de um pacote sem carrega-lo
 ```
 (pacote)::função()
 ```
 
 Acessar documentação
-> Obs: é possível acessar o help de uma função ou pacote simplesmente 
-> selecionando a função com mouse  e pressionando F1
+> Obs: é possível acessar o help de uma função, pacote selecionando a função com mouse + F1
 ```
 help('pacote')
-```
-
-Acessar  a documentação de um pacote
-```
 help(package='pacote')
 ```
 
@@ -163,8 +166,7 @@ help('comando', package='pacote')
 ## Configurações de Memória e Processador.
 
 Expandir memória
-> Obs: também é possível selecionar a quantidade memória desejada
-> substituindo os valores em mb no lugar do 9....
+> Obs: também é possível selecionar a quantidade memória desejada substituindo os valores em mb no lugar do 9....
 ```
 memory.limit (9999999999) 
 ```
@@ -197,46 +199,47 @@ Visualizar 100 linhas do dataframe
 View(head(df, n=100))
 ```
 
-Visualizar apenas algumas colunas do dataframe
+Visualizar algumas colunas do dataframe
 ```
 view(df[,c("var_1", "var_2", "var_3")])
 ```
 
-Visualizar apenas algumas colunas com data.table
+Visualizar algumas colunas com data.table
 ```
 view(df[,.(var_1, var_2, var_3)])
 ```
 
-Visualizar o nome das colunas de um dataframe
+Visualizar nome das colunas do df
 ```
 names(df)
 colnames(df)
 ```
 
-Visualizar nome de colunas utilizando seu número
+Visualizar nome de colunas a partir do número da coluna
 ```
 names(df)[c(1:4,9,20)]
 ```
 
-Visualizar numero das colunas utilizando seu nome
+Visualizar número atribuido a cada coluna a partir do nome
 ```
 Col_number <- which(names(df) %in% c("var1","var2","var3","var4"))
 ```
 
-Visualizar uma prévia do dataframe
+Visualizar prévia do df
 ```
 df
 ```
-Visualizar as primeiras 10 linhas do dataframe
+
+Visualizar as primeiras linhas do df
 ```
 head(df) 
-head(df, n==5) ## Ver as primeiras 5 linhas
+head(df, n==10) # Visualizar as primeiras 5 linhas
 ```
 
-Visualizar as últimas 10 linhas do dataframe
+Visualizar as últimaslinhas do df
 ```
 tail(df) 
-tail(df, n==5) ## Ver as últimas 5 linhas
+tail(df, n==5) # Visualizar as últimas 5 linhas
 ```
 
 Visualizar  dimensões do dataframe (colunas e linhas)
@@ -244,37 +247,37 @@ Visualizar  dimensões do dataframe (colunas e linhas)
 dim(df)
 ```
 
-Visualizar detalhes das variáveis do dataframe
+Visualizar detalhes das variáveis do df
 ```
 str(df)
 ```
 
-Visualizar classes das colunas e prévia dos dados
+Visualizar classes das colunas e outras informações
 ```
 glimpse(df)
 ```
 
-Visualizar o tipo de classe de uma variável (numérico, string, etc.)
+Visualizar classe de uma coluna no df (numérico, string, etc.)
 ```
 class(df$var1)
 ```
 
-Visualizar  a classe de um objeto (numeric, matrix, data.frame, etc,)
+Visualizar classe de um objeto (numeric, matrix, data.frame, etc,)
 ```
 class(df)
 ```
 
-Visualizar a classe de todas colunas
+Visualizar classe de todas colunas
 ```
 lapply(df,class)
 ```
 
-Listar objetos no ambiente de trabalho
+Listar objetos
 ```
 ls(df)
 ```
 
-Plotar rapidamente as variáveis númericas                  
+Visualizar e plotar colunas do df rapidamente                 
 ``library(funModeling)`` 
 Ver mais em: https://livebook.datascienceheroes.com/appendix.html#funmodeling-quick-start
 
@@ -297,18 +300,18 @@ profiling_num(df) %>% mutate_if(is.numeric, ~round(., 3))
 
 ## Manipulando Dataframes
 
-Ordenando alfabeticamente as colunas de um dataframe
+Ordenando alfabeticamente as colunas do df
 ```
 df <- df %>% select(order(colnames(df)))
 ```
 
-Ordenando um dataframe com as colunas desejadas
+Ordenando df com as colunas desejadas
 > Nota: isso é um subset, portando, se não colocar o nome da coluna ela será excluida do df
 ```
 df <- df %>% select(c("var_3", "var_1", "var_2")) 
 ```
 
-Ordenar uma coluna de um dataframe
+Ordenar coluna do df
 ```
 # Ordenar de forma crescente
 df <- df [order(df$var1),]
@@ -317,38 +320,41 @@ df <- df [order(df$var1),]
 df <- df [order(df$var1),decreasing = (TRUE),] 
 ```
 
-Ordenar colunas de um dataframe
+Ordenar colunas do df
 ```
 df <- df %>%  select(sort(current_vars()))
 ```
 
-Gerar uma amostra com o comando `subset`
+Gerar amostra com o comando `subset`
 ```
-# Gerar uma amostra apenas com as colunas var1 var2 var3
+# Gerar amostra apenas com as colunas var1 var2 var3
 df_novo <- subset(df, select = c(var1, var2, var3)) 
 
-# Gerar uma amostra sem as colunas var1 var2 var3
+# Gerar amostra sem as colunas var1 var2 var3
 df_novo <- subset(df, select = -c(var1, var2, var3)) 
 
-# Para nomes com espaços utilizar `var 1`
+# Utilizando nomes com espaços
 df_novo <- subset(df, select = -c(`var 1`, `var 1`, `var 1`)) 
 ```
 
-Dropar colunas que contenham uma determinada expressão
+Dropar colunas contendo determinada expressão
 ```
 df_novo <- subset(df, select = c(!grepl("^Expressão",names(df))))
 ```
 
-Gerar uma amostra  com package `data.table`
+Gerar amostra  com package `data.table`
 > Obs: só funciona se o objeto for um data.table
 ```
-# Gerar uma amostra apenas com as colunas var1 var2 var3
+# Gerar amostra apenas com as colunas var1 var2 var3
 df_novo <- df[,.(var1, var2, var3)]
 
-# Remover colunas
+# Remover colunas var1 var2 var3
 df_novo <- df[, c("var1", "var2", "var3") := NULL]
 
-# Subset com data.table
+# Remover ids que aparecem apenas uma vez no painel de dados (data.table)
+setDT(df)[, if(.N>1) .SD, by = id]
+
+# Outros Subsets com data.table
 df <- df[!(df$var=="var1"),]
 df <- df[(df$Ano>=2009 & df$Ano==2017),]
 ```
@@ -389,31 +395,30 @@ df_long  <- melt(setDT(df), id.vars = c("id"),
                                            "Nome_3"))
 ```
 
-Clonar uma variável do dataframe com package `dplyr`
+Clonar coluna do df com package `dplyr`
 ```
 df <- df %>% mutate(var_clone1 = var1) %>%   
              mutate(var_clone2 = var2)
 ```
 
-Clonar uma variável
+Clonar coluna do df
 ```
 df$var_clone1 <- df$var1
 ```
 
-Deixar somente alguns dos dataframes selecionados
+Deixar dfs selecionados
 ```
 rm(list=(ls()[ls()!="df1", "df2"]))
 ```
 
-Remover  dataframe
+Remover df ou outros objetos
 ```
 rm(df)
 ```
 
-Renomear data.frame
+Clonar df
 ```
 df_novo <- df_antigo
-rm(df_antigo)
 ```
 
 Renomear colunas
@@ -422,7 +427,7 @@ df <- rename(df, c("nome_novo_1" = "nome_antigo_1",
                    "nome_novo_2" = "nome_antigo_2"))
 ```
 
-Renomear múltiplas colunas de um só vez
+Renomear múltiplas colunas utilizando seu indice (número)
 ```
 names(df)[1:4] <- c("var1", "var2","var3" ,"var4")
 ```
@@ -438,7 +443,7 @@ Renomear colunas de um data.frame
 names(df)[names(df) == 'nome_antigo'] <- 'nome_novo'
 ```
 
-Renomear colunas adicionando um prefixo e sufixo
+Adicionar prefixo ou sufixo nas colunas
 ```
 # Prefixo
 colnames(df) <- paste("ln", colnames(df), sep = "_")
@@ -447,13 +452,13 @@ colnames(df) <- paste("ln", colnames(df), sep = "_")
 colnames(df)[1:10] <- paste(colnames(df)[1:10], "texto", sep = "_")
 ```
 
-Dropar (deletar) colunas do dataframe
+Dropar (deletar) colunas do df
 ```
 df$var1  <-NULL
 df$var2 <- df$var3 <-NULL
 ```
 
-Gerar uma nova coluna dentro em um dataframe
+Gerar nova coluna no df
 ```
 df$var0 = 0
 df$var3 = (df$var1 + df$var2)
@@ -462,23 +467,23 @@ df$var5 = (df$var1 / df$var2)
 df$var6 = (df$var1)^2 
 ```
 
-Gerar nova coluna por meio da soma de duas colonas desconsiderando os missings
+Gerar nova coluna a partir da soma de duas colonas desconsiderando os missings
 ```
 df$var_total<- rowSums(df[,c("var1", "var2")], na.rm=TRUE)
 ```
 
-Remover se da coluna 2 a 10 for missings
+Remover missings das colunas 2 a 10
 ```
 df <- df[complete.cases(df[ , 2:10]),]
 ```
 
-Gerar uma nova coluna tirando o  logaritmo de uma variável
+Gerar nova coluna com o logaritmo natural
 > Obs: esse comando gera o logaritmo natural
 ```
 df$log_var1 <- log(df$var1)
 ```
 
-Gerar múltiplas colunas em logaritmo 
+Gerar múltiplas colunas com logaritmo natural
 > Obs: depois basta renomear as colunas (recomendo adicionar somente o prefixo com:
 >  ``colnames(df) <- paste("ln", colnames(df), sep = "_")``
 ```
@@ -491,7 +496,7 @@ df[,1:10] <- as.data.frame(lapply(df[,1:10], FUN = function(x) {sapply(x, FUN = 
 # Aplicar função log_natural nas colunas 1 a 10 e 12 ao 20
 df[,c(1:10, 12:20)] <- as.data.frame(lapply(df[,c(1:10, 12:20)], FUN = function(x) {sapply(x, FUN = log_natural)}))
 
-# Criar uma função para gerar o logaritmo natural + 1 (para quando temos zeros na coluna
+# Criar função para gerar o logaritmo natural + 1 (para quando temos zeros na coluna)
 log_mais_um <- function(x) {log(x + 1)}
 
 # Aplicar função log_mais_um nas colunas 1 a 10
@@ -501,62 +506,62 @@ df[,1:10] <- as.data.frame(lapply(df[,1:10], FUN = function(x) {sapply(x, FUN = 
 df[,c(1:10, 12:20)] <- as.data.frame(lapply(df[,c(1:10, 12:20)], FUN = function(x) {sapply(x, FUN = log_mais_um)}))
 ```
 
-
-Adicionar um label com pacote `Hmisc`
-> Nota: o label é um descrição, ou seja, um rótulo para a coluna com a sua descrição. Cabe destacar que o label pode gerar problemas posteriormente com algumas transformação, portanto, adicione o label  após realizar todas as transformações nas colunas.
+Adicionar label a uma coluna com pacote `Hmisc`
 ```
 label(var[[1]]) <- "var descrição"
 ```
 
-Converter uma coluna de numérico para string. objeto do tipo `datatable`
+Converter coluna numérica para string. objeto do tipo `datatable`
 ```
 df <- as.data.table(apply(df, "var", as.character))  
 class(df$var)
 ```
-Converter uma coluna de string para numérico. objeto do tipo `datatable`
+
+Converter coluna string para numérico. objeto do tipo `datatable`
 ```
 df <- as.data.table(apply(df, "var", as.numeric))  
 class(df$var)
 ```
-Converter uma coluna para numérico
+
+Converter coluna para numérico (cuidado se a coluna for factor irá gerar problemas)
 ```
 df$var1 <- as.numeric(df$var1)
 ```
 
-Converter uma coluna factor para numérico (primeiro converter para character depois para numérico)
+Converter coluna factor para numérico (primeiro converter para character após para numérico)
 ```
 df$var1 <- as.character(df$var1) 
 df$var1 <- as.numeric(df$var1)
 ```
 
-Converter um conjunto de colunas para numérico com `dplyr`
+Converter conjunto de colunas para numérico com `dplyr`
 ```
 df <- df %>% mutate_at(c(1:10), as.numeric)
 ```
 
-Converter um conjunto de colunas para factor com `dplyr`
+Converter conjunto de colunas para factor com `dplyr`
 ```
 df <- df %>% mutate_at(c(1:10), as.factor)
 ```
 
-Converter todo dataframe para numérico
+Converter todo df para numérico
 ```
 df = as.data.frame(sapply(df, as.numeric))
 ```
 
-Converter uma coluna para fator
+Converter coluna para factor
 ```
 df$var1 <- factor(df$var1)
 ```
 
-Converter muitas colunas para fator
+Converter varias colunas para factor
 ```
 col_names <- c("var_1", "var_2", "var_3") # definindo 3 colunas
 col_names_all <- colnames(df) # obter todos os nomes das colunas
 df[,col_names] <- lapply(df[,col_names], factor)
 ```
 
-Converter colunas selecionadas para numérico
+Converter colunas para numérico, utilizando o indice(número)
 ```
 df <- df %>% mutate_at(c(1:15), as.numeric)
 ```
@@ -573,19 +578,19 @@ Substituir inf e -inf por NA com data.table
 ```
 invisible(lapply(names(df),function(.name) set(df, which(is.infinite(df[[.name]])), j = .name,value =NA)))
 
-# para todas colunas
+# Substituir inf de todas as colunas
 is.na(df) <- sapply(df, is.infinite)
 ```
 
-Gerar uma variável categórica com `dplyr`
-> Exemplo: suponha que temos uma variável categórica com tipos de produtos, e queremos gerar uma nova variável categóricas agregando esses produtos. A saída deste comando resulta e uma variável com 4 categorias, 0,1,2,3,4
+Gerar coluna categórica com `dplyr`
+> Exemplo: suponha que temos uma coluna categórica com difentes tipos de produtos e queremos gerar uma nova coluna categóricas agregando esses produtos. A saída deste comando resulta e uma variável com 4 categorias, 0,1,2,3,4
 ```
 df <- df %>% mutate(var_cat = ifelse(Var_Produto %in% c(1:24,28,35,99), 1,
                               ifelse(Var_Produto %in% c(26,34), 2 ,
                               ifelse(Var_Produto %in% c(25,32,33), 3, 0))))
 ```
 
-Arredondando valores de uma coluna ou de varias colunas 
+Arredondando valores de uma ou varias colunas 
 > Nota: o comando arredonda com 2 casas decimais.
 ```
 df %>% mutate_at(vars(var1), funs(round(., 2)))
@@ -602,12 +607,12 @@ Arredondar valores de todas as colunas cujo nome começa por VAR
 df %>% mutate_at(vars(starts_with("VAR")), funs(round(., 2)))
 ```
 
-Arredondar valores  apenas colunas numéricas
+Arredondar valores apenas das colunas numéricas
 ```
 mydf %>% mutate_if(is.numeric, ~round(., 2))
 ```
 
-Agregar  dados por id com `dplyr`
+Agregar dados por id com `dplyr`
 > Obs: as colunas do agrupamento devem ser fatores
 ```
 df_novo <- df %>% group_by(as.factor(id, Ano)) %>%  
@@ -617,7 +622,7 @@ df_novo <- df %>% group_by(as.factor(id, Ano)) %>%
                       Min_var = min(var))
 ```
 
-Agregar  os dados por id e Ano com `data.table`
+Agregar dados por id e Ano com `data.table`
 ```
 df_novo <- setDT(df)[ , .(Max_var   = max(var, na.rm=TRUE),
                           Media_var = mean(var, na.rm=TRUE),
@@ -626,7 +631,7 @@ df_novo <- setDT(df)[ , .(Max_var   = max(var, na.rm=TRUE),
                           by =c("id", "Ano")]
 ```
 
-Agregar  os dados por id e Ano com `data.table` e gerar novas colunas
+Agregar dados por id e Ano com `data.table` e gerar novas colunas
 ```
 setDT(df)[ , .(Max_var   := max(var, na.rm=TRUE),
                Media_var := mean(var, na.rm=TRUE),
@@ -635,26 +640,32 @@ setDT(df)[ , .(Max_var   := max(var, na.rm=TRUE),
                by =c("id", "Ano")]
 ```
 
-Contar valores unicos de uma coluna agrupando por id
+Contar valores únicos de uma coluna agrupando por id
 ```
 df_novo <- df %>% group_by(id) %>% summarize(Total = n_distinct(var), Count = n())
 ```
 
-Contar quantas linhas não missings por id 
+Contar linhas sem missings por id 
 ```
 df2 <- df1 %>% group_by(id) %>% mutate(contagem = sum(!is.na(var)))
 ```
 
-Agregar  os dados com a soma
+Contar o número de caracteres de uma coluna
+```
+df$Length <- str_count(df$var)
+table(df$Length)
+```
+
+Agregar dados utilizando a soma
 ```
 df_novo <- summarise(df, total_var = sum(var))
 ```
 
-Replace (substituir) de forma fácil
+Replace (substituir)
 ```
-df$var1[df$var2 == 1] <- 1  # fazer replace para 1 em var1 se var2 ==1
-df$var1[df$var1 == 0] <- NA # fazer replace de 0 para NA
-[df$var2 == 2] <- 1         # fazer replace para 1 se var2 ==2
+df$var1[df$var2 == 1] <- 1   # Replace para 1 em var1 se var2 ==1
+df$var1[df$var1 == 0] <- NA  # Replace de 0 para NA
+[df$var2 == 2] <- 1          # Replace para 1 se var2 ==2
 
 # Substiuir infinitos por missings
 df$var[is.infinite(df$var)] <- NA 
@@ -662,7 +673,7 @@ df$var[is.infinite(df$var)] <- NA
 # Substiuir missings por zero
 df$var[is.na(df$var)] <- 0 
 
-# Para muitas colunas
+# Replace Para muitas colunas
 df[,  1:10][ df[,  1:10] == 0 ] <- NA # fazer replace de 0 para NA
 ```
 
@@ -670,7 +681,7 @@ Atribuindo zero a todos os missings com `imputeTS`
 ``install.packages('imputeTS')``    
 ``library(imputeTS)``    
 ```
-# Atribuir zeros para todo os missings do dataframe
+# Atribuir zeros para todo os missings do df
 df <- na_replace(df, 0)
 
 # Atribuir zeros para todo os missings de uma coluna
@@ -680,12 +691,12 @@ df$var <- na_replace(df$var, 0)
 df[, 1:20] <- na_replace(df[, 1:20], 0)
 ```
 
-Replace todas colunas de nan para NA 
+Replace de todas colunas com 'nan' para 'NA'
 ```
 invisible(lapply(names(df),function(.name) set(df, which(is.nan(df[[.name]])), j = .name,value =NA)))
 ```
 
-Replace virgula para ponto & ponto para virgula
+Replace virgula e ponto
 ```
 # Replace virgula para ponto
 df$var <- gsub(",", "\\.", df$var)
@@ -694,24 +705,24 @@ df$var <- gsub(",", "\\.", df$var)
 df$var <- gsub("\\.", ",", df$var)
 ```
 
-Replace valores de uma coluna se outra coluna contém expressão específica.
-> Exemplo: suponha que a coluna Municipio tem o nome do municipio underline e a Sigla do UF, bastaria criar uma Coluna UF e preender os valores desta forma
-```
-# Municípios que terminam com RS
-df$UF[which(grepl("RS$", df$Municipio))] <- "RS"
-
-# Municípios que começam com RS
-df$UF[which(grepl("^RS", df$Municipio))] <- "RS" 
-```
-
-Replace virgula para ponto & ponto para virgula em todas colunas do dataframe
+Replace virgula para ponto (outra forma)
 ```
 df <- format(df, decimal.mark=",") %>% as.data.frame()
 df = as.data.frame(sapply(df, as.numeric))
 ```
 
+Replace valores de uma coluna, se outra coluna contém a expressão.
+> Exemplo: suponha que a coluna Municipio contém o nome do municipio underline e a Sigla do UF, bastaria criar uma Coluna UF e preender os valores desta forma
+```
+# Municípios que terminam com RS
+df$UF[which(grepl("RS$", df$Municipio))] <- "RS"
+
+# Municípios  que iniciam com RS
+df$UF[which(grepl("^RS", df$Municipio))] <- "RS" 
+```
+
 Replace com ifelse 
-> Nota: Fazer replace na variável var1, se var1 for menor que zero então var1 irá receber o valor de 1, caso contrário não irá alterar
+> Nota: Fazer replace na variável var1, se var1 <0, então var1 receberá o valor 1, caso contrário permanecerá inalterada
 ```
 df$var1 = ifelse(df$var1 <0, 1, df$var1)
 ```
@@ -730,21 +741,21 @@ df$var_5cat = equal_freq(df$var, n_bins = 5)
 ```
 
 
-##  Variáveis  do Tipo Data (Date)
+##  Colunas do Tipo Data (Date)
 
-Converter uma variável para o tipo date com `lubridate`
-> Nota: ymd representa a ordem em que a data está construída, ou seja:
+Converter coluna para date com `lubridate`
+> Nota: ymd representa a ordem em que a data deve estar, ou seja:
  y=ano, m=mês, d=dia
 ```
 df$Data_var <- ymd(paste(df$Data_var))
 ```
 
-Extrair apenas o ano de uma coluna do tipo date
+Extrair o ano da coluna date
 ```
 df$Ano <- format(as.Date(df$Data, format="%d/%m/%Y"),"%Y")
 ```
 
-Extrair apenas o mês de uma coluna do tipo date
+Extrair o mês da coluna date
 ```
 df$Ano <- format(as.Date(df$Data, format="%d/%m/%Y"),"%m")
 ```
