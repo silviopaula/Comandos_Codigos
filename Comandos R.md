@@ -803,6 +803,14 @@ Fazer resumo de missings e zeros
 df_status(df)
 ```
 
+Gerar tabela resumo de missings, zeros e vazios
+```
+resumo <- df_status(df)
+resumo$vazias <- apply(df, 2, function(x) length(which(x == '')))
+resumo$OBS_Total <- nrow(df)
+resumo$perc_vazias = df$vazias / df$OBS_Total
+```
+
 Ver total de células vazias 
 ```
 # Ver células vazias de uma coluna string
