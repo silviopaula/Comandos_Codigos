@@ -324,6 +324,10 @@ Ordenar colunas do df
 ```
 df <- df %>%  select(sort(current_vars()))
 ```
+Escolher qual será a primeira coluna do df
+```
+df <- df %>% relocate(var)
+```
 
 Gerar amostra com o comando `subset`
 ```
@@ -1800,23 +1804,25 @@ df <- df[, c("AT_XXX") := NULL]
 
 
 **Imputar missings com XGboost**
+ver mais em: https://github.com/agnesdeng/mixgb
+
+Por padrão, escolherá aleatoriamente uma variável incompleta como a resposta e construirá um modelo XGBoost 
+com outras variáveis usando os casos completos do conjunto de dados. Portanto, cada corrida é provável que 
+retorne resultados diferentes. Os usuários também podem especificar a resposta e covariáveis no argumento e, 
+respectivamente.mixgb_cv()mixgb_cv()responseselect_features
 
 ```
 # Carregar pacotes
 if(!require(pacman)){install.packages("pacman")}
-p_load(tidyverse, data.table,funModeling, mixgb) 
+p_load(tidyverse, data.table, funModeling, mixgb) 
 
-# Impedindo notação cientifica 
-options(scipen=999)
-
-# Carregar dados
-df_original <- read_xxx("df.xlsx")
-names(df_original)
+# Semente
+set.seed(2022)
 
 # Preparar 
 df_original <- df_original %>% mutate_at(c(1:10), as.numeric) # converter as colunas 1 a 10 para numérico
 
-# 1.4 - Ver resumo de missings zeros e vazios
+# Visualizar resumo de missings zeros e vazios
 resumo <- df_status(df_original)
 resumo$vazias <- apply(df_original, 2, function(x) length(which(x == '')))
 resumo$OBS_Total <- nrow(df_original)
@@ -1878,6 +1884,16 @@ df2 <- left_join(df_original, Mean_df_inputed, by = c("Ano"))
 
 # Remover dfs que não preciso mais
 rm(`imputed.data`, imputed_data_1, imputed_data_2, imputed_data_3, imputed_data_4, imputed_data_5, Mean_df_inputed, col_missing)
+```
+
+**Imputar missings com mice**
+
+```
+# Carregar pacotes
+if(!require(pacman)){install.packages("pacman")}
+p_load(tidyverse, data.table, funModeling, mice) 
+
+df_imputed <- mice(df, m=5 ,maxit=5, meth = c("rf"), seed=500)
 ```
 
 ## Importar e Exportar Dados
