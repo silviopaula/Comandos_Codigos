@@ -1798,6 +1798,88 @@ Amostra <- df[,.(ANO, id, D_XXX, AT_XXX, Entrada_XXX, Todos_Trat_XXX, First_trea
 df <- df[, c("AT_XXX") := NULL]
 ```
 
+
+**Imputar missings com XGboost**
+
+```
+# Carregar pacotes
+if(!require(pacman)){install.packages("pacman")}
+p_load(tidyverse, data.table,funModeling, mixgb) 
+
+# Impedindo notação cientifica 
+options(scipen=999)
+
+# Carregar dados
+df_original <- read_xxx("df.xlsx")
+names(df_original)
+
+# Preparar 
+df_original <- df_original %>% mutate_at(c(1:10), as.numeric) # converter as colunas 1 a 10 para numérico
+
+# 1.4 - Ver resumo de missings zeros e vazios
+resumo <- df_status(df_original)
+resumo$vazias <- apply(df_original, 2, function(x) length(which(x == '')))
+resumo$OBS_Total <- nrow(df_original)
+resumo$perc_vazias = df_original$vazias / df_original$OBS_Total
+
+# Clonar df
+df <- df_original
+
+## Imputar missings com XGboost
+# É altamente recomendável limpar e verificar seus dados antes da imputação. Aqui estão algumas questões comuns:
+# 1- Os dados devem ser um quadro de dados.
+# 2- O ID deve ser removido
+# 3- Os valores perdidos devem ser codificados como NA não NaN
+# 4- Inf ou -Inf não são permitidos
+# 5- Células vazias devem ser codificadas como ou valores NA
+# 6- Variáveis do tipo "caractere" devem ser convertidas em "fator" 
+# 7- Variáveis do tipo "fator" devem ter pelo menos dois níveis
+
+# Selecionar colunas que serão imputadas (colunas com missings)
+col_missing <- c("var1", "var2", "var")
+
+# obter o nome das colunas que contém missings
+col_missing <- names(which(colSums(is.na(df))>0)) 
+
+# Parâmetros do XGboost - Ver mais em: https://xgboost.readthedocs.io/en/stable/parameter.html
+params <- list(max_depth = 2, gamma = 0.1, eta = 0.3, min_child_weight = 1, subsample = 1, 
+               colsample_bytree = 1, colsample_bylevel = 1, colsample_bynode = 1, nthread = 25,
+               tree_method = "auto",gpu_id = 1, predictor = "auto")
+
+imputed.data <- mixgb(data = cov[col_missing], m = 5, maxit = 1, ordinalAsInteger = TRUE, bootstrap = TRUE, pmm.type = "auto", 
+                      pmm.k = 5, pmm.link = "prob", initial.num = "normal", initial.int = "mode", initial.fac = "mode",
+                      save.models = FALSE, save.vars = NULL, xgb.params = params, nrounds = 150, print_every_n = 10L,
+                      early_stopping_rounds = 20, verbose = 0)
+
+imputed_data_1 <- as.data.frame(imputed.data[[1]])
+imputed_data_1 <- cbind(imputed_data_1, df$Ano)
+
+imputed_data_2 <- as.data.frame(imputed.data[[2]])
+imputed_data_2 <- cbind(imputed_data_2, df$Ano)
+
+imputed_data_3 <- as.data.frame(imputed.data[[3]])
+imputed_data_3 <- cbind(imputed_data_3, df$Ano)
+
+imputed_data_4 <- as.data.frame(imputed.data[[4]])
+imputed_data_4 <- cbind(imputed_data_4, df$Ano)
+
+imputed_data_5 <- as.data.frame(imputed.data[[5]])
+imputed_data_5 <- cbind(imputed_data_5, df$Ano)
+
+# Pegar a média dos 5 modelos
+Mean_df_inputed <- rbindlist(list(imputed_data_1, imputed_data_2, imputed_data_3, imputed_data_4, imputed_data_5))[,lapply(.SD,mean), by= c("df$Ano")]
+Mean_df_inputed <- rename(Mean_df_inputed, c("Ano" = "df$Ano"))
+
+# Remover as colunas do df_original que foram imputadas 
+df_original <- subset(df_original, select = -c(var1, var2, var3))
+
+# Unir com as colunas imputadas
+df2 <- left_join(df_original, Mean_df_inputed, by = c("Ano"))
+
+# Remover dfs que não preciso mais
+rm(`imputed.data`, imputed_data_1, imputed_data_2, imputed_data_3, imputed_data_4, imputed_data_5, Mean_df_inputed, col_missing)
+```
+
 ## Importar e Exportar Dados
 
 > Nota: No Rstudio é possível importar bases de dados via menu.
