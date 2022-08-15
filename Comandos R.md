@@ -677,9 +677,13 @@ df$var[is.na(df$var)] <- 0
 df[,  1:10][ df[,  1:10] == 0 ] <- NA # fazer replace de 0 para NA
 ```
 
-Atribuindo zero a todos os missings com `imputeTS`     
+Imputar missings utilizando `imputeTS`     
 ``install.packages('imputeTS')``    
-``library(imputeTS)``    
+``library(imputeTS)``  
+ver mais:
+https://cran.rstudio.com/web/packages/imputeTS/vignettes/Cheat_Sheet_imputeTS.pdf
+https://cran.r-project.org/web/packages/imputeTS/readme/README.html
+
 ```
 # Atribuir zeros para todo os missings do df
 df <- na_replace(df, 0)
@@ -689,6 +693,34 @@ df$var <- na_replace(df$var, 0)
 
 # Atribuir zeros para todo os missings de vetor de colunas
 df[, 1:20] <- na_replace(df[, 1:20], 0)
+
+cols <- c("var1", "var2", "var3", "var4")
+Col_number <- which(names(df) %in% cols)
+
+# Imputar a mediana por id e Ano
+df <- df %>% group_by(id, Ano) %>%  na_mean(df[, Col_number], option = "median")
+
+# Imputar a media por id e Ano
+df <- df %>% group_by(id, Ano) %>%  na_mean(df[, Col_number])
+
+# Imputar a moda por id e Ano
+df <- df %>% group_by(id, Ano) %>%  na_mode(df[, Col_number])
+
+# Imputar com interpolação por id e Ano
+df <- df %>% group_by(id, Ano) %>%  na_interpolation(df[, Col_number], option = "spline")
+
+# Imputar com valores aleatórios por id e Ano
+df <- df %>% group_by(id, Ano) %>%  na_random(df[, Col_number])
+
+# Imputar zeros por id e Ano
+df <- df %>% group_by(id, Ano) %>%  na_replace(df[, Col_number], 0)
+
+# Remover missings por id e Ano
+df <- df %>% group_by(id, Ano) %>%  na_remove(df[, Col_number])
+
+# Outras funções
+ggplot_na_distribution, ggplot_na_intervals, ggplot_na_gapsize, ggplot_na_imputations
+Também é possível adicionar sazonalidade e etc
 ```
 
 Replace de todas colunas com 'nan' para 'NA'
