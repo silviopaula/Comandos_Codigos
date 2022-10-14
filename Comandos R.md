@@ -413,7 +413,8 @@ df$var_clone1 <- df$var1
 
 Deixar dfs selecionados
 ```
-rm(list=(ls()[ls()!="df1", "df2"]))
+rm(list=setdiff(ls(), c("df1", "df2", "df3")))
+
 ```
 
 Remover df ou outros objetos
@@ -621,10 +622,18 @@ Agregar dados por id com `dplyr`
 > Obs: as colunas do agrupamento devem ser fatores
 ```
 df_novo <- df %>% group_by(as.factor(id, Ano)) %>%  
-           summarise(Max_var   = max(var),
-                     Media_var = mean(var),
-                     Total_var = sum(var),
-                      Min_var = min(var))
+                  dplyr::summarise(Max_var   = max(var),
+                                   Media_var = mean(var),
+                                   Total_var = sum(var),
+                                   Min_var = min(var),
+				   Contagem_distinta = n_distinct(var))
+```
+
+Adicionar coluna com valores agregados por id com `dplyr`
+```
+df <- df %>% group_by(id) %>%  
+             dplyr::mutate(Total = sum(var1, na.rm=TRUE),
+                           Contagem = n_distinct(var2))
 ```
 
 Agregar dados por id e Ano com `data.table`
@@ -645,6 +654,13 @@ setDT(df)[ , .(Max_var   := max(var, na.rm=TRUE),
                by =c("id", "Ano")]
 ```
 
+Adicionar coluna com valores agregados por id com `data.table`
+```
+df <- df[, ":="(Total = sum(var1, na.rm=TRUE), 
+                        Contagem = uniqueN(var2)), 
+                        by =c("id")]
+```		
+		
 Contar valores únicos de uma coluna agrupando por id
 ```
 df_novo <- df %>% group_by(id) %>% summarize(Total = n_distinct(var), Count = n())
@@ -1399,6 +1415,12 @@ joined <- list(df1, df2, df3, df4, df5, df6, %>%
                reduce(left_join, by = c("id", "year"), fill=TRUE)
 ```	    
 
+**Left_join** 
+```
+# Join com nomes diferentes das colunas
+df3 <- left_join(df1, df2, by = c("code_ibge" = "id_ibge"))
+```
+
 ## Dummy (One Hot Encode)
 
 Gerar dummy com ifelse
@@ -1683,28 +1705,41 @@ Fonte: [https://fmeireles.com/blog/rstats/deflacionar-series-no-r-deflatebr/](ht
 
 ```
 # Gerar variável Data
-df$Data <- 0
-df$Data <- ifelse (df$Ano  == 2006, "2006-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2007, "2007-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2008, "2008-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2009, "2009-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2010, "2010-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2011, "2011-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2012, "2012-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2013, "2013-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2014, "2014-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2015, "2015-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2016, "2016-12-31", df$Data)
-df$Data <- ifelse (df$Ano  == 2017, "2017-12-31", df$Data)
-table(df$Data)
+df <- df %>% mutate(Data = ifelse(Ano %in% c(2002), "2002-12-31",
+                           ifelse(Ano %in% c(2003), "2003-12-31",
+                           ifelse(Ano %in% c(2004), "2004-12-31",
+                           ifelse(Ano %in% c(2005), "2005-12-31",
+                           ifelse(Ano %in% c(2006), "2006-12-31",
+                           ifelse(Ano %in% c(2007), "2007-12-31",
+                           ifelse(Ano %in% c(2008), "2008-12-31",
+                           ifelse(Ano %in% c(2009), "2009-12-31",
+                           ifelse(Ano %in% c(2010), "2010-12-31",
+                           ifelse(Ano %in% c(2011), "2011-12-31",
+                           ifelse(Ano %in% c(2012), "2012-12-31",
+                           ifelse(Ano %in% c(2013), "2013-12-31",
+                           ifelse(Ano %in% c(2014), "2014-12-31",
+                           ifelse(Ano %in% c(2015), "2015-12-31",
+                           ifelse(Ano %in% c(2016), "2016-12-31",
+                           ifelse(Ano %in% c(2017), "2017-12-31",
+                           ifelse(Ano %in% c(2018), "2018-12-31", 
+                                             NA))))))))))))))))))
 
-# Converter a variável Data para o formato date com lubridate
+# Converter a variável Data para o formato date com `lubridate`
 df$Data <- as.Date(df$Data)
 
-# Deflacionar com o pacote deflateBR utilizando o IPCA para o ano 2017
-install.packages('deflateBR')
-library(deflateBR)
-df$var_monetaria_def <- ipca(df$var_monetaria, df$Data, "12/2017")
+# Selecionar colunas que serão deflacionadas
+Cols_Deflate <- c("var_1", "var_2", "var_3", "var_4")
+
+# Deflacionar com o pacote `deflateBR` utilizando o IPCA para o ano 2018
+if(!require(deflateBR)){install.packages("deflateBR")}
+
+# Deflacioanr uma coluna
+df$var_monetaria_def <- ipca(df$var_monetaria, df$Data, "12/2018")
+
+# Deflacioanr muitas colunas
+for(i in 1:length(Cols_Deflate)) {
+  df[ , i] <- ipca(df[ , i], df$Data, "12/2018")
+}
 
 # Ver como era e como ficou
 summary(df$var_monetaria)
