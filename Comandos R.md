@@ -518,6 +518,8 @@ df[,c(1:10, 12:20)] <- as.data.frame(lapply(df[,c(1:10, 12:20)], FUN = function(
 ```
 
 Adicionar label a uma coluna com pacote `Hmisc`
+if(!require(Hmisc)){install.packages("Hmisc")}
+
 ```
 label(var[[1]]) <- "var descrição"
 ```
@@ -714,9 +716,8 @@ df$var[is.na(df$var)] <- 0
 df[,  1:10][ df[,  1:10] == 0 ] <- NA # fazer replace de 0 para NA
 ```
 
-Imputar missings utilizando `imputeTS`     
-``install.packages('imputeTS')``    
-``library(imputeTS)``  
+Imputar missings utilizando `imputeTS`  
+if(!require(imputeTS)){install.packages("imputeTS")}  
 ver mais:
 https://cran.rstudio.com/web/packages/imputeTS/vignettes/Cheat_Sheet_imputeTS.pdf
 https://cran.r-project.org/web/packages/imputeTS/readme/README.html
@@ -801,8 +802,8 @@ Remover primeira e última linha
 df <- df[-1, ]
 ```
 
-Gerar categorias a partir de uma variável númericas              
-``library(funModeling)``            
+Gerar categorias a partir de uma variável númericas  
+if(!require(funModeling)){install.packages("funModeling")}           
 
 ```
 # Gerar 5 categorias
@@ -837,9 +838,9 @@ Extrair apenas o dia de uma coluna do tipo date
 df$Ano <- format(as.Date(df$Data, format="%d/%m/%Y"),"%d")
 ```
 
-Dividir coluna em várias com `splitstackshape`    
-``install.packages(‘splitstackshape’) ``  
-``library(splitstackshape)``    
+Dividir coluna em várias com `splitstackshape`   
+if(!require(splitstackshape)){install.packages("splitstackshape")}   
+  
 ```
 df<- cSplit(df, "var", "/") # ex: absde/12/asdf/2010
 ```
@@ -869,8 +870,8 @@ empty <- as.matrix(colSums(df==""))
 print(empty)
 ```
 
-Fazer resumo de missings e zeros                                                            
-``library(funModeling)``                        
+Fazer resumo de missings e zeros   
+if(!require(funModeling)){install.packages("funModeling")}                        
 ```
 df_status(df)
 ```
@@ -971,9 +972,8 @@ Substituir de missings de uma coluna por valores de outra coluna
 df$Var_1 <- ifelse(is.na(df$Var_1), df$Var_2, df$Var_1)
 ```
 
-Atribuindo zero a todos os missings com `imputeTS`     
-``install.packages('imputeTS')``    
-``library(imputeTS)``    
+Atribuindo zero a todos os missings com `imputeTS`  
+if(!require(imputeTS)){install.packages("imputeTS")}      
 ```
 # Atribuir zeros para todo os missings do dataframe
 df <- na_replace(df, 0)
@@ -1060,6 +1060,7 @@ for(i in c(2,4:ncol(df))){
 ```
 
 Boxplot com `ggplot2`
+if(!require(ggplot2)){install.packages("ggplot2")}  
 ```
 ggplot(dat) + 
 aes(x = "", y = var1) + 
@@ -1102,7 +1103,6 @@ hampel_outlier(df$var)
 hampel_outlier(df$var, k_mad_value = 6) 
 ```
 
-
 Método de **TURKEY**         
 Detalhes:          
 Este método marca outliers usando os quartis, Q1, Q2 e Q3, onde Q1 é indescritível no 25º percentil,
@@ -1127,8 +1127,9 @@ Ver mais detalhes em:
 https://rpubs.com/melinatarituba/353262
 https://anderlerv.netlify.app/tabelas-com-stargazer/10/2018/
 
-Descritivas completas com quartis, quantis, kurtosis e etc.                                          
-``library(funModeling)``        
+Descritivas completas com quartis, quantis, kurtosis e etc. com  funModeling
+if(!require(funModeling)){install.packages("funModeling")}  
+      
 ```
 profiling_num(df$var)
 ```
@@ -1146,10 +1147,8 @@ view(descritivas)
 ```
 
 Exportar descritivas com `stargazer`             
-
-   ``install.packages(“stargazer”)``                  
-   `` library(stargazer)``                   
-
+if(!require(stargazer)){install.packages("stargazer")} 
+                   
 ```
 stargazer(df, type = "text", out = "Descritivas.txt")
 stargazer(df, type = "html", out = "Descritivas.txt")
@@ -1157,8 +1156,8 @@ stargazer(df, type = "html",title="Descritivas", digits=3, out = "Descritivas.do
 ```
 
 Tabela de estatísticas descritivas com `fields`
-``install.package('fields')``
-``library(fields)``
+if(!require(fields)){install.packages("fields")} 
+
 ```
 Tabela_descritivas<- cbind(stats(df$var1), stats(df$var2), stats(df$var3), stats(df$var4))
 colnames(Tabela_descritivas)<- c("var1","var2", "var3", "var4")
@@ -1166,8 +1165,7 @@ round(Tabela_descritivas,3) ## Arredondando em 3 casas decimais
 ```
 
 Outra maneira de obter as estatísticas descritivas com `pastecs`
-``install.packages('pastecs')``
-``library(pastecs)``
+if(!require(pastecs)){install.packages("pastecs")} 
 ```
 stat.desc(df) 
 stat.desc(df[,c("var1","var2","var3","var4")])
@@ -1175,6 +1173,7 @@ stat.desc(df[,c("var1","var2","var3","var4")], basic=TRUE, desc=TRUE, norm=TRUE,
 ```
 
 Descritivas rapidas com o package `pastecs`
+if(!require(pastecs)){install.packages("pastecs")} 
 ```
 Descritivas <- as.data.frame(t(stat.desc(df) %>% mutate_if(is.numeric, ~round(., 2))))
 ```
@@ -1221,9 +1220,9 @@ correlation.matrix <- cor(attitude[,c("var1","var2","var3")])
 stargazer(correlation.matrix, title="Matriz de Correlação", type = "html")
 ```
 
-Gerar correlalograma                     
-``install.packages(c("DescTools", "corrplot"))``                          
-``library(c("DescTools", "corrplot"))``                        
+Gerar correlalograma 
+if(!require(DescTools)){install.packages("DescTools")} 
+if(!require(corrplot)){install.packages("corrplot")}                        
 ```
 corelacao <- DescTools::PairApply(df, DescTools::CramerV)
 corrplot::corrplot(corelacao)
@@ -1251,9 +1250,8 @@ apply(df[,1:10],2,function(x) table(x))
 apply(df[,1:10],2,function(x) table(x, df$Ano))
 ```
 
-
-Tabular dados e gerar gráfico                                                   
-``library(funModeling)``                  
+Tabular dados e gerar gráfico    
+if(!require(funModeling)){install.packages("funModeling")}                
 
 ```
 # Tabular dados de uma variável binária     
@@ -1263,8 +1261,8 @@ freq(df, "D_var")
 head(freq(df, "ano"), 5) 
 ```
 
-Ver correlação de todas colunas em relação a uma especifica                      
-``library(funModeling)``                 
+Ver correlação de todas colunas em relação a uma especifica  
+if(!require(funModeling)){install.packages("funModeling")}                   
 ```
 correlation_table(df, "var")
 ```
@@ -1489,17 +1487,15 @@ df <- df %>% mutate(D_var = ifelse(var1 %in% c(1,10,28), 1,
                             ifelse(var2 %in% c(2,5,23:26), 1,0)))
 ```
 
-Gera dummies com `fastDummies`                         
-``install.packages(‘fastDummies’) ``                                   
-``library(fastDummies)``                           
+Gera dummies com `fastDummies`  
+if(!require(fastDummies)){install.packages("fastDummies")}                             
 > Nota: com fastaDummies basta selecionar uma variável categórica que ele gera as dummies.
 ```
 df <- dummy_cols(df, select_columns =c("var"))
 ```
 
 Gerar dummies  com `data.table` e `mltools`
-``install.packages(‘mltools’) ``
-``library(mltools)``
+if(!require(mltools)){install.packages("mltools")} 
 ```
 # Transformar em dummies as colunas 1 a 3
 df <- one_hot(as.data.table(df[,1:3])) 
@@ -1599,9 +1595,8 @@ df_pad = scale(df[,1:4])
 df[,1:4] = scale(df[,1:4]) 
 ```
 
-**Normalização de dados (deixar em uma escala entr 0 e 1)**               
-``install.packages("scales")``
-``library(scales)``
+**Normalização de dados (deixar em uma escala entr 0 e 1)**  
+if(!require(scales)){install.packages("scales")} 
 ```
 # Normalizar uma coluna
 df$var_Norm <- rescale(df$var) 
@@ -1688,7 +1683,8 @@ Retirando ponto e traço de CPF
 df$CPF <- gsub("\\W","",df$CPF)
 ```
 
-**Gerar classes etárias com `fastDummies`**         
+**Gerar classes etárias com `fastDummies`**  
+if(!require(fastDummies)){install.packages("fastDummies")} 
 ```
 df$Idade_grp <- df$Idade
 df$Idade_grp <- ifelse((df$Idade>=1  & df$Idade<=10) , 'Idade_01_20',df$Idade_grp)
@@ -2176,9 +2172,8 @@ Nota: basicamente o que esses comandos fazem  é pegar os códigos das estaçõe
 
 ```
 # Carregar pacotes
-library(jsonlite)
-library(readr)
-library(dplyr)
+if(!require(pacman)){install.packages("pacman")}
+p_load(data.table, tidyverse, fst, readr, jsonlite)
 
 # Definir pasta de trabalo (onde será salvo os arquivos .csv)
 setwd("D:/")
@@ -2200,7 +2195,7 @@ for(cod in x) {
 # Bibliometria com bibliometrix
 
 ```
-install.packages("remotes")  
+if(!require(remotes)){install.packages("remotes")}
 install.packages("igraph", type="binary")
 remotes::install_github("massimoaria/bibliometrix")
 library(bibliometrix)
