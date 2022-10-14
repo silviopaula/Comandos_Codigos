@@ -298,6 +298,7 @@ profiling_num(df)
 profiling_num(df) %>% mutate_if(is.numeric, ~round(., 3))
 ```
 
+
 ## Manipulando Dataframes
 
 Ordenando alfabeticamente as colunas do df
@@ -776,7 +777,10 @@ Gerar categorias a partir de uma variável númericas
 df$var_5cat = equal_freq(df$var, n_bins = 5)
 ```
 
-
+Transpor linha para colunas
+```
+df <- as.data.frame(t(df))
+```
 ##  Colunas do Tipo Data (Date)
 
 Converter coluna para date com `lubridate`
@@ -1136,6 +1140,11 @@ Outra maneira de obter as estatísticas descritivas com `pastecs`
 stat.desc(df) 
 stat.desc(df[,c("var1","var2","var3","var4")])
 stat.desc(df[,c("var1","var2","var3","var4")], basic=TRUE, desc=TRUE, norm=TRUE, p=0.95)
+```
+
+Descritivas rapidas com o package `pastecs`
+```
+Descritivas <- as.data.frame(t(stat.desc(df) %>% mutate_if(is.numeric, ~round(., 2))))
 ```
 
 Matriz de correlação
@@ -1521,7 +1530,11 @@ df[,1:4] = scale(df[,1:4])
 ``install.packages("scales")``
 ``library(scales)``
 ```
+# Normalizar uma coluna
 df$var_Norm <- rescale(df$var) 
+
+# Normalizar varias colunas
+df <- df %>% mutate_at(c(1:10), funs(c(scale(.))))
 ```
 
 **Gerar um lag e lead de uma variável observando os grupos** 
@@ -1952,8 +1965,11 @@ data_demand = data.table::rbindlist(myfiles)
 ```
 
 Importar .csv de forma mais rápida com `data.table`
+* https://www.rdocumentation.org/packages/data.table/versions/1.14.2/topics/fread
+
 ```
-df_amostra <- fread(D:df.csv)
+# Importar csv com fread data.table
+df <- read.table("test.csv", header=TRUE, sep=",", quote="", stringsAsFactors=FALSE, comment.char="", nrows=n)
 ```
 
 Exportar .csv com `data.table`
