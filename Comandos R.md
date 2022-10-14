@@ -277,8 +277,8 @@ Listar objetos
 ls(df)
 ```
 
-Visualizar e plotar colunas do df rapidamente                 
-``library(funModeling)`` 
+Visualizar e plotar colunas do df rapidamente    
+if(!require(funModeling)){install.packages("funModeling")}
 Ver mais em: https://livebook.datascienceheroes.com/appendix.html#funmodeling-quick-start
 
 ```
@@ -1421,6 +1421,13 @@ joined <- list(df1, df2, df3, df4, df5, df6, %>%
 df3 <- left_join(df1, df2, by = c("code_ibge" = "id_ibge"))
 ```
 
+**Left_join** 
+```
+# left join adicionando sufixo as colunas com mesmo nome
+df_3 <- left_join(df_1, df_2, by = "id", suffix = c(".df_1", ".df_2"))
+```
+
+
 ## Dummy (One Hot Encode)
 
 Gerar dummy com ifelse
@@ -1651,16 +1658,23 @@ df$Idade_grp <- ifelse((df$Idade>=71) , 'idade_71_mais',df$Idade_grp)
 df <- dummy_cols(df, select_columns = "Idade_grp")
 ```
 
-**Balanceando classes em modelos de Machine Learning**                            
-``install.packages(“DMwR”) ``                 
-``library(DMwR``               
-
+**Balanceando classes em modelos de Machine Learning**   
+if(!require(DMwR)){install.packages("DMwR")}
+              
 ```
 set.seed(9560)
 df_treino_balanceado <- SMOTE(var_desbalanceada ~., data=df_treino)
 table(df_treino_balanceado$var_desbalanceada) 
 prob.table(table(df_treino_balanceado$var_desbalanceada)
 ```
+
+**Remover acentos com package** `abjutils`                    
+https://github.com/abjur/abjutils                            
+if(!require(abjutils)){install.packages("abjutils")}
+
+# Remover acentos
+df$var_nova <- rm_accent(df$var)
+
 **Remover acentos**
 Fonte: [Retirar acentos de um Data Frame com a Linguagem R](https://www.thomazrossito.com.br/retirar-acentos-de-um-data-frame-com-a-linguagem-r/)
 ```
