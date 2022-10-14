@@ -278,10 +278,12 @@ ls(df)
 ```
 
 Visualizar e plotar colunas do df rapidamente    
-if(!require(funModeling)){install.packages("funModeling")}
 Ver mais em: https://livebook.datascienceheroes.com/appendix.html#funmodeling-quick-start
 
 ```
+# Instalar package 
+if(!require(funModeling)){install.packages("funModeling")}
+
 # Ver quantidades de zeros missings etc.
 df_status(df)
 
@@ -518,7 +520,10 @@ df[,c(1:10, 12:20)] <- as.data.frame(lapply(df[,c(1:10, 12:20)], FUN = function(
 ```
 
 Adicionar label a uma coluna com pacote `Hmisc`
+```
+# Instalar package 
 if(!require(Hmisc)){install.packages("Hmisc")}
+```
 
 ```
 label(var[[1]]) <- "var descrição"
@@ -717,10 +722,14 @@ df[,  1:10][ df[,  1:10] == 0 ] <- NA # fazer replace de 0 para NA
 ```
 
 Imputar missings utilizando `imputeTS`  
-if(!require(imputeTS)){install.packages("imputeTS")}  
 ver mais:
 https://cran.rstudio.com/web/packages/imputeTS/vignettes/Cheat_Sheet_imputeTS.pdf
 https://cran.r-project.org/web/packages/imputeTS/readme/README.html
+
+```
+# Instalar package 
+if(!require(imputeTS)){install.packages("imputeTS")}  
+```
 
 ```
 # Atribuir zeros para todo os missings do df
@@ -803,8 +812,11 @@ df <- df[-1, ]
 ```
 
 Gerar categorias a partir de uma variável númericas  
-if(!require(funModeling)){install.packages("funModeling")}           
-
+```
+# Instalar package 
+if(!require(funModeling)){install.packages("funModeling")} 
+```
+          
 ```
 # Gerar 5 categorias
 df$var_5cat = equal_freq(df$var, n_bins = 5)
@@ -839,8 +851,11 @@ df$Ano <- format(as.Date(df$Data, format="%d/%m/%Y"),"%d")
 ```
 
 Dividir coluna em várias com `splitstackshape`   
-if(!require(splitstackshape)){install.packages("splitstackshape")}   
-  
+```
+# Instalar package 
+if(!require(splitstackshape)){install.packages("splitstackshape")}
+```
+ 
 ```
 df<- cSplit(df, "var", "/") # ex: absde/12/asdf/2010
 ```
@@ -871,8 +886,9 @@ print(empty)
 ```
 
 Fazer resumo de missings e zeros   
-if(!require(funModeling)){install.packages("funModeling")}                        
+                       
 ```
+if(!require(funModeling)){install.packages("funModeling")} 
 df_status(df)
 ```
 
@@ -973,8 +989,11 @@ df$Var_1 <- ifelse(is.na(df$Var_1), df$Var_2, df$Var_1)
 ```
 
 Atribuindo zero a todos os missings com `imputeTS`  
-if(!require(imputeTS)){install.packages("imputeTS")}      
+    
 ```
+# Instalar package
+if(!require(imputeTS)){install.packages("imputeTS")}  
+
 # Atribuir zeros para todo os missings do dataframe
 df <- na_replace(df, 0)
 
@@ -1060,8 +1079,11 @@ for(i in c(2,4:ncol(df))){
 ```
 
 Boxplot com `ggplot2`
-if(!require(ggplot2)){install.packages("ggplot2")}  
+
 ```
+# Instalar package
+if(!require(ggplot2)){install.packages("ggplot2")}  
+
 ggplot(dat) + 
 aes(x = "", y = var1) + 
 geom_boxplot(fill = "#0c4c8a") + 
@@ -1128,9 +1150,12 @@ https://rpubs.com/melinatarituba/353262
 https://anderlerv.netlify.app/tabelas-com-stargazer/10/2018/
 
 Descritivas completas com quartis, quantis, kurtosis e etc. com  funModeling
-if(!require(funModeling)){install.packages("funModeling")}  
+
       
 ```
+# Instalar package
+if(!require(funModeling)){install.packages("funModeling")}  
+
 profiling_num(df$var)
 ```
 
@@ -1147,33 +1172,39 @@ view(descritivas)
 ```
 
 Exportar descritivas com `stargazer`             
-if(!require(stargazer)){install.packages("stargazer")} 
-                   
+               
 ```
+# Instalar package
+if(!require(stargazer)){install.packages("stargazer")} 
+
 stargazer(df, type = "text", out = "Descritivas.txt")
 stargazer(df, type = "html", out = "Descritivas.txt")
 stargazer(df, type = "html",title="Descritivas", digits=3, out = "Descritivas.doc")
 ```
 
 Tabela de estatísticas descritivas com `fields`
-if(!require(fields)){install.packages("fields")} 
 
 ```
+# Instalar package
+if(!require(fields)){install.packages("fields")} 
+
 Tabela_descritivas<- cbind(stats(df$var1), stats(df$var2), stats(df$var3), stats(df$var4))
 colnames(Tabela_descritivas)<- c("var1","var2", "var3", "var4")
 round(Tabela_descritivas,3) ## Arredondando em 3 casas decimais
 ```
 
 Outra maneira de obter as estatísticas descritivas com `pastecs`
-if(!require(pastecs)){install.packages("pastecs")} 
+
 ```
+# Instalar package
+if(!require(pastecs)){install.packages("pastecs")} 
+
 stat.desc(df) 
 stat.desc(df[,c("var1","var2","var3","var4")])
 stat.desc(df[,c("var1","var2","var3","var4")], basic=TRUE, desc=TRUE, norm=TRUE, p=0.95)
 ```
 
 Descritivas rapidas com o package `pastecs`
-if(!require(pastecs)){install.packages("pastecs")} 
 ```
 Descritivas <- as.data.frame(t(stat.desc(df) %>% mutate_if(is.numeric, ~round(., 2))))
 ```
@@ -1221,9 +1252,12 @@ stargazer(correlation.matrix, title="Matriz de Correlação", type = "html")
 ```
 
 Gerar correlalograma 
-if(!require(DescTools)){install.packages("DescTools")} 
-if(!require(corrplot)){install.packages("corrplot")}                        
+                     
 ```
+# Instalar package
+if(!require(DescTools)){install.packages("DescTools")} 
+if(!require(corrplot)){install.packages("corrplot")}   
+
 corelacao <- DescTools::PairApply(df, DescTools::CramerV)
 corrplot::corrplot(corelacao)
 ```
@@ -1251,9 +1285,11 @@ apply(df[,1:10],2,function(x) table(x, df$Ano))
 ```
 
 Tabular dados e gerar gráfico    
-if(!require(funModeling)){install.packages("funModeling")}                
-
+           
 ```
+# Instalar package
+if(!require(funModeling)){install.packages("funModeling")}     
+
 # Tabular dados de uma variável binária     
 freq(df, "D_var")                     
 
@@ -1261,8 +1297,7 @@ freq(df, "D_var")
 head(freq(df, "ano"), 5) 
 ```
 
-Ver correlação de todas colunas em relação a uma especifica  
-if(!require(funModeling)){install.packages("funModeling")}                   
+Ver correlação de todas colunas em relação a uma especifica  `funModeling`                
 ```
 correlation_table(df, "var")
 ```
@@ -1280,8 +1315,11 @@ df$var <- paste(df$var1, df$var2, sep = "")
 ```
 
 Substituir caracteres com a função
-if(!require(stringr)){install.packages("stringr")}                
+             
 ```
+# Instalar package
+if(!require(stringr)){install.packages("stringr")}   
+
 df$var <- str_replace(df$var, "-", "")
 ```
 
