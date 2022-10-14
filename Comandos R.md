@@ -422,6 +422,11 @@ Remover df ou outros objetos
 rm(df)
 ```
 
+Remover todos os objetos que comtém no nome "df"
+```
+rm(list = ls()[grepl("df", ls())])
+```
+
 Clonar df
 ```
 df_novo <- df_antigo
@@ -527,6 +532,17 @@ Converter coluna string para numérico. objeto do tipo `datatable`
 ```
 df <- as.data.table(apply(df, "var", as.numeric))  
 class(df$var)
+```
+
+Converter varias colunas em fator umerico ou  string etc.
+```
+col_names <- c("var_1", "var_2", "var_3", "var_4")
+df[,col_names] <- lapply(df[,col_names], factor)
+```
+
+Converta strings BRL (valores com Cifrão) para númerico
+```
+reais()
 ```
 
 Converter coluna para numérico (cuidado se a coluna for factor irá gerar problemas)
@@ -1255,10 +1271,18 @@ correlation_table(df, "var")
 
 ## Strings
 
+Concatenar Unir colunas com data.table (exemplo)
+```
+df <- df[,Periodo:=paste0(mês, "/", ano, "-", mês, "/", ano)]
+```
 
-Substituir caracteres com a função                    
-``install.packages('stringr')``               
-``library(stringr)``                     
+Concatenar, unir duas colunas strings
+```
+df$var <- paste(df$var1, df$var2, sep = "")
+```
+
+Substituir caracteres com a função
+if(!require(stringr)){install.packages("stringr")}                
 ```
 df$var <- str_replace(df$var, "-", "")
 ```
@@ -1296,6 +1320,11 @@ Remove todos caracteres *não-numéricos*
 df$var <- gsub("[^0-9]", "", df$var)
 ```
 
+Remova caracteres não numéricos de uma string
+```
+clean_cnj()
+```
+
 Remove todos caracteres numéricos
 > Nota: remove somente números, (não remove caracteres especiais)
 ```
@@ -1308,9 +1337,19 @@ Remove caracteres especiais
 df$var <- gsub("[^[:alnum:]]", " ", df$vra)
 ```
 
+Encodificar colunas para latin
+```
+Encoding(df$var) <- 'latin1'
+```
+
+Substitua caracteres latinos estendidos por Unicode
+```
+escape_unicode()
+```
+
 Converter letras minusculas para maiusculas com `magrittr`
-``install.packages('magrittr')``
-``library(magrittr)``
+if(!require(magrittr)){install.packages("magrittr")}      
+
 ```
 df %<>% mutate_if(is.character, toupper)
 ```
@@ -1318,6 +1357,11 @@ df %<>% mutate_if(is.character, toupper)
 Converter letras minusculas para maiuscula 
 ```
 df$var <- toupper(df$var)
+```
+
+Deixar primeira letra maiuscula
+```
+df$var <- str_to_title(df$var)
 ```
 
 Remover linhas com a expressão exata
