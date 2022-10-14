@@ -204,6 +204,11 @@ Visualizar algumas colunas do dataframe
 view(df[,c("var_1", "var_2", "var_3")])
 ```
 
+Visualizar 100 linhas de algumas colunas
+```
+view(head(df[,c("var_1", "var_2", "var_3")], n=100))
+```
+
 Visualizar algumas colunas com data.table
 ```
 view(df[,.(var_1, var_2, var_3)])
