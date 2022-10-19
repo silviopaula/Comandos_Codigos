@@ -710,6 +710,17 @@ Agregar dados utilizando a soma
 df_novo <- summarise(df, total_var = sum(var))
 ```
 
+Replace missings com valores de outras colunas `dplyr`
+```
+df <- df %>% mutate(var_1 = coalesce(var_1, var_2, var_3, var_4, var_5))
+```
+
+Replace com ifelse 
+> Nota: Fazer replace na variável var1, se var1 <0, então var1 receberá o valor 1, caso contrário permanecerá inalterada
+```
+df$var1 = ifelse(df$var1 <0, 1, df$var1)
+```
+
 Replace (substituir)
 ```
 df$var1[df$var2 == 1] <- 1   # Replace para 1 em var1 se var2 ==1
@@ -803,12 +814,6 @@ df$UF[which(grepl("RS$", df$Municipio))] <- "RS"
 
 # Municípios  que iniciam com RS
 df$UF[which(grepl("^RS", df$Municipio))] <- "RS" 
-```
-
-Replace com ifelse 
-> Nota: Fazer replace na variável var1, se var1 <0, então var1 receberá o valor 1, caso contrário permanecerá inalterada
-```
-df$var1 = ifelse(df$var1 <0, 1, df$var1)
 ```
 
 Remover primeira e última linha
@@ -1597,6 +1602,11 @@ options(scipen = 999)
 file.remove("D:/data.R")
 file.remove("D:/data.RDS")
 file.remove("D:/data.csv")
+```
+
+** Remover duplicados de grande volume de dados** `data.table`
+```
+df2 <- df[, if(.N==1) .SD, .(va1, var2, var3, var4)]
 ```
 
 **Remover observações duplicadas**
