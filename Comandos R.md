@@ -297,12 +297,6 @@ plot_num(df, path_out = ".")
 
 # Plotar todas variáveis categóricas do df (devem estar em fator)
 freq(df)
-
-# Estatisticas descritivas
-profiling_num(df)
-
-# Estatisticas descritivas (arredondando para 3 casas decimais)
-profiling_num(df) %>% mutate_if(is.numeric, ~round(., 3))
 ```
 
 
@@ -1159,30 +1153,32 @@ Ver mais detalhes em:
 https://rpubs.com/melinatarituba/353262
 https://anderlerv.netlify.app/tabelas-com-stargazer/10/2018/
 
-Descritivas completas com quartis, quantis, kurtosis e etc. com  funModeling
+Estatisticas Descritivas com  funModeling
 
-      
 ```
 # Instalar package
-if(!require(funModeling)){install.packages("funModeling")}  
+if(!require(funModeling)){install.packages("funModeling")} 
 
+# Estatisticas descritivas de todo o data.frame
+profiling_num(df)
+
+# Estatisticas descritivas de apenas uma coluna
 profiling_num(df$var)
+
+# Estatisticas descritivas (arredondando para 3 casas decimais)
+profiling_num(df) %>% mutate_if(is.numeric, ~round(., 3))
 ```
 
-Descritivas
+Estatisticas Descritivas com funções básicas do R
 ```
 summary(df)
 summary(df$var1, df$var2)
-```
 
-Descritivas dataframe
-```
 descritivas <- data.frame(unclass(summary(df)), check.names = FALSE, stringsAsFactors = FALSE)
 view(descritivas)
 ```
 
-Exportar descritivas com `stargazer`             
-               
+Estatisticas Descritivas com `stargazer`                        
 ```
 # Instalar package
 if(!require(stargazer)){install.packages("stargazer")} 
@@ -1192,8 +1188,7 @@ stargazer(df, type = "html", out = "Descritivas.txt")
 stargazer(df, type = "html",title="Descritivas", digits=3, out = "Descritivas.doc")
 ```
 
-Tabela de estatísticas descritivas com `fields`
-
+Estatisticas Descritivas com `fields`
 ```
 # Instalar package
 if(!require(fields)){install.packages("fields")} 
@@ -1203,8 +1198,8 @@ colnames(Tabela_descritivas)<- c("var1","var2", "var3", "var4")
 round(Tabela_descritivas,3) ## Arredondando em 3 casas decimais
 ```
 
-Outra maneira de obter as estatísticas descritivas com `pastecs`
 
+Estatisticas Descritivas com `pastecs`
 ```
 # Instalar package
 if(!require(pastecs)){install.packages("pastecs")} 
@@ -1212,11 +1207,17 @@ if(!require(pastecs)){install.packages("pastecs")}
 stat.desc(df) 
 stat.desc(df[,c("var1","var2","var3","var4")])
 stat.desc(df[,c("var1","var2","var3","var4")], basic=TRUE, desc=TRUE, norm=TRUE, p=0.95)
-```
 
-Descritivas rapidas com o package `pastecs`
-```
-Descritivas <- as.data.frame(t(stat.desc(df) %>% mutate_if(is.numeric, ~round(., 2))))
+# Descritivas com arredondamento
+Descritivas <- as.data.frame(t(stat.desc(df) %>% mutate_if(is.numeric, ~round(., 3))))
+
+# Exportando Descritivas com `openxlsx`
+# Instalar package
+if(!require(openxlsx)){install.packages("openxlsx")} 
+
+Descritivas <- as.data.frame(t(stat.desc(df) %>% mutate_if(is.numeric, ~round(., 3))))
+write.xlsx(Descritivas, "D:/Descritivas.xlsx", row.names = TRUE)
+
 ```
 
 Matriz de correlação
