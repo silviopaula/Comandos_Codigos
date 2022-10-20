@@ -1169,13 +1169,20 @@ profiling_num(df$var)
 profiling_num(df) %>% mutate_if(is.numeric, ~round(., 3))
 ```
 
+
+
 Estatisticas Descritivas com funções básicas do R
 ```
+# descritivas basicas
 summary(df)
 summary(df$var1, df$var2)
 
+# Gerar dataframe de descritivas
 descritivas <- data.frame(unclass(summary(df)), check.names = FALSE, stringsAsFactors = FALSE)
 view(descritivas)
+
+# Descritivas por grupos
+tapply(df$var1, df$var_grupos, summary)
 ```
 
 Estatisticas Descritivas com `stargazer`                        
@@ -1272,12 +1279,6 @@ if(!require(corrplot)){install.packages("corrplot")}
 corelacao <- DescTools::PairApply(df, DescTools::CramerV)
 corrplot::corrplot(corelacao)
 ```
-
-Estatísticas descritivas por grupos
-```
-tapply(df$var1, df$var_grupos, summary)
-```
-
 Para ver proporções (table)
 ```
 prop.table(table(df$var))
