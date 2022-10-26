@@ -304,13 +304,13 @@ freq(df)
 
 Ordenando alfabeticamente as colunas do df
 ```
-df <- df %>% select(order(colnames(df)))
+df <- df %>% dplyr::select(order(colnames(df)))
 ```
 
 Ordenando df com as colunas desejadas
 > Nota: isso é um subset, portando, se não colocar o nome da coluna ela será excluida do df
 ```
-df <- df %>% select(c("var_3", "var_1", "var_2")) 
+df <- df %>% dplyr::select(c("var_3", "var_1", "var_2")) 
 ```
 
 Ordenar coluna do df
@@ -324,11 +324,11 @@ df <- df [order(df$var1),decreasing = (TRUE),]
 
 Ordenar colunas do df
 ```
-df <- df %>%  select(sort(current_vars()))
+df <- df %>%  dplyr::select(sort(current_vars()))
 ```
 Escolher qual será a primeira coluna do df
 ```
-df <- df %>% relocate(var)
+df <- df %>% dplyr::relocate(var)
 ```
 
 Gerar amostra com o comando `subset`
@@ -403,8 +403,8 @@ df_long  <- melt(setDT(df), id.vars = c("id"),
 
 Clonar coluna do df com package `dplyr`
 ```
-df <- df %>% mutate(var_clone1 = var1) %>%   
-             mutate(var_clone2 = var2)
+df <- df %>% dplyr::mutate(var_clone1 = var1) %>%   
+             dplyr::mutate(var_clone2 = var2)
 ```
 
 Clonar coluna do df
@@ -564,12 +564,12 @@ df$var1 <- as.numeric(df$var1)
 
 Converter conjunto de colunas para numérico com `dplyr`
 ```
-df <- df %>% mutate_at(c(1:10), as.numeric)
+df <- df %>% dplyr::mutate_at(c(1:10), as.numeric)
 ```
 
 Converter conjunto de colunas para factor com `dplyr`
 ```
-df <- df %>% mutate_at(c(1:10), as.factor)
+df <- df %>% dplyr::mutate_at(c(1:10), as.factor)
 ```
 
 Converter todo df para numérico
@@ -591,13 +591,13 @@ df[,col_names] <- lapply(df[,col_names], factor)
 
 Converter colunas para numérico, utilizando o indice(número)
 ```
-df <- df %>% mutate_at(c(1:15), as.numeric)
+df <- df %>% dplyr::mutate_at(c(1:15), as.numeric)
 ```
 
 Substituir (replace) inf para zero com `dplyr`
     Nota: inf é a abreviação de infinito
 ```
-fortify.zoo(log_ret) %>% mutate_all(function(x) ifelse(is.infinite(x), 0, x))
+fortify.zoo(log_ret) %>% dplyr::mutate_all(function(x) ifelse(is.infinite(x), 0, x))
 # ou
 df$var[which(!is.finite(df$var))] <- 0
 ```
@@ -613,37 +613,37 @@ is.na(df) <- sapply(df, is.infinite)
 Gerar coluna categórica com `dplyr`
 > Exemplo: suponha que temos uma coluna categórica com difentes tipos de produtos e queremos gerar uma nova coluna categóricas agregando esses produtos. A saída deste comando resulta e uma variável com 4 categorias, 0,1,2,3,4
 ```
-df <- df %>% mutate(var_cat = ifelse(Var_Produto %in% c(1:24,28,35,99), 1,
-                              ifelse(Var_Produto %in% c(26,34), 2 ,
-                              ifelse(Var_Produto %in% c(25,32,33), 3, 0))))
+df <- df %>% dplyr::mutate(var_cat = ifelse(Var_Produto %in% c(1:24,28,35,99), 1,
+                                     ifelse(Var_Produto %in% c(26,34), 2 ,
+                                     ifelse(Var_Produto %in% c(25,32,33), 3, 0))))
 ```
 
 Arredondando valores de uma ou varias colunas 
 > Nota: o comando arredonda com 2 casas decimais.
 ```
-df %>% mutate_at(vars(var1), funs(round(., 2)))
-df %>% mutate_at(vars(var1, var2, va3), funs(round(., 2)))
+df %>% dplyr::mutate_at(vars(var1), funs(round(., 2)))
+df %>% dplyr::mutate_at(vars(var1, var2, va3), funs(round(., 2)))
 ```
 
 Arredondar valores de todas as colunas exceto a var1
 ```
-df %>% mutate_at(vars(-var1), funs(round(., 2)))
+df %>% dplyr::mutate_at(vars(-var1), funs(round(., 2)))
 ```
 
 Arredondar valores de todas as colunas cujo nome começa por VAR
 ```
-df %>% mutate_at(vars(starts_with("VAR")), funs(round(., 2)))
+df %>% dplyr::mutate_at(vars(starts_with("VAR")), funs(round(., 2)))
 ```
 
 Arredondar valores apenas das colunas numéricas
 ```
-mydf %>% mutate_if(is.numeric, ~round(., 2))
+mydf %>% dplyr::mutate_if(is.numeric, ~round(., 2))
 ```
 
 Agregar dados por id com `dplyr`
 > Obs: as colunas do agrupamento devem ser fatores
 ```
-df_novo <- df %>% group_by(as.factor(id, Ano)) %>%  
+df_novo <- df %>% dplyr::group_by(as.factor(id, Ano)) %>%  
                   dplyr::summarise(Max_var   = max(var),
                                    Media_var = mean(var),
                                    Total_var = sum(var),
@@ -653,7 +653,7 @@ df_novo <- df %>% group_by(as.factor(id, Ano)) %>%
 
 Adicionar coluna com valores agregados por id com `dplyr`
 ```
-df <- df %>% group_by(id) %>%  
+df <- df %>% dplyr::group_by(id) %>%  
              dplyr::mutate(Total = sum(var1, na.rm=TRUE),
                            Contagem = n_distinct(var2))
 ```
@@ -685,12 +685,12 @@ df <- df[, ":="(Total = sum(var1, na.rm=TRUE),
 		
 Contar valores únicos de uma coluna agrupando por id
 ```
-df_novo <- df %>% group_by(id) %>% summarize(Total = n_distinct(var), Count = n())
+df_novo <- df %>% dplyr::group_by(id) %>% dplyr::summarize(Total = n_distinct(var), Count = n())
 ```
 
 Contar linhas sem missings por id 
 ```
-df2 <- df1 %>% group_by(id) %>% mutate(contagem = sum(!is.na(var)))
+df2 <- df1 %>% dplyr::group_by(id) %>% dplyr::mutate(contagem = sum(!is.na(var)))
 ```
 
 Contar o número de caracteres de uma coluna
@@ -706,7 +706,7 @@ df_novo <- summarise(df, total_var = sum(var))
 
 Replace missings com valores de outras colunas `dplyr`
 ```
-df <- df %>% mutate(var_1 = coalesce(var_1, var_2, var_3, var_4, var_5))
+df <- df %>% dplyr::mutate(var_1 = coalesce(var_1, var_2, var_3, var_4, var_5))
 ```
 
 Replace com ifelse 
@@ -933,14 +933,14 @@ df <- df[!is.na(df$Var1),]
 Imputar dados faltante com interpolação
 
 ```
-df <- df %>%  group_by(id) %>%  mutate_at(vars(var1, var2, var3), 
-                                list(inter = ~na.approx(., na.rm = FALSE)))
+df <- df %>%  dplyr::group_by(id) %>%  dplyr::mutate_at(vars(var1, var2, var3), 
+                                                   list(inter = ~na.approx(., na.rm = FALSE)))
 ```
 
 Preencher susbstituir missings com valores anterior ou posterior                 
 ver mais em https://tidyr.tidyverse.org/reference/fill.html
 ```
-df <- df %>% dplyr::group_by(id) %>%  fill(c(VAR_1, VAR_2), .direction = "downup")
+df <- df %>% dplyr::group_by(id) %>%  dplyr::fill(c(VAR_1, VAR_2), .direction = "downup")
 ```
 
 Substituir missings pela média GERAL
@@ -957,15 +957,15 @@ Substituir missings pela média agrupada por id com `dplyr`
 ```
 # Gerar a função para imputar média agrupada
 impute.mean <- function(x) replace(x, is.na(x), mean(x, na.rm = TRUE))
-df <- df %>% group_by(id) %>% mutate(var1_nova = impute.mean(var1), 
-                                     var2_nova = impute.mean(var2)) 
+df <- df %>% dplyr::group_by(id) %>% dplyr::mutate(var1_nova = impute.mean(var1), 
+                                                  var2_nova = impute.mean(var2)) 
 ```
 
 Substituir missings pela mediana agrupada por id com `dplyr`
 ```
 impute.median <- function(x) replace(x, is.na(x), median(x, na.rm = TRUE))
-df <- df %>% group_by(id) %>% mutate(var1_nova = impute.median(var1), 
-                                     var2_nova = impute.median(var2)) 
+df <- df %>% dplyr::group_by(id) %>% dplyr::mutate(var1_nova = impute.median(var1), 
+                                                   var2_nova = impute.median(var2)) 
 ```
 
 Substituir missings pela média e mediana agrupada por id com `datatable`
@@ -1172,10 +1172,8 @@ profiling_num(df)
 profiling_num(df$var)
 
 # Estatisticas descritivas (arredondando para 3 casas decimais)
-profiling_num(df) %>% mutate_if(is.numeric, ~round(., 3))
+profiling_num(df) %>% dplyr::mutate_if(is.numeric, ~round(., 3))
 ```
-
-
 
 Estatisticas Descritivas com funções básicas do R
 ```
@@ -1222,13 +1220,13 @@ stat.desc(df[,c("var1","var2","var3","var4")])
 stat.desc(df[,c("var1","var2","var3","var4")], basic=TRUE, desc=TRUE, norm=TRUE, p=0.95)
 
 # Descritivas com arredondamento
-Descritivas <- as.data.frame(t(stat.desc(df) %>% mutate_if(is.numeric, ~round(., 3))))
+Descritivas <- as.data.frame(t(stat.desc(df) %>% dplyr::mutate_if(is.numeric, ~round(., 3))))
 
 # Exportando Descritivas com `openxlsx`
 # Instalar package
 if(!require(openxlsx)){install.packages("openxlsx")} 
 
-Descritivas <- as.data.frame(t(stat.desc(df) %>% mutate_if(is.numeric, ~round(., 3))))
+Descritivas <- as.data.frame(t(stat.desc(df) %>% dplyr::mutate_if(is.numeric, ~round(., 3))))
 write.xlsx(Descritivas, "D:/Descritivas.xlsx", row.names = TRUE)
 
 ```
@@ -1539,7 +1537,7 @@ df$D_Feminino  <- ifelse(df$Sexo = 'F', 1,0)
 Gerar dummie com diversas condições
 > Nota: se var1 for igual c(1,10,28) ou  var2 for igual a c(2,5,23:26) será atribuído ao valor de 1 caso contrário será 0
 ```
-df <- df %>% mutate(D_var = ifelse(var1 %in% c(1,10,28), 1,                   
+df <- df %>% dplyr::mutate(D_var = ifelse(var1 %in% c(1,10,28), 1,                   
                             ifelse(var2 %in% c(2,5,23:26), 1,0)))
 ```
 
@@ -1620,7 +1618,7 @@ df2 <- df[, if(.N==1) .SD, .(va1, var2, var3, var4)]
 **Remover observações duplicadas**
 ```
 **Remover duplicados**       
-df2 <- df %>% filter(!duplicated(var))   
+df2 <- df %>% dplyr::filter(!duplicated(var))   
 ```
 
 **Visualizar duplicados e gerar coluna de número de ocorrências**
@@ -1663,18 +1661,18 @@ if(!require(scales)){install.packages("scales")}
 df$var_Norm <- rescale(df$var) 
 
 # Normalizar varias colunas
-df <- df %>% mutate_at(c(1:10), funs(c(scale(.))))
+df <- df %>% dplyr::mutate_at(c(1:10), funs(c(scale(.))))
 ```
 
 **Gerar um lag e lead de uma variável observando os grupos** 
 ```
-df <-  df %>% group_by(id) %>% mutate(L1_var = dplyr::lag(var, n = 1, default = NA))
-df <-  df %>% group_by(id) %>% mutate(F1_var = dplyr::lead(var, n = 1, default = NA))
+df <-  df %>% dplyr::group_by(id) %>% dplyr::mutate(L1_var = dplyr::lag(var, n = 1, default = NA))
+df <-  df %>% dplyr::group_by(id) %>% dplyr::mutate(F1_var = dplyr::lead(var, n = 1, default = NA))
 ```
 
 **Gerar (id) identificador a partir de uma ou mais colunas**
 ```
-df <- df %>% group_by(var1,var2) %>% mutate(id = cur_group_id())
+df <- df %>% dplyr::group_by(var1,var2) %>% dplyr::mutate(id = cur_group_id())
 ```
 
 **Obter código dos municípios de 6 dígitos (id6) a partir do id7**
@@ -1983,7 +1981,7 @@ p_load(tidyverse, data.table, funModeling, mixgb)
 set.seed(2022)
 
 # Preparar 
-df_original <- df_original %>% mutate_at(c(1:10), as.numeric) # converter as colunas 1 a 10 para numérico
+df_original <- df_original %>% dplyr::mutate_at(c(1:10), as.numeric) # converter as colunas 1 a 10 para numérico
 
 # Visualizar resumo de missings zeros e vazios
 resumo <- df_status(df_original)
