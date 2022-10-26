@@ -937,6 +937,12 @@ df <- df %>%  group_by(id) %>%  mutate_at(vars(var1, var2, var3),
                                 list(inter = ~na.approx(., na.rm = FALSE)))
 ```
 
+Preencher susbstituir missings com valores anterior ou posterior                 
+ver mais em https://tidyr.tidyverse.org/reference/fill.html
+```
+df <- df %>% dplyr::group_by(id) %>%  fill(c(VAR_1, VAR_2), .direction = "downup")
+```
+
 Substituir missings pela média GERAL
 ```
 df$var = ifelse(is.na(df$var), mean(df$var, na.rm=TRUE), df$var)
