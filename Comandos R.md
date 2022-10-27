@@ -2059,6 +2059,50 @@ df_imputed <- mice(df, m=5 ,maxit=5, meth = c("rf"), seed=500)
 
 ## Importar e Exportar Dados
 
+**Formatos de arquivo suportados**
+https://cran.r-project.org/web/packages/rio/vignettes/rio.html
+
+| Format                              | Typical Extension       | Import Package                                              | Export Package                                              | Installed by Default |
+| ----------------------------------- | ----------------------- | ----------------------------------------------------------- | ----------------------------------------------------------- | -------------------- |
+| Comma-separated data                | .csv                    | [data.table](https://cran.r-project.org/package=data.table) | [data.table](https://cran.r-project.org/package=data.table) | Yes                  |
+| Pipe-separated data                 | .psv                    | [data.table](https://cran.r-project.org/package=data.table) | [data.table](https://cran.r-project.org/package=data.table) | Yes                  |
+| Tab-separated data                  | .tsv                    | [data.table](https://cran.r-project.org/package=data.table) | [data.table](https://cran.r-project.org/package=data.table) | Yes                  |
+| CSVY (CSV + YAML metadata header)   | .csvy                   | [data.table](https://cran.r-project.org/package=data.table) | [data.table](https://cran.r-project.org/package=data.table) | Yes                  |
+| SAS                                 | .sas7bdat               | [haven](https://cran.r-project.org/package=haven)           | [haven](https://cran.r-project.org/package=haven)           | Yes                  |
+| SPSS                                | .sav                    | [haven](https://cran.r-project.org/package=haven)           | [haven](https://cran.r-project.org/package=haven)           | Yes                  |
+| SPSS (compressed)                   | .zsav                   | [haven](https://cran.r-project.org/package=haven)           | [haven](https://cran.r-project.org/package=haven)           | Yes                  |
+| Stata                               | .dta                    | [haven](https://cran.r-project.org/package=haven)           | [haven](https://cran.r-project.org/package=haven)           | Yes                  |
+| SAS XPORT                           | .xpt                    | [haven](https://cran.r-project.org/package=haven)           | [haven](https://cran.r-project.org/package=haven)           | Yes                  |
+| SPSS Portable                       | .por                    | [haven](https://cran.r-project.org/package=haven)           |                                                             | Yes                  |
+| Excel                               | .xls                    | [readxl](https://cran.r-project.org/package=readxl)         |                                                             | Yes                  |
+| Excel                               | .xlsx                   | [readxl](https://cran.r-project.org/package=readxl)         | [openxlsx](https://cran.r-project.org/package=openxlsx)     | Yes                  |
+| R syntax                            | .R                      | base                                                        | base                                                        | Yes                  |
+| Saved R objects                     | .RData, .rda            | base                                                        | base                                                        | Yes                  |
+| Serialized R objects                | .rds                    | base                                                        | base                                                        | Yes                  |
+| Epiinfo                             | .rec                    | [foreign](https://cran.r-project.org/package=foreign)       |                                                             | Yes                  |
+| Minitab                             | .mtp                    | [foreign](https://cran.r-project.org/package=foreign)       |                                                             | Yes                  |
+| Systat                              | .syd                    | [foreign](https://cran.r-project.org/package=foreign)       |                                                             | Yes                  |
+| “XBASE” database files              | .dbf                    | [foreign](https://cran.r-project.org/package=foreign)       | [foreign](https://cran.r-project.org/package=foreign)       | Yes                  |
+| Weka Attribute-Relation File Format | .arff                   | [foreign](https://cran.r-project.org/package=foreign)       | [foreign](https://cran.r-project.org/package=foreign)       | Yes                  |
+| Data Interchange Format             | .dif                    | utils                                                       |                                                             | Yes                  |
+| Fortran data                        | no recognized extension | utils                                                       |                                                             | Yes                  |
+| Fixed-width format data             | .fwf                    | utils                                                       | utils                                                       | Yes                  |
+| gzip comma-separated data           | .csv.gz                 | utils                                                       | utils                                                       | Yes                  |
+| Apache Arrow (Parquet)              | .parquet                | [arrow](https://cran.r-project.org/package=arrow)           | [arrow](https://cran.r-project.org/package=arrow)           | No                   |
+| EViews                              | .wf1                    | [hexView](https://cran.r-project.org/package=hexView)       |                                                             | No                   |
+| Feather R/Python interchange format | .feather                | [feather](https://cran.r-project.org/package=feather)       | [feather](https://cran.r-project.org/package=feather)       | No                   |
+| Fast Storage                        | .fst                    | [fst](https://cran.r-project.org/package=fst)               | [fst](https://cran.r-project.org/package=fst)               | No                   |
+| JSON                                | .json                   | [jsonlite](https://cran.r-project.org/package=jsonlite)     | [jsonlite](https://cran.r-project.org/package=jsonlite)     | No                   |
+| Matlab                              | .mat                    | [rmatio](https://cran.r-project.org/package=rmatio)         | [rmatio](https://cran.r-project.org/package=rmatio)         | No                   |
+| OpenDocument Spreadsheet            | .ods                    | [readODS](https://cran.r-project.org/package=readODS)       | [readODS](https://cran.r-project.org/package=readODS)       | No                   |
+| HTML Tables                         | .html                   | [xml2](https://cran.r-project.org/package=xml2)             | [xml2](https://cran.r-project.org/package=xml2)             | No                   |
+| Shallow XML documents               | .xml                    | [xml2](https://cran.r-project.org/package=xml2)             | [xml2](https://cran.r-project.org/package=xml2)             | No                   |
+| YAML                                | .yml                    | [yaml](https://cran.r-project.org/package=yaml)             | [yaml](https://cran.r-project.org/package=yaml)             | No                   |
+| Clipboard                           | default is tsv          | [clipr](https://cran.r-project.org/package=clipr)           | [clipr](https://cran.r-project.org/package=clipr)           | No                   |
+
+
+
+
 > Nota: No Rstudio é possível importar bases de dados via menu.
 
 Importar arquivo excel com `readxl`
