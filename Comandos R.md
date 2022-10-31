@@ -363,8 +363,11 @@ setDT(df)[, if(.N>1) .SD, by = id]
 # Outros Subsets com data.table
 df <- df[!(df$var=="var1"),]
 df <- df[(df$Ano>=2009 & df$Ano==2017),]
-```
 
+# Subset com muitas condições (deixar se var_1 contem as linhas A até J 
+df2 <- df[(df$var_1 %in% c("A", "B", "C", "D", "E", "F", "G", "H", "I", "J")),]
+```			     
+			     
 Gerar amostra com período delimitado
 ```
 df_novo <- subset(df, Ano>=2009)
