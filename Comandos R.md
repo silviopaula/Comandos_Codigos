@@ -1531,6 +1531,15 @@ df_3 <- left_join(df_1, df_2, by = "id", suffix = c(".df_1", ".df_2"))
 df_3 <- left_join(df_1, df_2, by = "id") %>% distinct(id, .keep_all = TRUE)
 ```
 
+**Left_join**  para grandes volumes de dados
+```
+# Converter para tibble os dois dfs
+df_1 <- as.tibble(df_1)  %>% lazy_dt()
+df_2 <- as.tibble(df_2) %>% lazy_dt()
+
+# Join
+df_3 <- left_join(df_1, df_2, by=c("id", "Ano")) %>% as_tibble()
+```
 
 ## Dummy (One Hot Encode)
 
