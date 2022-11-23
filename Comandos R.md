@@ -1526,6 +1526,11 @@ df3 <- left_join(df1, df2, by = c("code_ibge" = "id_ibge"))
 df_3 <- left_join(df_1, df_2, by = "id", suffix = c(".df_1", ".df_2"))
 ```
 
+**Left_join**  Sem linhas adicionais no df resultante
+```
+df_3 <- left_join(df_1, df_2, by = "id") %>% distinct(id, .keep_all = TRUE)
+```
+
 
 ## Dummy (One Hot Encode)
 
