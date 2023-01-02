@@ -19,7 +19,7 @@ Os operadores de comparação sempre retornam um valor lógico TRUE ou FALSE.
 | Operador |   Significado    |
 |----------|------------------|
 |     ==   | igual a          |
-|     !=   | diferente de	    |
+|     !=   | diferente de     |
 |     >    | maior que        |
 |     <    | menor que        |
 |     >=   | maior ou igual a |
@@ -1980,6 +1980,15 @@ Amostra <- df[,.(ANO, id, D_XXX, AT_XXX, Entrada_XXX, Todos_Trat_XXX, First_trea
 df <- df[, c("AT_XXX") := NULL]
 ```
 
+** Completar dados que podem se repetir (ex: ano de nascimento, sexo, cor e etc) que aparecem para alguns anos e para outros não.
+```
+# Ordenar colunas
+df <- df [order(df$ID, df$ANO),]
+
+# Completar dados
+df <- df %>% dplyr::group_by(ID) %>%
+             fill(c(SEXO, COR, ANO_NASCIMENTO), .direction = "downup")
+```
 
 **Imputar missings com XGboost**
 ver mais em: https://github.com/agnesdeng/mixgb
