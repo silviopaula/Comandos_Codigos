@@ -1615,6 +1615,28 @@ str_detect(fruit, "[aeiou]")  # que contenha "aeiou" em qualquer lugar
 
 ## Tarefas Prontas
 
+** Exemplo de como criar a variável first_treat exigida no package DID (diferença-em-diferenças) do Callaway e Sant'anna **
+
+```
+# Gerar um dataframe de exemplo
+id <- c(1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4)
+Ano <- c(2000,2001,2002,2003,2004,2005,2006,2007,2008,2000,2001,2002,2003,2004,2005,2006,2007,2008,2000,2001,2002,2003,2004,2005,2006,2007,2008,2000,2001,2002,2003,2004,2005,2006,2007,2008)
+D_treat <- c(0,0,0,0,1,1,1,1,1,0,0,1,1,0,0,1,1,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0)
+df = data.frame(id, Ano, D_treat)
+
+# utilizar o pacote data.table para gerar a coluna first_treat (ideal para grandes conjuntos de dados)
+library(data.table)
+df = data.table(df)
+df[, first_treat := ifelse(max(D_treat) == 1, Ano[which.max(D_treat == 1)], 0), by = id]
+
+# utilizar o pacote dplyr para gerar a coluna first_treat
+library(dplyr)
+df2 <- as.data.frame(df)
+df2 <- df2 %>%
+  group_by(id) %>%
+  mutate(first_treat = ifelse(max(D_treat) == 1, Ano[which(D_treat == 1)[1]], 0))
+ ``` 
+  
 **Desabilitar notação científica**
 ```
 options(scipen = 999)
