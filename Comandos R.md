@@ -1631,8 +1631,8 @@ df[, first_treat := ifelse(max(D_treat) == 1, Ano[which.max(D_treat == 1)], 0), 
 
 # utilizar o pacote dplyr para gerar a coluna first_treat
 library(dplyr)
-df2 <- as.data.frame(df)
-df2 <- df2 %>%
+df_2 = data.frame(id, Ano, D_treat)
+df_2 <- df_2 %>%
   group_by(id) %>%
   mutate(first_treat = ifelse(max(D_treat) == 1, Ano[which(D_treat == 1)[1]], 0))
  ``` 
