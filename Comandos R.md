@@ -1,22 +1,9 @@
-# Comandos R
+# Comandos em linguagem R
 ![enter image description here](https://miro.medium.com/max/1400/1*cuOlMPTUQ3cTY7ldb-usKw.png)
 
 **Autores:**              
 Silvio da Rosa Paula                             
 Dianifer Leal Borges   
-
-**Table of Contents**
-
-[TOCM]
-
-[TOC]
-
-#H1 header
-## Dicionário de Termos:
-## Operadores de Comparação:
-####H4 header
-#####H5 header
-######H6 header
 
 ## Dicionário de Termos:
 
