@@ -3,14 +3,20 @@
 
 **Autores:**              
 Silvio da Rosa Paula                             
-Dianifer Leal Borges          
+Dianifer Leal Borges   
 
-![](https://img.shields.io/github/stars/silviopaula/Comandos_Codigos/editor.md.svg)
-![](https://img.shields.io/github/forks/silviopaula/Comandos_Codigos/editor.md.svg)
-![](https://img.shields.io/github/tag/silviopaula/Comandos_Codigos/editor.md.svg) 
-![](https://img.shields.io/github/release/silviopaula/Comandos_Codigos/editor.md.svg) 
-![](https://img.shields.io/github/issues/silviopaula/Comandos_Codigos/editor.md.svg) 
-![](https://img.shields.io/bower/v/editor.md.svg)
+**Table of Contents**
+
+[TOCM]
+
+[TOC]
+
+#H1 header
+## Dicionário de Termos:
+## Operadores de Comparação:
+####H4 header
+#####H5 header
+######H6 header
 
 ## Dicionário de Termos:
 
