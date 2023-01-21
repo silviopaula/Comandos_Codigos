@@ -5,11 +5,11 @@
 Silvio da Rosa Paula                             
 Dianifer Leal Borges          
 
-![](https://github.com/silviopaula/Comandos_Codigos)/stars/pandao/editor.md.svg) 
-![](https://img.shields.io/github/forks/pandao/editor.md.svg)
-![](https://img.shields.io/github/tag/pandao/editor.md.svg) 
-![](https://img.shields.io/github/release/pandao/editor.md.svg) 
-![](https://img.shields.io/github/issues/pandao/editor.md.svg) 
+![](https://img.shields.io/github/stars/silviopaula/editor.md.svg)
+![](https://img.shields.io/github/forks/silviopaula/editor.md.svg)
+![](https://img.shields.io/github/tag/silviopaula/editor.md.svg) 
+![](https://img.shields.io/github/release/silviopaula/editor.md.svg) 
+![](https://img.shields.io/github/issues/silviopaula/editor.md.svg) 
 ![](https://img.shields.io/bower/v/editor.md.svg)
 
 ## Dicionário de Termos:
