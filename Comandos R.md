@@ -1637,7 +1637,7 @@ df_2 <- df_2 %>%
   mutate(first_treat = ifelse(max(D_treat) == 1, Ano[which(D_treat == 1)[1]], 0))
  ``` 
   
-** Remover ids que aparecem apenas uma vez ```data.table``
+** Remover ids que aparecem apenas uma vez ```data.table``**
  
 ```
 # Carregar os dados
