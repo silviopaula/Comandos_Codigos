@@ -1637,6 +1637,28 @@ df_2 <- df_2 %>%
   mutate(first_treat = ifelse(max(D_treat) == 1, Ano[which(D_treat == 1)[1]], 0))
  ``` 
   
+** Remover ids que aparecem apenas uma vez ```data.table``
+ 
+```
+# Carregar os dados
+df <- data.frame(id = c(1, 1, 1, 1, 1, 1, 2, 2, 3, 4, 4, 4, 5, 6, 6, 6),
+                 Ano = c(2010, 2011, 2012, 2013, 2014, 2015, 2012, 2015, 2010, 2010, 2012, 2013, 2011, 2010, 2012, 2014))
+
+
+# Convertendo o dataframe para um data.table
+dt <- as.data.table(df)
+
+# Agrupando por id e contando a quantidade de vezes que cada id aparece
+dt[, count := .N, by = id]
+
+# Removendo os ids que aparecem apenas uma vez
+dt_filtered <- dt[count > 1] 
+
+# Removendo a coluna count
+dt_filtered[, count := NULL]
+```  
+  
+  
 **Desabilitar notação científica**
 ```
 options(scipen = 999)
