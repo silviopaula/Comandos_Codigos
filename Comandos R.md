@@ -1956,52 +1956,6 @@ df <- data.frame(Date=df, Estacoes=toSeason(df$var_date))
 df <- df %>% rename_all(~stringr::str_replace(.,"Date.",""))
 ```
 
-**Preparar colunas para os novos estimadores de diff (Callaway and Sant'anna; Sun and Abrahan; Gardner e outros)** 
-> Suponha que o tratamento do programa XXX, começou em 2006 para alguns municípios do Brasil
-```
-# Clonar dummy de tratamento e substituindo zeros por missings
-df$D_XXX_2 = df$D_XXX
-df$D_XXX_2[df$D_XXX_2 == 0] <- NA
-table(df$D_XXX_2)
-
-# Gerar variável com o ano de tratamento
-df$AT_XXX = (df$D_XXX_2 * df$ANO)
-table(df$AT_XXX)
-
-# Gerar indicador do ano de entrada no tratamento
-setDT(df)[, Entrada_XXX := min(AT_XXX, na.rm=TRUE), by = "id"]
-table(df$Entrada_XXX)
-
-# Substituir infinito por missings
-is.na(df$Entrada_XXX) <- sapply(df$Entrada_XXX, is.infinite)
-
-# Gerar dummie onde o municipio tratado sempre recebe o valor 1, em todos periodos que aparece na amostra
-df$Todos_Trat_XXX <- df$Entrada_XXX
-df$Todos_Trat_XXX[is.na(df$Todos_Trat_XXX)] <- 0
-df$Todos_Trat_XXX[df$Todos_Trat_XXX >0] <- 1
-table(df$Todos_Trat_XXX, df$ANO) 
-
-# Gerar First_treat_XXX que na prática é igual a variável Entrada_XXX
-df$First_treat_XXX <- df$Entrada_XXX
-df$First_treat_XXX[is.na(df$First_treat_XXX)] <- 0
-table(df$First_treat_XXX)
-
-# Gerar First_treat_XXX_2 (Nesta vamos impedir a reversão do tratamento)
-df$First_treat_XXX_2 <- df$First_treat_XXX
-df$First_treat_XXX_2[df$ANO > df$Entrada_XXX & df$D_XXX ==0] <- NA
-table(df$First_treat_XXX_2)
-
-# Gerar D_XXX_2 (nessa vamos impedir a reversão do tratamento)
-df$D_XXX_2 <- df$D_XXX
-df$D_XXX_2[is.na(df$First_treat_XXX_2)] <- NA
-
-# Gerar amostra para verificação
-Amostra <- df[,.(ANO, id, D_XXX, AT_XXX, Entrada_XXX, Todos_Trat_XXX, First_treat_XXX, First_treat_XXX_2, D_XXX_2)]
-
-# Remover colunas desnecessárias
-df <- df[, c("AT_XXX") := NULL]
-```
-
 ** Completar dados que podem se repetir (ex: ano de nascimento, sexo, cor e etc) que aparecem para alguns anos e para outros não.
 ```
 # Ordenar colunas
