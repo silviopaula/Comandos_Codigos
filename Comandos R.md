@@ -1879,24 +1879,7 @@ Fonte: [https://fmeireles.com/blog/rstats/deflacionar-series-no-r-deflatebr/](ht
 
 ```
 # Gerar variável Data
-df <- df %>% mutate(Data = ifelse(Ano %in% c(2002), "2002-12-31",
-                           ifelse(Ano %in% c(2003), "2003-12-31",
-                           ifelse(Ano %in% c(2004), "2004-12-31",
-                           ifelse(Ano %in% c(2005), "2005-12-31",
-                           ifelse(Ano %in% c(2006), "2006-12-31",
-                           ifelse(Ano %in% c(2007), "2007-12-31",
-                           ifelse(Ano %in% c(2008), "2008-12-31",
-                           ifelse(Ano %in% c(2009), "2009-12-31",
-                           ifelse(Ano %in% c(2010), "2010-12-31",
-                           ifelse(Ano %in% c(2011), "2011-12-31",
-                           ifelse(Ano %in% c(2012), "2012-12-31",
-                           ifelse(Ano %in% c(2013), "2013-12-31",
-                           ifelse(Ano %in% c(2014), "2014-12-31",
-                           ifelse(Ano %in% c(2015), "2015-12-31",
-                           ifelse(Ano %in% c(2016), "2016-12-31",
-                           ifelse(Ano %in% c(2017), "2017-12-31",
-                           ifelse(Ano %in% c(2018), "2018-12-31", 
-                                             NA))))))))))))))))))
+df <- df %>% mutate(Data = as.Date(as.yearmon(paste0(Ano,"-12"), "%Y-%m")) + days(31))
 
 # Converter a variável Data para o formato date com `lubridate`
 df$Data <- as.Date(df$Data)
