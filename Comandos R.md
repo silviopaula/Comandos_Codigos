@@ -659,7 +659,7 @@ dt_wide <- dcast(data = dt_long,
 				 value.var = c("Coluna_1", "Coluna_2", "Coluna_3"))
 ```
 
-# Reshape dt wide para long com `data.table`
+###  Reshape dt wide para long com `data.table`
 > Neste exemplo, as colunas Código e Município são especificadas como colunas que devem ser mantidas como colunas fixas, enquanto as outras colunas são identificadas como sendo variáveis a serem medidas usando a expressão regular "^[0-9]{4}$". Em seguida, as colunas variable e value geradas pela função melt são renomeadas para Anoe e Valor, respectivamente.
 ```
 Arrecadacao_total_long <- melt(setDT(Arrecadacao_total), 
