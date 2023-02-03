@@ -653,13 +653,23 @@ print(df_long)
 # Converter o dataframe (df) para um data.table (dt)
 dt_long <- as.data.table(df_long) 
 
-# Converter o dtlong para dt wide 
+# Converter o dt long para dt wide 
 dt_wide <- dcast(data = dt_long, 
 				 id ~ Ano, 
 				 value.var = c("Coluna_1", "Coluna_2", "Coluna_3"))
 ```
 
-###   Replace com ifelse 
+# Reshape dt wide para long com `data.table`
+> Neste exemplo, as colunas Código e Município são especificadas como colunas que devem ser mantidas como colunas fixas, enquanto as outras colunas são identificadas como sendo variáveis a serem medidas usando a expressão regular "^[0-9]{4}$". Em seguida, as colunas variable e value geradas pela função melt são renomeadas para Anoe e Valor, respectivamente.
+```
+Arrecadacao_total_long <- melt(setDT(Arrecadacao_total), 
+                               id.vars = c("id", "Município"), 
+                               measure.vars = patterns("^[0-9]{4}$"))
+setnames(df_long, c("Ano", "Valor"))
+```
+
+
+### Replace com ifelse 
 > Fazer replace na variável var1, se var1 <0, então var1 receberá o valor 1, caso contrário permanecerá inalterada
 ```
 df$Coluna_1= ifelse(df$Coluna_1 < 0, 1, df$Coluna_1)
