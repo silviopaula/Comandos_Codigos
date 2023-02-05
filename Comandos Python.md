@@ -2175,7 +2175,7 @@ tabela1 = tables['arquivo1']
 import pandas as pd
 
 # Importar .csv carregado no databricks
-df_spark = spark.read.csv("/FileStore/tables/Arrecadacao_total.csv", header=True, inferSchema=True)
+df_spark = spark.read.csv("/FileStore/tables/arquivo.csv", header=True, inferSchema=True)
 
 # Converter para pandas
 df = df_spark.toPandas()
