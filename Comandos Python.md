@@ -2168,5 +2168,18 @@ for file in files:
 # para acessar uma tabela específica, basta utilizar o nome do arquivo sem extensão como chave do dicionário, por exemplo:
 tabela1 = tables['arquivo1']
 ```
+
+### Arquivo .csv no databricks e converter para pandas
+```
+# Importar pandas
+import pandas as pd
+
+# Importar .csv carregado no databricks
+df_spark = spark.read.csv("/FileStore/tables/Arrecadacao_total.csv", header=True, inferSchema=True)
+
+# Converter para pandas
+df = df_spark.toPandas()
+```
+
 -----------------------------------
 
