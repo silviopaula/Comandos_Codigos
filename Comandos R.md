@@ -2171,8 +2171,9 @@ df$faixa_salarial <- cut(df$renda, breaks = breaks, right = FALSE, labels = labe
                                 
 > Ver mais: [Deflacionando séries com o deflateBR | Fernando Meireles (fmeireles.com)](https://fmeireles.com/blog/rstats/deflacionar-series-no-r-deflatebr/)
 
-> `if(!require(deflateBR)){install.packages("deflateBR")}` 
-> `if(!require(lubridate)){install.packages("lubridate")}` 
+>- `if(!require(deflateBR)){install.packages("deflateBR")}`                
+>- `if(!require(lubridate)){install.packages("lubridate")}` 
+>- `if(!require(zoo)){install.packages("zoo")}` 
 ```
 # Gerar coluna com a data de 31 de dezembro a partir da coluna Ano
 df <- df %>% mutate(Data = as.Date(as.yearmon(paste0(Ano,"-12"), "%Y-%m")) + days(31))
