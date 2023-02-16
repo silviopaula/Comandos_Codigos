@@ -1892,22 +1892,13 @@ write_dta(df, "D:/Arquivo.dta")
 > ver mais:  https://www.rdocumentation.org/packages/data.table/versions/1.14.2/topics/fread
 ```
 # Importar csv com fread data.table
-df <- read.table("arquivo.csv", 
-                  header=TRUE, 
-                  sep=",", 
-                  quote="", 
-                  stringsAsFactors=FALSE, 
-                  comment.char="", 
-                  nrows=n)
-
-# Exportar arquivo .csv
-write.table(df,"arquivo.csv",sep=",")
+df <- fread("arquivo.csv")
 ```
 
 ### Importar .csv com  `sqldf`      
 >  `if(!require(sqldf)){install.packages("sqldf")}`                 
 ```
-SQL_df <- read.csv.sql("D:/arquivo.csv",dbname=NULL))
+SQL_df <- read.csv.sql("D:/arquivo.csv",dbname=NULL)
 ```
 
 ### Importar vários arquivos .csv e fazer append (Método 1)
