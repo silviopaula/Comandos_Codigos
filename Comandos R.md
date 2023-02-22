@@ -2396,6 +2396,24 @@ df_imputed <- mice(df, method = "rf", seed = 123)
 df_complete <- complete(df_imputed)
 ```
 
+### Verificar se o dataframe possui as colunas "Coluna_1", "Coluna_2", "Coluna_3"
+```
+# Nome das colunas a serem verificadas
+col_names <- c("Coluna_1", "Coluna_2", "Coluna_3")
+
+# Dataframe a ser verificado
+df <- data.frame()
+
+# Verificar se as colunas existem no dataframe
+missing_cols <- setdiff(col_names, colnames(df))
+
+if (length(missing_cols) > 0) {
+  cat("As seguintes colunas estão faltando no dataframe: ", paste(missing_cols, collapse = ", "))
+} else {
+  cat("Todas as colunas estão presentes no dataframe!")
+}
+```
+
 ###  Bibliometria com `bibliometrix`
 >O pacote bibliometrix  fornece um conjunto de ferramentas para pesquisa quantitativa em bibliometria e cienciometria.
 >
