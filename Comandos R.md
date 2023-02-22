@@ -2347,6 +2347,29 @@ results <- data.frame(MSE, MAE, RMSE, R_Squared)
 print(results)
 ```
 
+### Gerar função para obter o logaritmo natural das colunas.
+> Essa função obtém o log natural de uma lista de colunas, mesmo quando a coluna contém valores zeros e negativos. Ademais, a função adiciona o prefixo "ln_" as novas colunas geradas.
+```
+# Definir lista de colunas que irei tirar o logaritmo natural
+colunas <- c("Coluna_1", "Coluna_2", "Coluna_3")
+	     
+# Definir função log_transform 	     
+log_transform <- function(df, colunas) {
+  for (col in colunas) {
+    if (any(df[get(col) <= 0, get(col)])) {
+      min_value <- min(df[get(col) <= 0, get(col)]) # Identificar o menor valor negativo ou zero na coluna
+      df[, (paste0("ln_", col)) := log(get(col) - min_value + 1)] # Calcular o logaritmo natural e salvar com o prefixo "ln_"
+    } else {
+      df[, (paste0("ln_", col)) := log(get(col) + 1)] # Adicionar 1 ao valor da coluna antes de calcular o logaritmo natural e salvar com o prefixo "ln_"
+    }
+  }
+  return(df)
+}
+
+# Aplicar a função log_transform
+df <- log_transform(df, colunas)
+```
+
 ### Imputar missings com `mice`
 > O pacote `mice` oferece diversos métodos para imputação de valores missing, incluindo:
 
