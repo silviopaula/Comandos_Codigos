@@ -367,7 +367,7 @@ df.columns
 colunas = df.columns.to_list()
 ```
 
-###  Obeter nome das colunas a partir do índice
+###  Obter nome das colunas a partir do índice
 ```
 # Método 1:
 print(df.columns[0])
