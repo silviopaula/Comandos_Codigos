@@ -82,6 +82,7 @@ install.packages("fixest", version='0.8.4')
 old.packages() 
 update.packages()
 update.packages(checkBuilt=TRUE, ask=FALSE)
+update.packages(ask = FALSE)
 ```
 
 ### Carregar pacotes
@@ -372,14 +373,21 @@ df_novo <- df[, c("Coluna_1", "Coluna_2", "Coluna_3") := NULL]
 df_novo <- df[(df$Ano>=2000 & df$Ano<=2010),]
 ```	
 
-###  Remover ids duplicados com `data.table`
+###  Remover ids duplicadas com `data.table` e `dplyr`
 ```	
-setDT(df)[, if(.N>1) .SD, by = id]
+# Identificar os ids duplicados (data.table)
+dt <- setDT(df)[, if(.N>1) .SD, by = id]
+
+# remover linhas duplicadas das colunas 1 e 2 (dplyr)
+df <- df %>% distinct(Coluna_1, Coluna_2, .keep_all = TRUE)
+
+# Removendo todas as linhas duplicadas (dplyr)
+df <- df %>% distinct()
 ```	
 
-###  Gerar amostra - subset com muitas condições com `magrittr`
+###  Gerar amostra com linhas que contenha as letras A, B, C, D, E `magrittr`
 ```
-df_novo <- df[(df$Coluna_1%in% c("A", "B", "C", "D", "E")),]
+df_novo <- df[(df$Coluna_1 %in% c("A", "B", "C", "D", "E")),]
 ```	     
 			   
 ### Remover linhas e colunas do df
@@ -427,6 +435,9 @@ df$Coluna_1 <- NULL
 
 # Método 2: Dropar duas colunas 
 df$Coluna_1 <- df$Coluna_2 <- NULL
+
+# Método 3: com dplyr
+df <- df %>% select(-coluna_1, -coluna_2, -coluna_3)
 ```
 
 ###  Renomear colunas
@@ -564,6 +575,11 @@ df <- df %>% dplyr::mutate_at(c(1:10), as.numeric)
 
 # Método 6: Converter todas colunas do df para numérico
 df = as.data.frame(sapply(df, as.numeric))
+
+# Método 7: Converter todas colunas para numérico exceto as listadas
+col_ignore <- c("Coluna_1", "Coluna_2", "Coluna_3", "Coluna_4")
+col_to_convert <- setdiff(colnames(df), col_ignore)
+df[,col_to_convert] <- sapply(df[,col_to_convert], as.numeric)
 ```
 
 ###  Converter colunas para fator`factor`
@@ -592,16 +608,10 @@ valores_numericos <- as.numeric(gsub("R\\$ | BRL", "", valores))
 ###  Arredondar valores das colunas 
 ```
 # Arredondar valores (2 digítos) de um coluna com `dplyr`
-df <- df %>% dplyr::mutate_at(vars(Coluna_1), funs(round(., 2)))
-
-# Arredondar valores (3 digítos) de varias colunas com `dplyr`
-df <-df %>% dplyr::mutate_at(vars(Coluna_1, Coluna_2, Coluna_3), funs(round(., 3)))
+df <- df %>% mutate(across(c(Coluna_1, Coluna_2), ~round(., 2)))
 
 # Arredondar valores (4 digítos) de todas as colunas exceto a Coluna_1 com `dplyr`
-df <-df %>% dplyr::mutate_at(vars(-var1), funs(round(., 4)))
-
-# Arredondar valores (2 digítos) de todas as colunas com nome que começa por "col" com `dplyr`
-df <-df %>% dplyr::mutate_at(vars(starts_with("col")), funs(round(., 2)))
+df <-df %>% mutate(across(c(-Coluna_1, Coluna_2), ~round(., 2)))
 
 # Arredondar valores (2 digítos) apenas das colunas numéricas com `dplyr`
 df <- df %>% dplyr::mutate_if(is.numeric, ~round(., 2))
@@ -765,7 +775,8 @@ df_novo<- df %>% dplyr::group_by(id, Ano) %>%
                    Media_Coluna_1 = mean(Coluna_1, na.rm = TRUE),
                    Total_Coluna_1 = sum(Coluna_1, na.rm = TRUE),
                    Min_Coluna_1 = min(Coluna_1, na.rm = TRUE),
-                   Contagem_distinta = n_distinct(Coluna_1, na.rm = TRUE))
+                   Contagem_distinta = n_distinct(Coluna_1, na.rm = TRUE),
+                   .groups = "drop")
 ```
 
 ###  Agregar dados por id e Ano com `data.table`
@@ -779,13 +790,26 @@ df_novo5 <- setDT(df)[,.(Max_Coluna_1   = max(Coluna_1, na.rm=TRUE),
                         by =c("id", "Ano")]
 ```
 
-### Visualizar informações duplicadas
+### Verificar  duplicadas
 ```
 # Gerar tabela com os totais de informações duplicadas
 Dup <- data.frame(table(df$Coluna_1, df$Coluna_2))
 
 # Visualizar total de informações repetidas em uma coluna
-df$Coluna_1 %>% unique() %>% length() 
+df$Coluna_1 %>% unique() %>% length()
+
+# Função para verificar duplicatas com base em duas colunas
+verificarDuplicatasDuasColunas <- function(df, coluna1, coluna2) {
+  # Verificar duplicatas com base nas duas colunas
+  have_duplicates <- duplicated(df[, c(coluna1, coluna2)]) | duplicated(df[, c(coluna1, coluna2)], fromLast = TRUE)
+  
+  if (any(have_duplicates)) {
+    cat("Existem duplicatas com base nas colunas", coluna1, "e", coluna2, ".\n")
+  } else {
+    cat("Não existem duplicatas com base nas colunas", coluna1, "e", coluna2, ".\n")
+  }
+}
+verificarDuplicatasDuasColunas(Dados, "coluna_A", "coluna_B")
 ```
 
 ### Remover  informações duplicadas com `data.table`
@@ -1237,7 +1261,8 @@ df <- df %>% group_by(id, Ano) %>% na_mean(df[, Col_number])
 df <- df %>% group_by(id, Ano) %>% na_mode(df[, Col_number])
 
 # Imputar valores missings com INTERPOLAÇÃO agrupado por id e Ano
-df <- df %>% group_by(id, Ano) %>% na_interpolation(df[, Col_number], option = "spline")
+df <- df %>% group_by(id, Ano) %>%
+ mutate(Coluna_1 = na_interpolation(Coluna_1, option = "spline"))
 
 # Imputar valores missings com VALORES ALEATÓRIOS agrupado por id e Ano
 df <- df %>% group_by(id, Ano) %>% na_random(df[, Col_number])
@@ -1329,6 +1354,22 @@ df$Mes <- format(as.Date(df$Data_str, format="%d/%m/%Y"),"%m")
 # Gerar nova coluna extraindo apenas o dia
 df$Mes <- format(as.Date(df$Data_str, format="%d/%m/%Y"),"%d")
 ```
+
+###   Gerar coluna do tipo date a partir das colunas ano e mes`lubridate`
+`if(!require(lubridate)){install.packages("lubridate")}`       
+
+```
+# Gerar coluna do tipo date a partir das colunas ano e mes
+df <- df %>% mutate(date_column = ymd(paste(Ano, Mes, "01", sep = "-")))
+
+# Gerar coluna Ano a partir da coluna data
+df$Ano <- year(df$data)
+
+# Gerar coluna Mes a partir da coluna data
+df$Mes <- month(df$data)
+
+```
+
 
 ## Outliers
 
@@ -1763,8 +1804,8 @@ df_3 <- left_join(df_1, df_2, by = c("id"))
 df_3 <- left_join(df_1, df_2, by = c("id" = "ID"))
 
 # Left join para unir mais de dois dataframes
-joined <- list(df_1, df_2, df_3, df_4, df_5, df_6, %>% 
-               reduce(left_join, by = c("id", "Ano"), fill=TRUE)
+joined <- list(df_1, df_2, df_3, df_4, df_5, df_6) %>% 
+               reduce(left_join, by = c("id", "Ano"))
 
 # Left join e adicionar sufixo aos nome das colunas 
 df_3 <- left_join(df_1, df_2, by = "id", suffix = c(".df_1", ".df_2"))
@@ -2200,21 +2241,22 @@ df <- data.frame(id = 1:100,
                  length.out = 100))
 
 # Gerar função para criar as estações do ano a partir da coluna data
-determine_season <- function(date) {
+determine_season_southern <- function(date) {
   month <- as.numeric(format(date, "%m"))
   if (month %in% c(12, 1, 2)) {
-    return("Inverno")
-  } else if (month %in% c(3, 4, 5)) {
-    return("Primavera")
-  } else if (month %in% c(6, 7, 8)) {
     return("Verão")
+  } else if (month %in% c(3, 4, 5)) {
+    return("Outono")
+  } else if (month %in% c(6, 7, 8)) {
+    return("Inverno")
   } else if (month %in% c(9, 10, 11)) {
-    return("outono")
+    return("Primavera")
   }
 }
 
+
 # Gerar coluna estações
-df$Estacoes <- sapply(df$date, determine_season)
+df$Estacoes <- sapply(df$date, determine_season_southern)
 ```
 
 ### Imputar missings com `mixgb` (Método 1)
@@ -2413,6 +2455,73 @@ if (length(missing_cols) > 0) {
   cat("Todas as colunas estão presentes no dataframe!")
 }
 ```
+
+### Função para verificar se o dataframe possui as colunas listadas
+```
+# Função 
+verificar_Colunas <- function(df, colunas_desejadas) {
+  # Verificar quais colunas estão ausentes no dataframe
+  colunas_ausentes <- setdiff(colunas_desejadas, names(df))
+  
+  # Verificar quais colunas são extras no dataframe
+  colunas_extras <- setdiff(names(df), colunas_desejadas)
+  
+  mensagem <- character(0)
+  
+  if (length(colunas_ausentes) > 0) {
+    mensagem <- c(mensagem, paste("As seguintes colunas estão ausentes no dataframe:", paste(colunas_ausentes, collapse = ", ")))
+  }
+  
+  if (length(colunas_extras) > 0) {
+    mensagem <- c(mensagem, paste("As seguintes colunas são extras no dataframe:", paste(colunas_extras, collapse = ", ")))
+  }
+  
+  if (length(mensagem) == 0) {
+    cat("Todas as colunas desejadas estão presentes no dataframe.\n")
+  } else {
+    cat(paste(mensagem, collapse = "\n"), "\n")
+  }
+}
+
+colunas_desejadas <- c("Coluna1", "Coluna2", "Coluna5")
+verificar_Colunas(df_exemplo, colunas_desejadas)
+
+```
+
+
+### Balancear painel de dados
+
+O pacote `plm` em R permite "balancear" conjuntos de dados de painel usando a função `pdata.frame`. A maneira como o balanceamento é feito é determinada pelo argumento `balance.type`.
+
+1.  **`fill`**: Insere entradas faltantes para indivíduos e períodos de tempo, preenchendo com NA onde necessário. Garante que todos os indivíduos tenham uma entrada para cada período de tempo, mesmo que isso signifique introduzir valores NA.
+2.  **`shared.times`**: Mantém apenas os períodos de tempo observados para todos os indivíduos, descartando os períodos não comuns.
+3.  **`shared.individuals`**: Mantém apenas os indivíduos que têm observações em todos os períodos de tempo, descartando indivíduos com qualquer período faltante.
+
+A opção escolhida dependerá do objetivo da análise e das características do conjunto de dados.
+
+**Nota**  
+- Esse aviso indica que tem duplicados [In pdata.frame(df, index = c("code_muni", "Data2")) : duplicate couples (id-time) in resulting pdata.frame to find out which, use, e.g., table(index(your_pdataframe), useNA = "ifany")]
+
+* Identificar as combinações duplicadas:  ``duplicates <- table(index(df\_p), useNA = "ifany")``
+*  Filtrar apenas as combinações que aparecem mais de uma vez:  ``duplicates\[duplicates > 1]``
+
+```
+# Converter dataframe para pdata e identificar o id e time
+df_p <- pdata.frame(df, index = c("id", "time"))
+
+# Verificar duplicados
+duplicates <- table(index(df_p), useNA = "ifany")
+
+# check se está balanceado 
+pdim(df_p)$balanced  # FALSE = desbalanceado, TRUE = balanceado
+
+# Balancear dataframe
+df_balanced <- make.pbalanced(df, idname= "id", tname= "time", balance.type = "fill")
+
+# remove                  
+rm(df_p, duplicates)
+```
+
 
 ###  Bibliometria com `bibliometrix`
 >O pacote bibliometrix  fornece um conjunto de ferramentas para pesquisa quantitativa em bibliometria e cienciometria.
